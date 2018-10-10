@@ -3,12 +3,75 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".AreaInfoFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp">
 
+        <TextView
+            android:id="@+id/lblBiome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="Wilderness"
+            android:textSize="16pt"
+            android:textStyle="bold"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/lblDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="Description"
+            android:textSize="10pt"
+            android:gravity="center"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lblBiome"/>
+
+        <LinearLayout
+            android:id="@+id/linOptions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lblDescription">
+
+            <ImageButton
+                android:id="@+id/btnStar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="8dp"
+                android:src="@drawable/ic_star_border_black_24dp"
+                android:scaleType="fitCenter"
+                android:background="@android:color/transparent"/>
+
+            <TextView
+                android:id="@+id/lblCoordinate"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:text="[1,1]"
+                android:textSize="10pt"
+                android:gravity="center"/>
+
+            <ImageButton
+                android:id="@+id/btnEdit"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="8dp"
+                android:src="@drawable/ic_edit_black_24dp"
+                android:scaleType="fitCenter"
+                android:background="@android:color/transparent"/>
+        </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 </FrameLayout>
