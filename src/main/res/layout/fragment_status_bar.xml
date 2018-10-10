@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".StatusBarFragment">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/lblCash"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Cash"
+            android:gravity="center"
+            android:textStyle="bold"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/lblHealth"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/valCash"/>
+
+        <TextView
+            android:id="@+id/lblHealth"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Health"
+            android:gravity="center"
+            android:textStyle="bold"
+
+            app:layout_constraintStart_toEndOf="@id/lblCash"
+            app:layout_constraintEnd_toStartOf="@id/lblMass"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/valHealth"/>
+
+        <TextView
+            android:id="@+id/lblMass"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Mass"
+            android:gravity="center"
+            android:textStyle="bold"
+
+            app:layout_constraintStart_toEndOf="@id/lblHealth"
+            app:layout_constraintEnd_toStartOf="@id/btnReset"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/valMass"/>
+
+        <TextView
+            android:id="@+id/valCash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$$$"
+
+            app:layout_constraintStart_toStartOf="@id/lblCash"
+            app:layout_constraintEnd_toEndOf="@id/lblCash"
+            app:layout_constraintTop_toBottomOf="@id/lblCash"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/valHealth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100"
+
+            app:layout_constraintStart_toStartOf="@id/lblHealth"
+            app:layout_constraintEnd_toEndOf="@id/lblHealth"
+            app:layout_constraintTop_toBottomOf="@id/lblHealth"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/valMass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50kg"
+
+            app:layout_constraintStart_toStartOf="@id/lblMass"
+            app:layout_constraintEnd_toEndOf="@id/lblMass"
+            app:layout_constraintTop_toBottomOf="@id/lblMass"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageButton
+            android:id="@+id/btnReset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_refresh_black_24dp"
+
+            app:layout_constraintStart_toEndOf="@id/lblMass"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </android.support.constraint.ConstraintLayout>
+
+</FrameLayout>
