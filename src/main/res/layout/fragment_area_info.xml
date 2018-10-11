@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:text="@string/wilderness"
+            android:textColor="@color/colorAccentDark"
             android:textSize="16pt"
             android:textStyle="bold"
 
