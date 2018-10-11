@@ -13,7 +13,7 @@
             android:id="@+id/lblCash"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Cash"
+            android:text="@string/cash"
             android:gravity="center"
             android:textStyle="bold"
 
@@ -26,7 +26,7 @@
             android:id="@+id/lblHealth"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Health"
+            android:text="@string/health"
             android:gravity="center"
             android:textStyle="bold"
 
@@ -39,7 +39,7 @@
             android:id="@+id/lblMass"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Mass"
+            android:text="@string/mass"
             android:gravity="center"
             android:textStyle="bold"
 
@@ -86,6 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_refresh_black_24dp"
+            android:contentDescription="@string/reset"
 
             app:layout_constraintStart_toEndOf="@id/lblMass"
             app:layout_constraintEnd_toEndOf="parent"

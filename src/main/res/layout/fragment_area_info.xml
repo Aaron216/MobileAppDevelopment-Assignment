@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:text="Wilderness"
+            android:text="@string/wilderness"
             android:textSize="16pt"
             android:textStyle="bold"
 
@@ -29,7 +29,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:text="Description"
+            android:text="@string/description"
             android:textSize="10pt"
             android:gravity="center"
 
@@ -53,7 +53,8 @@
                 android:layout_margin="8dp"
                 android:src="@drawable/ic_star_border_black_24dp"
                 android:scaleType="fitCenter"
-                android:background="@android:color/transparent"/>
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/star_area"/>
 
             <TextView
                 android:id="@+id/lblCoordinate"
@@ -71,7 +72,8 @@
                 android:layout_margin="8dp"
                 android:src="@drawable/ic_edit_black_24dp"
                 android:scaleType="fitCenter"
-                android:background="@android:color/transparent"/>
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/edit_description"/>
         </LinearLayout>
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>
