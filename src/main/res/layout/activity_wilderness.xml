@@ -6,4 +6,84 @@
     android:layout_height="match_parent"
     tools:context=".WildernessActivity">
 
+    <FrameLayout
+        android:id="@+id/frameStatusBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/ic_arrow_back_black_24dp"
+        android:scaleType="fitStart"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:contentDescription="@string/return_to_previous"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameStatusBar"/>
+
+    <TextView
+        android:id="@+id/lblWilderness"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="8dp"
+        android:text="@string/wilderness"
+        android:textSize="12pt"
+        android:gravity="center_vertical"
+
+        app:layout_constraintStart_toEndOf="@id/btnBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameStatusBar"
+        app:layout_constraintBottom_toBottomOf="@+id/btnBack"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/listDrop"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="8dp"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/listPickUp"
+        app:layout_constraintTop_toBottomOf="@id/lblWilderness"
+        app:layout_constraintBottom_toTopOf="@id/btnDrop"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/listPickUp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="8dp"
+
+        app:layout_constraintStart_toEndOf="@id/listDrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lblWilderness"
+        app:layout_constraintBottom_toTopOf="@id/btnPickUp"/>
+
+    <Button
+        android:id="@+id/btnDrop"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="@string/drop"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnPickUp"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+        android:id="@+id/btnPickUp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="@string/pick_up"
+
+        app:layout_constraintStart_toEndOf="@id/btnDrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
 </android.support.constraint.ConstraintLayout>

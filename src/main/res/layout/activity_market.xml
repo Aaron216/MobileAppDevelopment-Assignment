@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".MarketActivity">
 
+    <FrameLayout
+        android:id="@+id/frameStatusBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <ImageButton
         android:id="@+id/btnBack"
         android:layout_width="60dp"
@@ -13,24 +22,26 @@
         android:src="@drawable/ic_arrow_back_black_24dp"
         android:scaleType="fitStart"
         style="@style/Widget.AppCompat.Button.Borderless"
+        android:contentDescription="@string/return_to_previous"
 
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/frameStatusBar"/>
 
     <TextView
         android:id="@+id/lblMarket"
         android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_height="0dp"
         android:padding="8dp"
-        android:text="Market"
+        android:text="@string/market"
         android:textSize="12pt"
         android:gravity="center_vertical"
 
         app:layout_constraintStart_toEndOf="@id/btnBack"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/frameStatusBar"
+        app:layout_constraintBottom_toBottomOf="@+id/btnBack"/>
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/listSell"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -41,7 +52,7 @@
         app:layout_constraintTop_toBottomOf="@id/lblMarket"
         app:layout_constraintBottom_toTopOf="@id/btnSell"/>
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/listBuy"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -57,7 +68,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="Sell"
+        android:text="@string/sell"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btnBuy"
@@ -68,7 +79,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="Buy"
+        android:text="@string/buy"
 
         app:layout_constraintStart_toEndOf="@id/btnSell"
         app:layout_constraintEnd_toEndOf="parent"

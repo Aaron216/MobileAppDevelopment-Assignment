@@ -1,30 +1,34 @@
 <resources>
     <string name="app_name">MAD Assignment</string>
 
-    <!-- Status Bar Labels -->
+    <!-- Status Bar Fragment -->
     <string name="cash">Cash</string>
     <string name="health">Health</string>
     <string name="mass">Mass</string>
-
-    <!-- Status Bar Content Descriptions -->
     <string name="reset">Reset game</string>
 
-    <!-- Area Info Fragment Labels -->
+    <!-- Area Info Fragment -->
     <string name="wilderness">Wilderness</string>
     <string name="town">Town</string>
     <string name="description">Description</string>
-
-    <!-- Area Info Fragment Content Descriptions -->
     <string name="star_area">Star area</string>
     <string name="edit_description">Edit description</string>
 
-    <!-- Navigation Activity Buttons -->
+    <!-- Navigation Activity -->
     <string name="options">Options</string>
     <string name="overview">Overview</string>
-    
-    <!-- Navigation Button Content Descriptions -->
     <string name="move_north">Move North</string>
     <string name="move_west">Move West</string>
     <string name="move_east">Move East</string>
     <string name="move_south">Move South</string>
+
+    <!-- Market Activity -->
+    <string name="return_to_previous">Return to previous screen</string>
+    <string name="market">Market</string>
+    <string name="sell">Sell Item</string>
+    <string name="buy">Buy Item</string>
+
+    <!-- Wilderness Activity -->
+    <string name="drop">Drop Item</string>
+    <string name="pick_up">Pick Up Item</string>
 </resources>

@@ -6,9 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".NavigationActivity">
 
-    <fragment
-        android:id="@+id/fragStatusBar"
-        android:name="au.edu.curtin.madassignment.StatusBarFragment"
+    <FrameLayout
+        android:id="@+id/frameStatusBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
@@ -16,13 +15,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <fragment
-        android:id="@+id/fragAreaInfo"
-        android:name="au.edu.curtin.madassignment.AreaInfoFragment"
+    <FrameLayout
+        android:id="@+id/frameAreaInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        app:layout_constraintTop_toBottomOf="@+id/fragStatusBar"
+        app:layout_constraintTop_toBottomOf="@+id/frameStatusBar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
