@@ -71,4 +71,16 @@ public class GameData {
     void setPlayer(Player inPlayer) {
         player = inPlayer;
     }
+
+    /* Functions */
+    void generateMap() {
+        for (int yy = 0; yy < MAX_ROW; yy++) {
+            // Iterate over rows
+            for (int xx = 0; xx < MAX_COL; xx++) {
+                // Iterate through columns
+                grid[yy][xx] = new Area();
+                grid[yy][xx].randomize();
+            }
+        }
+    }
 }
