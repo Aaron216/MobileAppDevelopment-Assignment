@@ -1,3 +1,14 @@
+/**
+ * Curtin University
+ * Mobile Application Development
+ * Assignment
+ * Aaron Musgrave
+ * 25/10/2018
+ *
+ * Area Class
+ * Responsible for storing data about an area
+ */
+
 package au.edu.curtin.madassignment;
 
 import java.util.LinkedList;
