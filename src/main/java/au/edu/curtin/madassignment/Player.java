@@ -61,15 +61,15 @@ public class Player {
 
     /* Mutators */
     void setRowLocation(int inRow) {
-        if (inRow < GameData.MIN_ROW || inRow > GameData.MAX_ROW) {
-            throw new IllegalArgumentException("Row Location must be >= " + GameData.MIN_ROW + " and <= " + GameData.MAX_ROW);
+        if (inRow < 0 || inRow > GameData.MAX_ROW) {
+            throw new IllegalArgumentException("Row Location must be >= 0 and <= " + GameData.MAX_ROW);
         }
         rowLocation = inRow;
     }
 
     void setColLocation(int inCol) {
-        if (inCol < GameData.MIN_COL || inCol > GameData.MAX_COL) {
-            throw new IllegalArgumentException("Column Location must be >= " + GameData.MIN_COL + " and <= " + GameData.MAX_COL);
+        if (inCol < 0 || inCol > GameData.MAX_COL) {
+            throw new IllegalArgumentException("Column Location must be >= 0 and <= " + GameData.MAX_COL);
         }
         colLocation = inCol;
     }
