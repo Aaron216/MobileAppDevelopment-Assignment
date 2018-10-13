@@ -1,5 +1,6 @@
 package au.edu.curtin.madassignment;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +16,8 @@ public class NavigationActivity extends AppCompatActivity {
     private ImageButton eastButton;
     private Button optionsButton;
     private Button overviewButton;
+    private Fragment areaInfo;
+    private Fragment statusBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +34,8 @@ public class NavigationActivity extends AppCompatActivity {
 
         // Initialise Fragments
         FragmentManager fm = getSupportFragmentManager();
-        AreaInfoFragment areaInfo = (AreaInfoFragment) fm.findFragmentById(R.id.frameAreaInfo);
-        StatusBarFragment statusBar = (StatusBarFragment) fm.findFragmentById(R.id.frameStatusBar);
+        areaInfo = fm.findFragmentById(R.id.frameAreaInfo);
+        statusBar = fm.findFragmentById(R.id.frameStatusBar);
 
         if (areaInfo == null) {
             areaInfo = new AreaInfoFragment();
@@ -48,28 +51,28 @@ public class NavigationActivity extends AppCompatActivity {
         northButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-            }
-        });
-
-        westButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
+                move('N');
             }
         });
 
         southButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                move('S');
+            }
+        });
 
+        westButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                move('W');
             }
         });
 
         eastButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                move('E');
             }
         });
 
@@ -87,5 +90,21 @@ public class NavigationActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    /* Functions */
+    private void move(char direction) {
+        Player player = GameData.getInstance().getPlayer();
+        player.move(direction);
+        int xx = player.getColLocation();
+        int yy = player.getRowLocation();
+
+        // Update UI elements
+        northButton.setEnabled(yy < GameData.MAX_ROW);
+        southButton.setEnabled(yy > 0);
+        westButton.setEnabled(xx > 0);
+        eastButton.setEnabled(xx < GameData.MAX_COL);
+
+        // Area Info and Status Bar
     }
 }

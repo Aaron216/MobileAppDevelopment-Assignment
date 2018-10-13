@@ -100,4 +100,25 @@ public class Player {
         }
         equipmentList = inEquipmentList;
     }
+
+    void move(char direction) {
+        switch (direction) {
+            case 'N':
+
+                // Move North
+                break;
+            case 'W':
+                // Move West
+                break;
+            case 'E':
+                // Move East
+                break;
+            case 'S':
+                // Move South
+                break;
+            default:
+                // Do Nothing
+                break;
+        }
+    }
 }
