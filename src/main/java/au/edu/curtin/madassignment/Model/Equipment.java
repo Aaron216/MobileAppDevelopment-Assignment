@@ -9,7 +9,7 @@
  * Responsible for storing data about an equipment item
  */
 
-package au.edu.curtin.madassignment;
+package au.edu.curtin.madassignment.Model;
 
 public class Equipment extends Item {
     /* Fields */

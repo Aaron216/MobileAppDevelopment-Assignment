@@ -9,12 +9,12 @@
  * Responsible for storing data about the current game
  */
 
-package au.edu.curtin.madassignment;
+package au.edu.curtin.madassignment.Model;
 
 public class GameData {
     /* Constants */
-    static final int MAX_ROW = 10;
-    static final int MAX_COL = 10;
+    public static final int MAX_ROW = 10;
+    public static final int MAX_COL = 10;
 
     /* Fields */
     private Area[][] grid;
@@ -28,11 +28,11 @@ public class GameData {
     }
 
     /* Accessors */
-    Area[][] getGrid() {
+    public Area[][] getGrid() {
         return grid;
     }
 
-    Area getArea(int colLocation, int rowLocation) {
+    public Area getArea(int colLocation, int rowLocation) {
         // Check column
         if (colLocation < 0 || colLocation > MAX_COL) {
             throw new IllegalArgumentException("Column location must be >= 0 and <= " + MAX_COL);
@@ -44,11 +44,11 @@ public class GameData {
         return grid[colLocation][rowLocation];
     }
 
-    Player getPlayer() {
+    public Player getPlayer() {
         return player;
     }
 
-    static GameData getInstance() {
+    public static GameData getInstance() {
         if (instance == null) {
             instance = new GameData();
         }
@@ -56,7 +56,7 @@ public class GameData {
     }
 
     /* Mutators */
-    void setArea(int colLocation, int rowLocation, Area inArea) {
+    public void setArea(int colLocation, int rowLocation, Area inArea) {
         // Check column
         if (colLocation < 0 || colLocation > MAX_COL) {
             throw new IllegalArgumentException("Column location must be >= 0 and <= " + MAX_COL);
@@ -68,12 +68,12 @@ public class GameData {
         grid[colLocation][rowLocation] = inArea;
     }
 
-    void setPlayer(Player inPlayer) {
+    public void setPlayer(Player inPlayer) {
         player = inPlayer;
     }
 
     /* Functions */
-    void generateMap() {
+    public void generateMap() {
         for (int yy = 0; yy < MAX_ROW; yy++) {
             // Iterate over rows
             for (int xx = 0; xx < MAX_COL; xx++) {

@@ -1,7 +1,9 @@
-package au.edu.curtin.madassignment;
+package au.edu.curtin.madassignment.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import au.edu.curtin.madassignment.*;
 
 public class WildernessActivity extends AppCompatActivity {
 

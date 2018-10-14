@@ -9,7 +9,7 @@
  * Responsible for storing data about a food item
  */
 
-package au.edu.curtin.madassignment;
+package au.edu.curtin.madassignment.Model;
 
 public class Food extends Item {
     /* Fields */

@@ -1,4 +1,4 @@
-package au.edu.curtin.madassignment;
+package au.edu.curtin.madassignment.Fragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import au.edu.curtin.madassignment.*;
 
 /**
  * A simple {@link Fragment} subclass.

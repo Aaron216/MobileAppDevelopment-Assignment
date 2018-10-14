@@ -9,7 +9,7 @@
  * Responsible for storing data about an area
  */
 
-package au.edu.curtin.madassignment;
+package au.edu.curtin.madassignment.Model;
 
 import java.util.LinkedList;
 import java.util.Random;

@@ -1,4 +1,4 @@
-package au.edu.curtin.madassignment;
+package au.edu.curtin.madassignment.Activities;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -7,6 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+;
+import au.edu.curtin.madassignment.Fragments.*;
+import au.edu.curtin.madassignment.Model.*;
+import au.edu.curtin.madassignment.*;
 
 public class NavigationActivity extends AppCompatActivity {
     /* Fields */

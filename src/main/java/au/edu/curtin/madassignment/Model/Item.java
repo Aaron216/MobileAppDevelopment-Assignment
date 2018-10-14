@@ -9,7 +9,7 @@
  * Responsible for storing data about an item
  */
 
-package au.edu.curtin.madassignment;
+package au.edu.curtin.madassignment.Model;
 
 public abstract class Item {
     /* Fields */
