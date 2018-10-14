@@ -1,6 +1,13 @@
 <resources>
     <string name="app_name">MAD Assignment</string>
 
+    <!-- Welcome Activity -->
+    <string name="title1">Explorer Game 2:</string>
+    <string name="title2">Electric Boogaloo</string>
+    <string name="author">By Aaron Musgrave</string>
+    <string name="continue_game">Continue Game</string>
+    <string name="new_game">Start New Game</string>
+
     <!-- Status Bar Fragment -->
     <string name="cash">Cash</string>
     <string name="health">Health</string>

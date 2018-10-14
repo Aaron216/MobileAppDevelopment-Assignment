@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Explorer Game 2:"
+            android:text="@string/title1"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="18pt"
             android:textStyle="bold" />
@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Electric Boogaloo"
+            android:text="@string/title2"
             android:textColor="@color/colorPrimary"
             android:textSize="16pt"
             android:textStyle="bold" />
@@ -43,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="By Aaron Musgrave"
+            android:text="@string/author"
             android:textSize="8pt"/>
 
         <Space
@@ -56,14 +56,14 @@
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Continue Game" />
+            android:text="@string/continue_game" />
 
 
         <Button
             android:id="@+id/btnNewGame"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Start new Game" />
+            android:text="@string/new_game" />
 
         <Space
             android:layout_width="1dp"
