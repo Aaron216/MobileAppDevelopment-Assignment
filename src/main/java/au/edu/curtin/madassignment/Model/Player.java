@@ -10,6 +10,10 @@
  */
 
 package au.edu.curtin.madassignment.Model;
+import android.app.Activity;
+import android.content.Context;
+import android.widget.Toast;
+
 import java.util.LinkedList;
 
 public class Player {
@@ -102,26 +106,31 @@ public class Player {
     }
 
     public void move(char direction) {
-        switch (direction) {
-            case 'N':
-                // Move North
-                setRowLocation(rowLocation-1);
-                break;
-            case 'W':
-                // Move West
-                setColLocation(colLocation-1);
-                break;
-            case 'E':
-                // Move East
-                setColLocation(colLocation+1);
-                break;
-            case 'S':
-                setRowLocation(rowLocation+1);
-                // Move South
-                break;
-            default:
-                // Do Nothing
-                break;
+        try {
+            switch (direction) {
+                case 'N':
+                    // Move North
+                    setRowLocation(rowLocation - 1);
+                    break;
+                case 'W':
+                    // Move West
+                    setColLocation(colLocation - 1);
+                    break;
+                case 'E':
+                    // Move East
+                    setColLocation(colLocation + 1);
+                    break;
+                case 'S':
+                    setRowLocation(rowLocation + 1);
+                    // Move South
+                    break;
+                default:
+                    // Do Nothing
+                    break;
+            }
+        }
+        catch (IllegalArgumentException argumentEx) {
+            throw new IllegalStateException("Cannot move outside of map");
         }
     }
 }

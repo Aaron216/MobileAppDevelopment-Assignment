@@ -63,10 +63,10 @@ public class AreaInfoFragment extends Fragment {
         coordinateText.setText(gameData.getCoordinateText());
 
         if (area.isStarred()) {
-            starButton.setBackgroundResource(R.drawable.ic_star_black_24dp);
+            starButton.setImageResource(R.drawable.ic_star_black_24dp);
         }
         else {
-            starButton.setBackgroundResource(R.drawable.ic_star_border_black_24dp);
+            starButton.setImageResource(R.drawable.ic_star_border_black_24dp);
         }
     }
 }

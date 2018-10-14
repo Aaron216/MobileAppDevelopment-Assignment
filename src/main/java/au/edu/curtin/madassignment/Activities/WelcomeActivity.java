@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.Button;
 
 import au.edu.curtin.madassignment.*;
-import au.edu.curtin.madassignment.Model.GameData;
 
 public class WelcomeActivity extends AppCompatActivity {
     @Override
