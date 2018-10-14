@@ -16,6 +16,8 @@ import java.util.Random;
 
 public class Area {
     /* Constants */
+    private static final String TOWN = "Town";
+    private static final String WILDERNESS = "Wilderness";
     private static final int DICE_SIZE = 10;
     private static final int TOWN_CHANCE = 6;
     private static final int ITEM_CHANCE = 5;
@@ -29,7 +31,7 @@ public class Area {
     private boolean explored;
 
     /* Constructor */
-    Area() {
+    public Area() {
         town = false;
         itemList = new LinkedList<Item>();
         description = "";
@@ -38,44 +40,57 @@ public class Area {
     }
 
     /* Accessors */
-    boolean isTown() {
+    public boolean isTown() {
         return town;
     }
 
-    LinkedList<Item> getItemList() {
+    public LinkedList<Item> getItemList() {
         return itemList;
     }
 
-    String getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    boolean isStarred() {
+    public boolean isStarred() {
         return starred;
     }
 
-    boolean isExplored() {
+    public boolean isExplored() {
         return explored;
     }
 
+    public String getBiomeString() {
+        String biome;
+
+        if (town) {
+            biome = TOWN;
+        }
+        else {
+            biome = WILDERNESS;
+        }
+
+        return biome;
+    }
+
     /* Mutators */
-    void setTown(boolean inTown) {
+    public void setTown(boolean inTown) {
         town = inTown;
     }
 
-    void setItemList(LinkedList<Item> inItems) {
+    public void setItemList(LinkedList<Item> inItems) {
         itemList = inItems;
     }
 
-    void setDescription(String inDescription) {
+    public void setDescription(String inDescription) {
         description = inDescription;
     }
 
-    void setStarred(boolean inStarred) {
+    public void setStarred(boolean inStarred) {
         starred = inStarred;
     }
 
-    void setExplored(boolean inExplored) {
+    public void setExplored(boolean inExplored) {
         explored = inExplored;
     }
 

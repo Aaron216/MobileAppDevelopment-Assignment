@@ -9,9 +9,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import au.edu.curtin.madassignment.*;
-import au.edu.curtin.madassignment.Model.Area;
-import au.edu.curtin.madassignment.Model.GameData;
-import au.edu.curtin.madassignment.Model.Player;
+import au.edu.curtin.madassignment.Model.*;
 
 public class AreaInfoFragment extends Fragment {
     /* Fields */
@@ -33,12 +31,42 @@ public class AreaInfoFragment extends Fragment {
         editButton = view.findViewById(R.id.btnEdit);
 
         // Set on click listeners
+        starButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Get Current Area
+                Area area = GameData.getInstance().getCurrentArea();
 
+                if (area.isStarred()) {
+                    starButton.setBackgroundResource(R.drawable.ic_star_border_black_24dp);
+                    area.setStarred(false);
+                    GameData.getInstance().setCurrentArea(area);
+                }
+                else {
+                    starButton.setBackgroundResource(R.drawable.ic_star_black_24dp);
+                    area.setStarred(true);
+                    GameData.getInstance().setCurrentArea(area);
+                }
+            }
+        });
+
+        update();
         return view;
     }
 
     public void update() {
-        Area area = GameData.getInstance().getCurrentArea();
+        GameData gameData = GameData.getInstance();
+        Area area = gameData.getCurrentArea();
 
+        biomeText.setText(area.getBiomeString());
+        descriptionText.setText(area.getDescription());
+        coordinateText.setText(gameData.getCoordinateText());
+
+        if (area.isStarred()) {
+            starButton.setBackgroundResource(R.drawable.ic_star_black_24dp);
+        }
+        else {
+            starButton.setBackgroundResource(R.drawable.ic_star_border_black_24dp);
+        }
     }
 }

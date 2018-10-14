@@ -104,16 +104,19 @@ public class Player {
     public void move(char direction) {
         switch (direction) {
             case 'N':
-
                 // Move North
+                setRowLocation(rowLocation-1);
                 break;
             case 'W':
                 // Move West
+                setColLocation(colLocation-1);
                 break;
             case 'E':
                 // Move East
+                setColLocation(colLocation+1);
                 break;
             case 'S':
+                setRowLocation(rowLocation+1);
                 // Move South
                 break;
             default:

@@ -25,6 +25,7 @@ public class GameData {
     private GameData() {
         grid = new Area[MAX_ROW+1][MAX_COL+1];
         player = new Player();
+        generateMap();
     }
 
     /* Accessors */
@@ -59,6 +60,13 @@ public class GameData {
         return getArea(player.getColLocation(), player.getRowLocation());
     }
 
+    public String getCoordinateText() {
+        String coordinate = "[";
+        coordinate += player.getColLocation() + ",";
+        coordinate += player.getRowLocation() + "]";
+        return coordinate;
+    }
+
     /* Mutators */
     public void setArea(int colLocation, int rowLocation, Area inArea) {
         // Check column
@@ -70,6 +78,10 @@ public class GameData {
             throw new IllegalArgumentException("Row location must be >= 0 and <= " + MAX_ROW);
         }
         grid[colLocation][rowLocation] = inArea;
+    }
+
+    public void setCurrentArea(Area inArea) {
+        setArea(player.getColLocation(), player.getRowLocation(), inArea);
     }
 
     public void setPlayer(Player inPlayer) {
