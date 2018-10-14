@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import au.edu.curtin.madassignment.*;
+import au.edu.curtin.madassignment.Model.Player;
 
 public class StatusBarFragment extends Fragment {
     /* Fields */
@@ -36,5 +37,9 @@ public class StatusBarFragment extends Fragment {
         });
 
         return view;
+    }
+
+    public void update() {
+
     }
 }

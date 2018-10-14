@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">MAD Assignment</string>
 
+    <!-- General -->
+    <string name="return_to_previous">Return to previous screen</string>
+    <string name="wilderness">Wilderness</string>
+    <string name="market">Market</string>
+
     <!-- Welcome Activity -->
     <string name="title1">Explorer Game 2:</string>
     <string name="title2">Electric Boogaloo</string>
@@ -15,7 +20,6 @@
     <string name="reset">Reset game</string>
 
     <!-- Area Info Fragment -->
-    <string name="wilderness">Wilderness</string>
     <string name="town">Town</string>
     <string name="description">Description</string>
     <string name="star_area">Star area</string>
@@ -30,8 +34,6 @@
     <string name="move_south">Move South</string>
 
     <!-- Market Activity -->
-    <string name="return_to_previous">Return to previous screen</string>
-    <string name="market">Market</string>
     <string name="sell">Sell Item</string>
     <string name="buy">Buy Item</string>
 

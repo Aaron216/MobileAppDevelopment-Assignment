@@ -55,6 +55,10 @@ public class GameData {
         return instance;
     }
 
+    public Area getCurrentArea() {
+        return getArea(player.getColLocation(), player.getRowLocation());
+    }
+
     /* Mutators */
     public void setArea(int colLocation, int rowLocation, Area inArea) {
         // Check column

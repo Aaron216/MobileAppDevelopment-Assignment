@@ -1,5 +1,7 @@
 package au.edu.curtin.madassignment.Activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +15,9 @@ import au.edu.curtin.madassignment.Model.*;
 import au.edu.curtin.madassignment.*;
 
 public class NavigationActivity extends AppCompatActivity {
+    /* Constants */
+    private static final String START_NEW = "au.edu.curtin.madassigment.startNew";
+
     /* Fields */
     private ImageButton northButton;
     private ImageButton westButton;
@@ -20,8 +25,8 @@ public class NavigationActivity extends AppCompatActivity {
     private ImageButton eastButton;
     private Button optionsButton;
     private Button overviewButton;
-    private Fragment areaInfo;
-    private Fragment statusBar;
+    private AreaInfoFragment areaInfo;
+    private StatusBarFragment statusBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +43,8 @@ public class NavigationActivity extends AppCompatActivity {
 
         // Initialise Fragments
         FragmentManager fm = getSupportFragmentManager();
-        areaInfo = fm.findFragmentById(R.id.frameAreaInfo);
-        statusBar = fm.findFragmentById(R.id.frameStatusBar);
+        areaInfo = (AreaInfoFragment) fm.findFragmentById(R.id.frameAreaInfo);
+        statusBar = (StatusBarFragment) fm.findFragmentById(R.id.frameStatusBar);
 
         if (areaInfo == null) {
             areaInfo = new AreaInfoFragment();
@@ -51,7 +56,7 @@ public class NavigationActivity extends AppCompatActivity {
             fm.beginTransaction().add(R.id.frameStatusBar, statusBar).commit();
         }
 
-        // Set onclick listeners
+        // Set on click listeners
         northButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,5 +115,13 @@ public class NavigationActivity extends AppCompatActivity {
         eastButton.setEnabled(xx < GameData.MAX_COL);
 
         // Area Info and Status Bar
+        areaInfo.update();
+        statusBar.update();
+    }
+
+    public static Intent getIntent(Context context, boolean startNew) {
+        Intent intent = new Intent(context, NavigationActivity.class);
+        intent.putExtra(START_NEW, startNew);
+        return intent;
     }
 }
