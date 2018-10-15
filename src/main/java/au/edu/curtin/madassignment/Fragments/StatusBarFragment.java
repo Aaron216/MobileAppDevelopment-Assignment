@@ -8,8 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.util.Locale;
+
 import au.edu.curtin.madassignment.*;
-import au.edu.curtin.madassignment.Model.Player;
+import au.edu.curtin.madassignment.Model.*;
 
 public class StatusBarFragment extends Fragment {
     /* Fields */
@@ -40,6 +42,10 @@ public class StatusBarFragment extends Fragment {
     }
 
     public void update() {
+        Player player = GameData.getInstance().getPlayer();
 
+        cashText.setText(String.format(Locale.ENGLISH, "$%d", player.getCash()));
+        healthText.setText(String.format(Locale.ENGLISH, "%.2f", player.getHealth()));
+        massText.setText(String.format(Locale.ENGLISH, "%.2fkg", player.getEquipmentMass()));
     }
 }
