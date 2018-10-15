@@ -40,4 +40,9 @@
     <!-- Wilderness Activity -->
     <string name="drop">Drop Item</string>
     <string name="pick_up">Pick Up Item</string>
+
+    <!-- Game Over Activity -->
+    <string name="game_over">Game Over</string>
+    <string name="play_again">Play again</string>
+
 </resources>

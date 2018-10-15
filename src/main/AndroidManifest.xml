@@ -19,7 +19,8 @@
         <activity android:name=".Activities.NavigationActivity" />
         <activity android:name=".Activities.MarketActivity" />
         <activity android:name=".Activities.WildernessActivity" />
-        <activity android:name=".Activities.OverviewActivity"></activity>
+        <activity android:name=".Activities.OverviewActivity" />
+        <activity android:name=".Activities.GameOverActivity"></activity>
     </application>
 
 </manifest>
