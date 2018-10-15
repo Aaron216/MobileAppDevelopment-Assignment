@@ -1,11 +1,14 @@
 package au.edu.curtin.madassignment.Activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import au.edu.curtin.madassignment.*;
+import au.edu.curtin.madassignment.Model.GameData;
 
 public class WelcomeActivity extends AppCompatActivity {
     @Override
@@ -21,6 +24,7 @@ public class WelcomeActivity extends AppCompatActivity {
         newGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                GameData.newGame();
                 startActivity(NavigationActivity.getIntent(WelcomeActivity.this, true));
             }
         });
@@ -31,5 +35,9 @@ public class WelcomeActivity extends AppCompatActivity {
                 startActivity(NavigationActivity.getIntent(WelcomeActivity.this, false));
             }
         });
+    }
+
+    public static Intent getIntent(Context context) {
+        return new Intent(context, WelcomeActivity.class);
     }
 }

@@ -86,8 +86,9 @@ public class Player {
     }
 
     public void setHealth(double inHealth) {
-        if (inHealth < 0.0 || inHealth > MAX_HEALTH) {
-            throw new IllegalArgumentException("Health must be >= 0.0 and <= " + MAX_HEALTH);
+        if (inHealth <= 0.0) {
+            health = 0.0;
+            GameData.getInstance().setGameOver();
         }
         health = inHealth;
     }

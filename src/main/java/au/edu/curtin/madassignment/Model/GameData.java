@@ -19,12 +19,14 @@ public class GameData {
     /* Fields */
     private Area[][] grid;
     private Player player;
+    private boolean gameOver;
     private static GameData instance;
 
     /* Constructor */
     private GameData() {
         grid = new Area[MAX_ROW+1][MAX_COL+1];
         player = new Player();
+        gameOver = false;
         generateMap();
     }
 
@@ -47,6 +49,10 @@ public class GameData {
 
     public Player getPlayer() {
         return player;
+    }
+
+    public boolean isGameOver() {
+        return gameOver;
     }
 
     public static GameData getInstance() {
@@ -86,6 +92,14 @@ public class GameData {
 
     public void setPlayer(Player inPlayer) {
         player = inPlayer;
+    }
+
+    void setGameOver() {
+        gameOver = true;
+    }
+
+    public static void newGame() {
+        instance = new GameData();
     }
 
     /* Functions */

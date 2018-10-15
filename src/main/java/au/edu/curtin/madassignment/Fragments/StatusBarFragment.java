@@ -1,5 +1,7 @@
 package au.edu.curtin.madassignment.Fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import java.util.Locale;
 
 import au.edu.curtin.madassignment.*;
+import au.edu.curtin.madassignment.Activities.WelcomeActivity;
 import au.edu.curtin.madassignment.Model.*;
 
 public class StatusBarFragment extends Fragment {
@@ -43,6 +46,19 @@ public class StatusBarFragment extends Fragment {
 
     public void update() {
         Player player = GameData.getInstance().getPlayer();
+
+        if (GameData.getInstance().isGameOver()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setTitle("GAME OVER");
+            builder.setCancelable(false);
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    startActivity(WelcomeActivity.getIntent(getContext()));
+                }
+            });
+            builder.show();
+        }
 
         cashText.setText(String.format(Locale.ENGLISH, "$%d", player.getCash()));
         healthText.setText(String.format(Locale.ENGLISH, "%.2f", player.getHealth()));
