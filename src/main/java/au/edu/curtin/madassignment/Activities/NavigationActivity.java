@@ -107,8 +107,8 @@ public class NavigationActivity extends AppCompatActivity {
         try {
             GameData.getInstance().getPlayer().move(direction);
         }
-        catch (IllegalStateException stateEx) {
-            Toast.makeText(this, stateEx.getMessage(), Toast.LENGTH_SHORT).show();
+        catch (Exception ex) {
+            Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
         update();

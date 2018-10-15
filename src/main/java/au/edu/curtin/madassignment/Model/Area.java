@@ -94,6 +94,10 @@ public class Area {
         explored = inExplored;
     }
 
+    public void toggleStarred() {
+        setStarred(!starred);
+    }
+
     /* Functions */
     void randomize() {
         Random random = new Random();

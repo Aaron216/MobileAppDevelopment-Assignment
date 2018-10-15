@@ -106,31 +106,26 @@ public class Player {
     }
 
     public void move(char direction) {
-        try {
-            switch (direction) {
-                case 'N':
-                    // Move North
-                    setRowLocation(rowLocation - 1);
-                    break;
-                case 'W':
-                    // Move West
-                    setColLocation(colLocation - 1);
-                    break;
-                case 'E':
-                    // Move East
-                    setColLocation(colLocation + 1);
-                    break;
-                case 'S':
-                    setRowLocation(rowLocation + 1);
-                    // Move South
-                    break;
-                default:
-                    // Do Nothing
-                    break;
-            }
+        switch (direction) {
+            case 'N':
+                // Move North
+                setRowLocation(rowLocation - 1);
+                break;
+            case 'W':
+                // Move West
+                setColLocation(colLocation - 1);
+                break;
+            case 'E':
+                // Move East
+                setColLocation(colLocation + 1);
+                break;
+            case 'S':
+                setRowLocation(rowLocation + 1);
+                // Move South
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown direction argument");
         }
-        catch (IllegalArgumentException argumentEx) {
-            throw new IllegalStateException("Cannot move outside of map");
-        }
+        setHealth(Math.max(0.0, health - 5.0 - (equipmentMass / 2.0)));
     }
 }
