@@ -10,9 +10,6 @@
  */
 
 package au.edu.curtin.madassignment.Model;
-import android.app.Activity;
-import android.content.Context;
-import android.widget.Toast;
 
 import java.util.LinkedList;
 

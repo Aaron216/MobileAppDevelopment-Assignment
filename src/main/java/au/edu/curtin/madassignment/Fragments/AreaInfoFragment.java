@@ -3,6 +3,7 @@ package au.edu.curtin.madassignment.Fragments;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -24,7 +25,7 @@ public class AreaInfoFragment extends Fragment {
     ImageButton editButton;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup ui, Bundle bundle) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup ui, Bundle bundle) {
         View view = inflater.inflate(R.layout.fragment_area_info, ui, false);
 
         // Reference UI Objects

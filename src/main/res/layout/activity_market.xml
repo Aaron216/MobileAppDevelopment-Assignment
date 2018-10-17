@@ -11,8 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageButton
@@ -41,48 +39,24 @@
         app:layout_constraintTop_toBottomOf="@+id/frameStatusBar"
         app:layout_constraintBottom_toBottomOf="@+id/btnBack"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/listSell"
+    <FrameLayout
+        android:id="@+id/frameSellList"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="8dp"
 
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/listBuy"
+        app:layout_constraintEnd_toStartOf="@id/frameBuyList"
         app:layout_constraintTop_toBottomOf="@id/lblMarket"
-        app:layout_constraintBottom_toTopOf="@id/btnSell"/>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/listBuy"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="8dp"
-
-        app:layout_constraintStart_toEndOf="@id/listSell"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lblMarket"
-        app:layout_constraintBottom_toTopOf="@id/btnBuy"/>
-
-    <Button
-        android:id="@+id/btnSell"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="@string/sell"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btnBuy"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <Button
-        android:id="@+id/btnBuy"
+    <FrameLayout
+        android:id="@+id/frameBuyList"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="@string/buy"
+        android:layout_height="0dp"
 
-        app:layout_constraintStart_toEndOf="@id/btnSell"
+        app:layout_constraintStart_toEndOf="@id/frameSellList"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lblMarket"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

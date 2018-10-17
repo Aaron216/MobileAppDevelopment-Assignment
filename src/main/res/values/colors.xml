@@ -9,4 +9,6 @@
     <color name="colorAccentLight">#63a4ff</color>
 
     <color name="colorRed">#BD362F</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorDarkGrey">#323232</color>
 </resources>
