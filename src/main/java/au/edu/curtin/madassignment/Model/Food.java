@@ -22,7 +22,7 @@ public class Food extends Item {
     }
 
     /* Accessors */
-    double getHealth() {
+    public double getHealth() {
         return health;
     }
 

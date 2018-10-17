@@ -1,13 +1,7 @@
 package au.edu.curtin.madassignment.Fragments;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.style.TextAppearanceSpan;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +50,7 @@ public class StatusBarFragment extends Fragment {
         }
 
         cashText.setText(String.format(Locale.ENGLISH, "$%d", player.getCash()));
-        healthText.setText(String.format(Locale.ENGLISH, "%.2f", player.getHealth()));
-        massText.setText(String.format(Locale.ENGLISH, "%.2fkg", player.getEquipmentMass()));
+        healthText.setText(String.format(Locale.ENGLISH, "%.2f HP", player.getHealth()));
+        massText.setText(String.format(Locale.ENGLISH, "%.2f kg", player.getEquipmentMass()));
     }
 }

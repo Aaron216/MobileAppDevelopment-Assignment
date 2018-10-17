@@ -23,11 +23,11 @@ public abstract class Item {
     }
 
     /* Accessors */
-    String getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    int getValue() {
+    public int getValue() {
         return value;
     }
 

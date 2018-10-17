@@ -17,10 +17,10 @@
             android:layout_margin="8dp"
 
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/btnInteract"/>
+            app:layout_constraintBottom_toTopOf="@id/btnAction"/>
 
         <Button
-            android:id="@+id/btnInteract"
+            android:id="@+id/btnAction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"

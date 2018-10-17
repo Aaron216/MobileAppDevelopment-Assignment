@@ -22,7 +22,7 @@ public class Equipment extends Item {
     }
 
     /* Accessors */
-    double getMass() {
+    public double getMass() {
         return mass;
     }
 

@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import au.edu.curtin.madassignment.Fragments.*;
 import au.edu.curtin.madassignment.Model.*;
@@ -25,10 +26,6 @@ public class MarketActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_market);
-
-        // Populate list data
-        playerEquipment = GameData.getInstance().getPlayer().getEquipmentList();
-        areaItems = GameData.getInstance().getCurrentArea().getItemList();
 
         // Initialise Fragments
         FragmentManager fm = getSupportFragmentManager();
@@ -50,6 +47,15 @@ public class MarketActivity extends AppCompatActivity {
             sellList = new ListFragment();
             fm.beginTransaction().add(R.id.frameSellList, sellList).commit();
         }
+
+        // Set button text
+        buyList.setButtonText(getResources().getString(R.string.buy));
+        sellList.setButtonText(getResources().getString(R.string.sell));
+
+        // Populate list
+        buyList.setData(GameData.getInstance().getCurrentArea().getItemList());
+        // TODO: FIX THIS SHIT
+        // sellList.setData(GameData.getInstance().getPlayer().getEquipmentList());
     }
 
     public static Intent getIntent(Context context) {
