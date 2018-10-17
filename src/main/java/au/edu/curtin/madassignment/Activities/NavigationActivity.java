@@ -88,18 +88,27 @@ public class NavigationActivity extends AppCompatActivity {
         optionsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if (GameData.getInstance().getCurrentArea().isTown()) {
+                    startActivity(MarketActivity.getIntent(NavigationActivity.this));
+                }
+                else {
+                    startActivity(WildernessActivity.getIntent(NavigationActivity.this));
+                }
             }
         });
 
         overviewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startActivity(OverviewActivity.getIntent(NavigationActivity.this));
             }
         });
+    }
 
-        // update();
+    @Override
+    protected void onResume() {
+        super.onResume();
+        update();
     }
 
     /* Functions */

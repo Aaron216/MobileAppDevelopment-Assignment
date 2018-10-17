@@ -62,6 +62,10 @@ public class GameData {
         return instance;
     }
 
+    public static boolean hasInstance() {
+        return !(instance == null);
+    }
+
     public Area getCurrentArea() {
         return getArea(player.getColLocation(), player.getRowLocation());
     }

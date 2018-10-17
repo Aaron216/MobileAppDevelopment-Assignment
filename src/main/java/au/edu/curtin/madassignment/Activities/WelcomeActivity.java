@@ -11,14 +11,18 @@ import au.edu.curtin.madassignment.*;
 import au.edu.curtin.madassignment.Model.GameData;
 
 public class WelcomeActivity extends AppCompatActivity {
+    /* Fields */
+    Button newGameButton;
+    Button continueGameButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
         // Get references to UI objects
-        Button newGameButton = findViewById(R.id.btnNewGame);
-        Button continueGameButton = findViewById(R.id.btnContinue);
+        newGameButton = findViewById(R.id.btnNewGame);
+        continueGameButton = findViewById(R.id.btnContinue);
 
         // Set on click listeners
         newGameButton.setOnClickListener(new View.OnClickListener() {
@@ -35,6 +39,14 @@ public class WelcomeActivity extends AppCompatActivity {
                 startActivity(NavigationActivity.getIntent(WelcomeActivity.this, false));
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Check if there is a game to continue
+        continueGameButton.setEnabled(GameData.hasInstance());
     }
 
     public static Intent getIntent(Context context) {
