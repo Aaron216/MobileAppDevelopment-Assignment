@@ -44,5 +44,6 @@
     <!-- Game Over Activity -->
     <string name="game_over">Game Over</string>
     <string name="play_again">Play again</string>
+    <string name="quit">Quit</string>
 
 </resources>

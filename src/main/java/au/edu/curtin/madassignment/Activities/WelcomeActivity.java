@@ -40,4 +40,9 @@ public class WelcomeActivity extends AppCompatActivity {
     public static Intent getIntent(Context context) {
         return new Intent(context, WelcomeActivity.class);
     }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
 }
