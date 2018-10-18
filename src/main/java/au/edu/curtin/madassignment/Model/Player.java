@@ -1,16 +1,17 @@
-/**
- * Curtin University
- * Mobile Application Development
- * Assignment
- * Aaron Musgrave
- * 25/10/2018
- *
- * Player Class
- * Responsible for storing data about the player character
+/*
+  Curtin University
+  Mobile Application Development
+  Assignment
+  Aaron Musgrave
+  25/10/2018
+
+  Player Class
+  Responsible for storing data about the player character
  */
 
 package au.edu.curtin.madassignment.Model;
 
+import java.util.List;
 import java.util.LinkedList;
 
 public class Player {
@@ -23,7 +24,7 @@ public class Player {
     private int cash;
     private double health;
     private double equipmentMass;
-    private LinkedList<Equipment> equipmentList;
+    private List<Equipment> equipmentList;
 
     /* Constructor */
     Player() {
@@ -32,7 +33,7 @@ public class Player {
         cash = 0;
         health = 100.0;
         equipmentMass = 0.0;
-        equipmentList = new LinkedList<Equipment>();
+        equipmentList = new LinkedList<>();
     }
 
     /* Accessors */
@@ -56,7 +57,7 @@ public class Player {
         return equipmentMass;
     }
 
-    public LinkedList<Equipment> getEquipmentList() {
+    public List<Equipment> getEquipmentList() {
         return equipmentList;
     }
 
@@ -96,7 +97,7 @@ public class Player {
         equipmentMass = inEquipmentMass;
     }
 
-    public void setEquipmentList(LinkedList<Equipment> inEquipmentList) {
+    public void setEquipmentList(List<Equipment> inEquipmentList) {
         if (inEquipmentList == null) {
             throw new IllegalArgumentException("Equipment list cannot be null");
         }

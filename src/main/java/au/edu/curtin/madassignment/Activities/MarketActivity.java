@@ -53,9 +53,16 @@ public class MarketActivity extends AppCompatActivity {
         sellList.setButtonText(getResources().getString(R.string.sell));
 
         // Populate list
-        buyList.setData(GameData.getInstance().getCurrentArea().getItemList());
-        // TODO: FIX THIS SHIT
-        // sellList.setData(GameData.getInstance().getPlayer().getEquipmentList());
+        GameData gameInstance = GameData.getInstance();
+        List<Item> areaItems = gameInstance.getCurrentArea().getItemList();
+
+        // Is this stupid?
+        List<Item> playerItems = new LinkedList<>();
+        List<Equipment> playerEquipment = gameInstance.getPlayer().getEquipmentList();
+        playerItems.addAll(playerEquipment);
+
+        buyList.setData(areaItems);
+        sellList.setData(playerItems);
     }
 
     public static Intent getIntent(Context context) {

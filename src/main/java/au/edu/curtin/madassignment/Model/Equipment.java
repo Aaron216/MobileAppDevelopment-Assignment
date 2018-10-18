@@ -1,17 +1,22 @@
-/**
- * Curtin University
- * Mobile Application Development
- * Assignment
- * Aaron Musgrave
- * 25/10/2018
- *
- * Equipment Class
- * Responsible for storing data about an equipment item
+/*
+  Curtin University
+  Mobile Application Development
+  Assignment
+  Aaron Musgrave
+  25/10/2018
+
+  Equipment Class
+  Responsible for storing data about an equipment item
  */
 
 package au.edu.curtin.madassignment.Model;
 
 public class Equipment extends Item {
+    /* Constants */
+    private static final String[] EQUIPMENT_NAMES = {
+        ""
+    };
+
     /* Fields */
     private double mass;
 

@@ -1,12 +1,12 @@
-/**
- * Curtin University
- * Mobile Application Development
- * Assignment
- * Aaron Musgrave
- * 25/10/2018
- *
- * Item Abstract Class
- * Responsible for storing data about an item
+/*
+  Curtin University
+  Mobile Application Development
+  Assignment
+  Aaron Musgrave
+  25/10/2018
+
+  Item Abstract Class
+  Responsible for storing data about an item
  */
 
 package au.edu.curtin.madassignment.Model;
