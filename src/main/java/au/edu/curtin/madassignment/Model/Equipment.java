@@ -18,7 +18,7 @@ public class Equipment extends Item {
     private static final String[] EQUIPMENT_NAMES = {
         "Borg Nanites", "Covenant Energy Sword", "Covenant Needler", "Deckard's Hand-Cannon", "Federation Phasor",
         "Goa'uld Ma'Tok", "Han Solo's DL-44", "Imperial Stormtrooper Blaster", "Klingon Batleth",
-        "Judge Dredd's Lawgiver Mk II", "Lightsabre\n", "Malcom Reynolds' Sidearm", "Mobile Infantry Mini-Nuke",
+        "Judge Dredd's Lawgiver Mk II", "Lightsabre", "Malcom Reynolds' Sidearm", "Mobile Infantry Mini-Nuke",
         "Romulan Disruptor", "Stargate Command FN P90", "Tron's Identity Disk", "UNSC Pistol", "UNSC Shotgun"
     };
 

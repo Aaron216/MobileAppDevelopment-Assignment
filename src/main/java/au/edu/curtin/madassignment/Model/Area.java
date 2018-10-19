@@ -21,6 +21,7 @@ public class Area {
     private static final int DICE_SIZE = 10;
     private static final int TOWN_CHANCE = 6;
     private static final int ITEM_CHANCE = 5;
+    private static final int MIN_NUM_ITEMS = 3;
     private static final int MAX_NUM_ITEMS = 10;
 
     /* Fields */
@@ -109,7 +110,7 @@ public class Area {
         town = (randNum > TOWN_CHANCE);
 
         // Items
-        numItems = random.nextInt(MAX_NUM_ITEMS);
+        numItems = random.nextInt(MAX_NUM_ITEMS) + MIN_NUM_ITEMS;
         for (int ii = 0; ii < numItems; ii++) {
             randNum = random.nextInt(DICE_SIZE);
             if (randNum < ITEM_CHANCE) {

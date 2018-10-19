@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    android:id="@+id/layoutItem"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
@@ -13,6 +15,8 @@
         android:text="Item Name"
         android:textSize="8pt"
         android:textColor="@color/colorBlack"
+        android:ellipsize="end"
+        android:maxLines="2"
 
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,5 +45,13 @@
         app:layout_constraintTop_toBottomOf="@id/lblItemName"
         app:layout_constraintStart_toEndOf="@id/lblItemValue"
         app:layout_constraintEnd_toEndOf="parent"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="8dp"
+        android:background="@color/colorDarkGrey"
+
+        app:layout_constraintTop_toBottomOf="@id/lblItemValue" />
 
 </android.support.constraint.ConstraintLayout>

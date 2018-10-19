@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.ImageButton;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -27,6 +29,15 @@ public class MarketActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_market);
 
+        // Set on click listeners
+        ImageButton backButton = findViewById(R.id.btnBack);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(NavigationActivity.getIntent(MarketActivity.this, false));
+            }
+        });
+
         // Initialise Fragments
         FragmentManager fm = getSupportFragmentManager();
         statusBar = (StatusBarFragment) fm.findFragmentById(R.id.frameStatusBar);
@@ -47,18 +58,31 @@ public class MarketActivity extends AppCompatActivity {
             sellList = new ListFragment();
             fm.beginTransaction().add(R.id.frameSellList, sellList).commit();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Update Status Bar
+        statusBar.update();
 
         // Set button text
-        //buyList.setButtonText(getResources().getString(R.string.buy));
-        //sellList.setButtonText(getResources().getString(R.string.sell));
+        buyList.setButtonText(getResources().getString(R.string.buy));
+        sellList.setButtonText(getResources().getString(R.string.sell));
 
         // Populate list
         GameData gameInstance = GameData.getInstance();
         List<Item> areaItems = gameInstance.getCurrentArea().getItemList();
         List<Item> playerItems = gameInstance.getPlayer().getItemList();
 
-        //buyList.setData(areaItems);
-        //sellList.setData(playerItems);
+        buyList.setData(areaItems);
+        sellList.setData(playerItems);
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(NavigationActivity.getIntent(MarketActivity.this, false));
     }
 
     public static Intent getIntent(Context context) {

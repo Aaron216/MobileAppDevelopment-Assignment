@@ -2,6 +2,7 @@ package au.edu.curtin.madassignment.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +22,7 @@ public class ListFragment extends Fragment {
     /* Fields */
     private RecyclerView itemRecyclerView;
     private Button actionButton;
+    private TextView noItemsText;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,8 @@ public class ListFragment extends Fragment {
         // Reference UI Elements
         itemRecyclerView = view.findViewById(R.id.listItems);
         actionButton = view.findViewById(R.id.btnAction);
+        noItemsText = view.findViewById(R.id.lblNoItems);
+
 
         // Specify Layout
         itemRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -54,6 +58,12 @@ public class ListFragment extends Fragment {
 
         // Connect to recycler view
         itemRecyclerView.setAdapter(adaptor);
+
+        if (itemList.isEmpty()) {
+            // Hide recycler view
+            itemRecyclerView.setVisibility(View.INVISIBLE);
+            noItemsText.setVisibility(View.VISIBLE);
+        }
     }
 
     private class ItemAdaptor extends RecyclerView.Adapter<ItemViewHolder>{
@@ -87,6 +97,7 @@ public class ListFragment extends Fragment {
 
     private class ItemViewHolder extends RecyclerView.ViewHolder {
         /* Fields */
+        private ConstraintLayout itemLayout;
         private TextView nameText;
         private TextView valueText;
         private TextView propertyText;
@@ -97,23 +108,31 @@ public class ListFragment extends Fragment {
             // Get UI element references
             // itemView is field of RecyclerView.ViewHolder
             // not some kind of magically appearing variable
+            itemLayout = itemView.findViewById(R.id.layoutItem);
             nameText = itemView.findViewById(R.id.lblItemName);
             valueText = itemView.findViewById(R.id.lblItemValue);
             propertyText = itemView.findViewById(R.id.lblItemProperty);
         }
 
         void bind(Item item) {
+            itemLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    itemLayout.setBackgroundColor(getResources().getColor(R.color.colorAccentLight, null));
+                }
+            });
+
             // Set text
             nameText.setText(item.getDescription());
             valueText.setText(String.format(Locale.ENGLISH, "$%d", item.getValue()));
 
             if (item instanceof Equipment) {
                 Equipment equipment = (Equipment) item;
-                propertyText.setText(String.format(Locale.ENGLISH, "%2f kg", equipment.getMass()));
+                propertyText.setText(String.format(Locale.ENGLISH, "%.2f kg", equipment.getMass()));
             }
             else if (item instanceof Food) {
                 Food food = (Food) item;
-                propertyText.setText(String.format(Locale.ENGLISH, "%2f HP", food.getHealth()));
+                propertyText.setText(String.format(Locale.ENGLISH, "%.2f HP", food.getHealth()));
             }
             else {
                 throw new IllegalArgumentException("Unknown Item type");
