@@ -16,6 +16,7 @@ public class BenKenobi extends Equipment {
     }
 
     /* Function */
+    @Override
     public void use() {
 
     }

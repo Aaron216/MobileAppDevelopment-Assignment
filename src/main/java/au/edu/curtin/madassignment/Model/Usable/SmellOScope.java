@@ -16,6 +16,7 @@ public class SmellOScope extends Equipment {
     }
 
     /* Function */
+    @Override
     public void use() {
 
     }

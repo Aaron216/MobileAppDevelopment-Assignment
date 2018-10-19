@@ -16,6 +16,7 @@ public class ImprobabilityDrive extends Equipment {
     }
 
     /* Function */
+    @Override
     public void use() {
 
     }

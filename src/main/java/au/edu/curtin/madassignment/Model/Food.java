@@ -45,4 +45,10 @@ public class Food extends Item {
     void setHealth(double inHealth) {
         health = inHealth;
     }
+
+    /* Functions */
+    @Override
+    public void use() {
+
+    }
 }

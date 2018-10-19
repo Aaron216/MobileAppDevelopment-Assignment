@@ -38,4 +38,10 @@ public class Equipment extends Item {
     public void setMass(double inMass) {
         mass = inMass;
     }
+
+    /* Function */
+    @Override
+    public void use() {
+        // This item cannot be used
+    }
 }

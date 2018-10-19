@@ -42,4 +42,9 @@ public abstract class Item {
         }
         value = inValue;
     }
+
+    /* Function */
+    public void use() {
+
+    }
 }
