@@ -11,6 +11,8 @@
 
 package au.edu.curtin.madassignment.Model;
 
+import java.util.Random;
+
 public class Equipment extends Item {
     /* Constants */
     private static final String[] EQUIPMENT_NAMES = {
@@ -26,7 +28,13 @@ public class Equipment extends Item {
     /* Constructor */
     public Equipment() {
         super();
-        mass = 0.0;
+
+        // Choose random item
+        Random random = new Random();
+        int index = random.nextInt(EQUIPMENT_NAMES.length);
+        super.setDescription(EQUIPMENT_NAMES[index]);
+        super.setValue(random.nextInt(20));
+        setMass(random.nextDouble()*10.0);
     }
 
     /* Accessors */

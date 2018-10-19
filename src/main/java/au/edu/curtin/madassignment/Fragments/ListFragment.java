@@ -23,6 +23,11 @@ public class ListFragment extends Fragment {
     private Button actionButton;
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup ui, Bundle bundle) {
         View view = inflater.inflate(R.layout.fragment_list, ui, false);
 

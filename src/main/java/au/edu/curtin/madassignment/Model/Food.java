@@ -33,7 +33,7 @@ public class Food extends Item {
         int index = random.nextInt(FOOD_NAMES.length);
         super.setDescription(FOOD_NAMES[index]);
         super.setValue(random.nextInt(10));
-        setHealth(random.nextDouble()*20.0);
+        setHealth(random.nextDouble()*2.0);
     }
 
     /* Accessors */

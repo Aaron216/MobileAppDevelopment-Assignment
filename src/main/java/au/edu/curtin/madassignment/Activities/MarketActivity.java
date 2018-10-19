@@ -49,20 +49,16 @@ public class MarketActivity extends AppCompatActivity {
         }
 
         // Set button text
-        buyList.setButtonText(getResources().getString(R.string.buy));
-        sellList.setButtonText(getResources().getString(R.string.sell));
+        //buyList.setButtonText(getResources().getString(R.string.buy));
+        //sellList.setButtonText(getResources().getString(R.string.sell));
 
         // Populate list
         GameData gameInstance = GameData.getInstance();
         List<Item> areaItems = gameInstance.getCurrentArea().getItemList();
+        List<Item> playerItems = gameInstance.getPlayer().getItemList();
 
-        // Is this stupid?
-        List<Item> playerItems = new LinkedList<>();
-        List<Equipment> playerEquipment = gameInstance.getPlayer().getEquipmentList();
-        playerItems.addAll(playerEquipment);
-
-        buyList.setData(areaItems);
-        sellList.setData(playerItems);
+        //buyList.setData(areaItems);
+        //sellList.setData(playerItems);
     }
 
     public static Intent getIntent(Context context) {
