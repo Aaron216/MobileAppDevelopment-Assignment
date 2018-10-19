@@ -32,11 +32,11 @@ public abstract class Item {
     }
 
     /* Mutators */
-    void setDescription(String inDescription) {
+    public void setDescription(String inDescription) {
         description = inDescription;
     }
 
-    void setValue(int inValue) {
+    public void setValue(int inValue) {
         if (inValue < 0) {
             throw new IllegalArgumentException("Value cannot be negative");
         }
