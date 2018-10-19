@@ -24,7 +24,7 @@ public class Player {
     private int cash;
     private double health;
     private double equipmentMass;
-    private List<Equipment> equipmentList;
+    private List<Item> itemList;
 
     /* Constructor */
     Player() {
@@ -33,7 +33,7 @@ public class Player {
         cash = 0;
         health = 100.0;
         equipmentMass = 0.0;
-        equipmentList = new LinkedList<>();
+        itemList = new LinkedList<>();
     }
 
     /* Accessors */
@@ -57,8 +57,8 @@ public class Player {
         return equipmentMass;
     }
 
-    public List<Equipment> getEquipmentList() {
-        return equipmentList;
+    public List<Item> getItemList() {
+        return itemList;
     }
 
     /* Mutators */
@@ -97,11 +97,11 @@ public class Player {
         equipmentMass = inEquipmentMass;
     }
 
-    public void setEquipmentList(List<Equipment> inEquipmentList) {
-        if (inEquipmentList == null) {
-            throw new IllegalArgumentException("Equipment list cannot be null");
+    public void setItemList(List<Item> inItemList) {
+        if (inItemList == null) {
+            throw new IllegalArgumentException("Item list cannot be null");
         }
-        equipmentList = inEquipmentList;
+        itemList = inItemList;
     }
 
     public void move(char direction) {
