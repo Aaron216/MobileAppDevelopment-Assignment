@@ -4,54 +4,69 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clickable="true"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/lblItemName"
-        android:layout_width="0dp"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layoutItemInfo"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Item Name"
-        android:textSize="8pt"
-        android:textColor="@color/colorBlack"
-        android:ellipsize="end"
-        android:maxLines="2"
+        android:layout_margin="8dp"
+        android:padding="8dp"
+        android:clickable="true"
 
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/lblItemValue"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Item Value"
-        android:textColor="@color/colorDarkGrey"
+        <TextView
+            android:id="@+id/lblItemName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Item Name"
+            android:textSize="8pt"
+            android:textColor="@color/colorBlack"
+            android:ellipsize="end"
+            android:maxLines="2"
 
-        app:layout_constraintTop_toBottomOf="@+id/lblItemName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/lblItemProperty"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-    <TextView
-        android:id="@+id/lblItemProperty"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Item Mass/Health"
-        android:textColor="@color/colorDarkGrey"
+        <TextView
+            android:id="@+id/lblItemValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Item Value"
+            android:textColor="@color/colorDarkGrey"
 
-        app:layout_constraintTop_toBottomOf="@id/lblItemName"
-        app:layout_constraintStart_toEndOf="@id/lblItemValue"
-        app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@+id/lblItemName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/lblItemProperty"/>
+
+        <TextView
+            android:id="@+id/lblItemProperty"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Item Mass/Health"
+            android:textColor="@color/colorDarkGrey"
+
+            app:layout_constraintTop_toBottomOf="@id/lblItemName"
+            app:layout_constraintStart_toEndOf="@id/lblItemValue"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </android.support.constraint.ConstraintLayout>
+
 
     <View
+        android:id="@+id/viewSeparator"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_margin="8dp"
         android:background="@color/colorDarkGrey"
 
-        app:layout_constraintTop_toBottomOf="@id/lblItemValue" />
+        app:layout_constraintTop_toBottomOf="@id/layoutItemInfo" />
 
 </android.support.constraint.ConstraintLayout>

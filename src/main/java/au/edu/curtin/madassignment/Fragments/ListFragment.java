@@ -38,7 +38,6 @@ public class ListFragment extends Fragment {
         actionButton = view.findViewById(R.id.btnAction);
         noItemsText = view.findViewById(R.id.lblNoItems);
 
-
         // Specify Layout
         itemRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -97,6 +96,7 @@ public class ListFragment extends Fragment {
 
     private class ItemViewHolder extends RecyclerView.ViewHolder {
         /* Fields */
+        private boolean selected;
         private ConstraintLayout itemLayout;
         private TextView nameText;
         private TextView valueText;
@@ -105,20 +105,28 @@ public class ListFragment extends Fragment {
         ItemViewHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.layout_item_list, parent, false));
 
+            selected = false;
+
             // Get UI element references
             // itemView is field of RecyclerView.ViewHolder
             // not some kind of magically appearing variable
-            itemLayout = itemView.findViewById(R.id.layoutItem);
+            itemLayout = itemView.findViewById(R.id.layoutItemInfo);
             nameText = itemView.findViewById(R.id.lblItemName);
             valueText = itemView.findViewById(R.id.lblItemValue);
             propertyText = itemView.findViewById(R.id.lblItemProperty);
         }
 
-        void bind(Item item) {
+        void bind(final Item item) {
             itemLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    itemLayout.setBackgroundColor(getResources().getColor(R.color.colorAccentLight, null));
+                    selected = !selected;
+                    if (selected) {
+                        itemLayout.setBackground(getResources().getDrawable(R.drawable.rounded_box, null));
+                    }
+                    else {
+                        itemLayout.setBackground(null);
+                    }
                 }
             });
 
