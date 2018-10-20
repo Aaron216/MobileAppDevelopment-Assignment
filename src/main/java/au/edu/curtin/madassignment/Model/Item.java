@@ -13,16 +13,22 @@ package au.edu.curtin.madassignment.Model;
 
 public abstract class Item {
     /* Fields */
+    private boolean selected;
     private String description;
     private int value;
 
     /* Constructor */
     Item() {
+        selected = false;
         description = "";
         value = 0;
     }
 
     /* Accessors */
+    public boolean isSelected() {
+        return selected;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -32,15 +38,23 @@ public abstract class Item {
     }
 
     /* Mutators */
+    public void toggleSelected() {
+        this.selected = !this.selected;
+    }
+
+    public void setSelected(boolean inSelected) {
+        this.selected = inSelected;
+    }
+
     public void setDescription(String inDescription) {
-        description = inDescription;
+        this.description = inDescription;
     }
 
     public void setValue(int inValue) {
         if (inValue < 0) {
             throw new IllegalArgumentException("Value cannot be negative");
         }
-        value = inValue;
+        this.value = inValue;
     }
 
     /* Function */

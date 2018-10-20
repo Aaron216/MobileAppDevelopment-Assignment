@@ -68,8 +68,8 @@ public class MarketActivity extends AppCompatActivity {
         statusBar.update();
 
         // Set button text
-        buyList.setButtonText(getResources().getString(R.string.buy));
-        sellList.setButtonText(getResources().getString(R.string.sell));
+        buyList.setListType(ListFragment.MARKET_BUY);
+        sellList.setListType(ListFragment.MARKET_SELL);
 
         // Populate list
         GameData gameInstance = GameData.getInstance();

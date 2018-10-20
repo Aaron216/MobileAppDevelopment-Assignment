@@ -19,6 +19,12 @@ import au.edu.curtin.madassignment.Model.*;
 import au.edu.curtin.madassignment.R;
 
 public class ListFragment extends Fragment {
+    /* Constants */
+    public static final int MARKET_SELL = 1;
+    public static final int MARKET_BUY = 2;
+    public static final int WILDERNESS_DROP = 3;
+    public static final int WILDERNESS_PICK = 4;
+
     /* Fields */
     private RecyclerView itemRecyclerView;
     private Button actionButton;
@@ -44,8 +50,31 @@ public class ListFragment extends Fragment {
         return view;
     }
 
-    public void setButtonText(String buttonText) {
-        actionButton.setText(buttonText);
+    public void setListType(int type) {
+        if (itemRecyclerView == null) {
+            throw new IllegalStateException("Recycler view has not been initialised");
+        }
+
+        switch (type) {
+            case MARKET_BUY:
+                actionButton.setText(getResources().getText(R.string.buy));
+                break;
+
+            case MARKET_SELL:
+                actionButton.setText(getResources().getText(R.string.sell));
+                break;
+
+            case WILDERNESS_DROP:
+                actionButton.setText(getResources().getText(R.string.drop));
+                break;
+
+            case WILDERNESS_PICK:
+                actionButton.setText(getResources().getText(R.string.pick_up));
+                break;
+
+            default:
+                throw new IllegalArgumentException("Unknown list fragment type");
+        }
     }
 
     public void setData(List<Item> inItemList) {
@@ -96,17 +125,14 @@ public class ListFragment extends Fragment {
 
     private class ItemViewHolder extends RecyclerView.ViewHolder {
         /* Fields */
-        private boolean selected;
         private ConstraintLayout itemLayout;
         private TextView nameText;
         private TextView valueText;
         private TextView propertyText;
 
+        /* Constructor */
         ItemViewHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.layout_item_list, parent, false));
-
-            selected = false;
-
             // Get UI element references
             // itemView is field of RecyclerView.ViewHolder
             // not some kind of magically appearing variable
@@ -116,12 +142,13 @@ public class ListFragment extends Fragment {
             propertyText = itemView.findViewById(R.id.lblItemProperty);
         }
 
+        /* Functions */
         void bind(final Item item) {
             itemLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    selected = !selected;
-                    if (selected) {
+                    item.toggleSelected();
+                    if (item.isSelected()) {
                         itemLayout.setBackground(getResources().getDrawable(R.drawable.rounded_box, null));
                     }
                     else {
