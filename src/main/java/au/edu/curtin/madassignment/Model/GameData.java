@@ -124,14 +124,17 @@ public class GameData {
     }
 
     public void actionItems(int type, LinkedList<Item> selectedItems) {
+
+        // TODO: TIDY THIS SHIT UP
+
         Equipment currEquipment;
+        Food currFood;
         double itemMass = 0.0;
+        double foodHealth = 0.0;
         int itemValue = 0;
 
+        // Always
         for (Item currItem : selectedItems) {
-            // Sum Value
-            itemValue += currItem.getValue();
-
             // Sum Mass
             if (currItem instanceof Equipment) {
                 currEquipment = (Equipment) currItem;
@@ -140,6 +143,14 @@ public class GameData {
 
             // Reset selected
             currItem.setSelected(false);
+        }
+
+        // If Buying or selling
+        if (type == ListFragment.MARKET_SELL || type == ListFragment.MARKET_BUY) {
+            // Sum value
+            for (Item currItem : selectedItems) {
+                itemValue += currItem.getValue();
+            }
         }
 
         switch (type) {
@@ -175,6 +186,27 @@ public class GameData {
 
                 // Change player mass
                 player.setEquipmentMass(player.getEquipmentMass() + itemMass);
+                break;
+
+            case ListFragment.BACKPACK_FOOD:
+                // Eat food
+                for (Item currItem : selectedItems) {
+                    if (currItem instanceof Food) {
+                        currFood = (Food) currItem;
+                        foodHealth += currFood.getHealth();
+                    }
+                    else {
+                        throw new IllegalStateException("Cannot eat non-food item");
+                    }
+                }
+                player.setHealth(player.getHealth() + foodHealth);
+
+                // Remove Items from Inventory
+                player.getItemList().removeAll(selectedItems);
+                player.setEquipmentMass(player.getEquipmentMass() - itemMass);
+                break;
+
+            case ListFragment.BACKPACK_EQUIPMENT:
                 break;
 
             default:
