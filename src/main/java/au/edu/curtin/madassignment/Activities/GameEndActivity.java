@@ -10,12 +10,12 @@ import android.widget.Button;
 import au.edu.curtin.madassignment.*;
 import au.edu.curtin.madassignment.Model.GameData;
 
-public class GameOverActivity extends AppCompatActivity {
+public class GameEndActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game_over);
+        setContentView(R.layout.activity_game_end);
 
         Button playAgainButton = findViewById(R.id.btnPlayAgain);
         Button quitButton = findViewById(R.id.btnQuit);
@@ -24,24 +24,24 @@ public class GameOverActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 GameData.newGame();
-                startActivity(NavigationActivity.getIntent(GameOverActivity.this));
+                startActivity(NavigationActivity.getIntent(GameEndActivity.this));
             }
         });
 
         quitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(WelcomeActivity.getIntent(GameOverActivity.this));
+                startActivity(WelcomeActivity.getIntent(GameEndActivity.this));
             }
         });
     }
 
     public static Intent getIntent(Context context) {
-        return new Intent(context, GameOverActivity.class);
+        return new Intent(context, GameEndActivity.class);
     }
 
     @Override
     public void onBackPressed() {
-        startActivity(WelcomeActivity.getIntent(GameOverActivity.this));
+        startActivity(WelcomeActivity.getIntent(GameEndActivity.this));
     }
 }

@@ -18,7 +18,7 @@
         </activity>
         <activity android:name=".Activities.NavigationActivity" />
         <activity android:name=".Activities.OverviewActivity" />
-        <activity android:name=".Activities.GameOverActivity" />
+        <activity android:name=".Activities.GameEndActivity" />
         <activity android:name=".Activities.InventoryActivity"></activity>
     </application>
 

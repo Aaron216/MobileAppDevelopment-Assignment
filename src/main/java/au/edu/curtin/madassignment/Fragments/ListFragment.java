@@ -41,6 +41,7 @@ public class ListFragment extends Fragment {
     /* Fields */
     private int type;
     private OnActionListener actionListener;
+    private TextView headerText;
     private RecyclerView itemRecyclerView;
     private Button actionButton;
     private TextView noItemsText;
@@ -56,6 +57,7 @@ public class ListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_list, ui, false);
 
         // Reference UI Elements
+        headerText = view.findViewById(R.id.lblList);
         itemRecyclerView = view.findViewById(R.id.listItems);
         actionButton = view.findViewById(R.id.btnAction);
         noItemsText = view.findViewById(R.id.lblNoItems);
@@ -94,31 +96,37 @@ public class ListFragment extends Fragment {
         // Set button text and list data
         switch (type) {
             case MARKET_SELL:
+                headerText.setText(getResources().getText(R.string.backpack));
                 actionButton.setText(getResources().getText(R.string.sell));
                 setData(gameInstance.getPlayer().getItemList());
                 break;
 
             case MARKET_BUY:
+                headerText.setText(getResources().getText(R.string.market));
                 actionButton.setText(getResources().getText(R.string.buy));
                 setData(gameInstance.getCurrentArea().getItemList());
                 break;
 
             case WILDERNESS_DROP:
+                headerText.setText(getResources().getText(R.string.backpack));
                 actionButton.setText(getResources().getText(R.string.drop));
                 setData(gameInstance.getPlayer().getItemList());
                 break;
 
             case WILDERNESS_PICK:
+                headerText.setText(getResources().getText(R.string.wilderness));
                 actionButton.setText(getResources().getText(R.string.pick_up));
                 setData(gameInstance.getCurrentArea().getItemList());
                 break;
 
             case BACKPACK_FOOD:
+                headerText.setText(getResources().getText(R.string.food));
                 actionButton.setText(getResources().getText(R.string.eat));
                 setData(gameInstance.getPlayer().getFoodItemList());
                 break;
 
             case BACKPACK_EQUIPMENT:
+                headerText.setText(getResources().getText(R.string.equipment));
                 actionButton.setText(getResources().getText(R.string.use));
                 setData(gameInstance.getPlayer().getEquipmentItemList());
                 break;

@@ -35,6 +35,8 @@
     <string name="move_south">Move South</string>
 
     <!-- List Fragment -->
+    <string name="food">Food</string>
+    <string name="equipment">Equipment</string>
     <string name="sell">Sell Item(s)</string>
     <string name="buy">Buy Item(s)</string>
     <string name="drop">Drop Item(s)</string>

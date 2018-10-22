@@ -46,7 +46,7 @@ public class StatusBarFragment extends Fragment {
         Player player = GameData.getInstance().getPlayer();
 
         if (GameData.getInstance().isGameOver()) {
-            startActivity(GameOverActivity.getIntent(getContext()));
+            startActivity(GameEndActivity.getIntent(getContext()));
         }
 
         cashText.setText(String.format(Locale.ENGLISH, "$%d", player.getCash()));
