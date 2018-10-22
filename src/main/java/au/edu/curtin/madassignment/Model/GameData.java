@@ -11,6 +11,8 @@
 
 package au.edu.curtin.madassignment.Model;
 
+import java.util.LinkedList;
+
 public class GameData {
     /* Constants */
     public static final int MAX_ROW = 10;
@@ -115,6 +117,12 @@ public class GameData {
                 grid[yy][xx] = new Area();
                 grid[yy][xx].randomize();
             }
+        }
+    }
+
+    public void actionItems(int type, LinkedList<Item> selectedItems) {
+        for (Item currItem : selectedItems) {
+            
         }
     }
 }

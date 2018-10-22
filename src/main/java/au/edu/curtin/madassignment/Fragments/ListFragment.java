@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
@@ -29,6 +30,7 @@ public class ListFragment extends Fragment {
     private RecyclerView itemRecyclerView;
     private Button actionButton;
     private TextView noItemsText;
+    private ItemAdaptor adaptor;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,14 +77,25 @@ public class ListFragment extends Fragment {
             default:
                 throw new IllegalArgumentException("Unknown list fragment type");
         }
+
+        actionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (adaptor == null) {
+                    throw new IllegalStateException("Cannot set list type before setting list data.");
+                }
+
+                adaptor.actionItems(type);
+            }
+        });
     }
 
     public void setData(List<Item> inItemList) {
         // Set Item List
         List<Item> itemList = inItemList;
 
-        // Create adaptor
-        ItemAdaptor adaptor = new ItemAdaptor(itemList);
+        // Initialise Adaptor
+        adaptor = new ItemAdaptor(itemList);
 
         // Connect to recycler view
         itemRecyclerView.setAdapter(adaptor);
@@ -120,6 +133,18 @@ public class ListFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull ItemViewHolder viewHolder, int index) {
             viewHolder.bind(itemList.get(index));
+        }
+
+        void actionItems(int type) {
+            LinkedList<Item> selectedItems = new LinkedList<>();
+
+            for (Item currItem: itemList) {
+                if (currItem.isSelected()) {
+                    selectedItems.add(currItem);
+                }
+            }
+
+            GameData.getInstance().actionItems(type, selectedItems);
         }
     }
 
