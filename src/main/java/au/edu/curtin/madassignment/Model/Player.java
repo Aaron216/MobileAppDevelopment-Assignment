@@ -63,6 +63,30 @@ public class Player {
         return itemList;
     }
 
+    public List<Item> getFoodItemList() {
+        List<Item> foodList = new LinkedList<>();
+
+        for (Item currItem : itemList) {
+            if (currItem instanceof Food) {
+                foodList.add(currItem);
+            }
+        }
+
+        return foodList;
+    }
+
+    public List<Item> getEquipmentItemList() {
+        List<Item> equipmentList = new LinkedList<>();
+
+        for (Item currItem : itemList) {
+            if (currItem instanceof Equipment) {
+                equipmentList.add(currItem);
+            }
+        }
+
+        return equipmentList;
+    }
+
     /* Mutators */
     public void setRowLocation(int inRow) {
         if (inRow < 0 || inRow > GameData.MAX_ROW) {

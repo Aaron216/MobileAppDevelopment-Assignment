@@ -24,6 +24,7 @@ public class NavigationActivity extends AppCompatActivity {
     private ImageButton southButton;
     private ImageButton eastButton;
     private Button optionsButton;
+    private Button inventoryButton;
     private Button overviewButton;
     private AreaInfoFragment areaInfo;
     private StatusBarFragment statusBar;
@@ -39,6 +40,7 @@ public class NavigationActivity extends AppCompatActivity {
         southButton = findViewById(R.id.btnSouth);
         eastButton = findViewById(R.id.btnEast);
         optionsButton = findViewById(R.id.btnOptions);
+        inventoryButton = findViewById(R.id.btnInventory);
         overviewButton = findViewById(R.id.btnOverview);
 
         // Initialise Fragments
@@ -89,11 +91,18 @@ public class NavigationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (GameData.getInstance().getCurrentArea().isTown()) {
-                    startActivity(MarketActivity.getIntent(NavigationActivity.this));
+                    startActivity(InventoryActivity.getIntent(NavigationActivity.this, InventoryActivity.MARKET));
                 }
                 else {
-                    startActivity(WildernessActivity.getIntent(NavigationActivity.this));
+                    startActivity(InventoryActivity.getIntent(NavigationActivity.this, InventoryActivity.WILDERNESS));
                 }
+            }
+        });
+
+        inventoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(InventoryActivity.getIntent(NavigationActivity.this, InventoryActivity.BACKPACK));
             }
         });
 
@@ -123,10 +132,8 @@ public class NavigationActivity extends AppCompatActivity {
         update();
     }
 
-    public static Intent getIntent(Context context, boolean startNew) {
-        Intent intent = new Intent(context, NavigationActivity.class);
-        intent.putExtra(START_NEW, startNew);
-        return intent;
+    public static Intent getIntent(Context context) {
+        return new Intent(context, NavigationActivity.class);
     }
 
     private void update() {

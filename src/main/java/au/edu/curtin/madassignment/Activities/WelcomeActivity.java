@@ -30,14 +30,14 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 GameData.newGame();
-                startActivity(NavigationActivity.getIntent(WelcomeActivity.this, true));
+                startActivity(NavigationActivity.getIntent(WelcomeActivity.this));
             }
         });
 
         continueGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(NavigationActivity.getIntent(WelcomeActivity.this, false));
+                startActivity(NavigationActivity.getIntent(WelcomeActivity.this));
             }
         });
     }

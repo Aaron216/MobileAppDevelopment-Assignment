@@ -20,7 +20,8 @@
         <activity android:name=".Activities.MarketActivity" />
         <activity android:name=".Activities.WildernessActivity" />
         <activity android:name=".Activities.OverviewActivity" />
-        <activity android:name=".Activities.GameOverActivity"/>
+        <activity android:name=".Activities.GameOverActivity" />
+        <activity android:name=".Activities.InventoryActivity"></activity>
     </application>
 
 </manifest>

@@ -35,8 +35,11 @@ public class ListFragment extends Fragment {
     public static final int MARKET_BUY = 2;
     public static final int WILDERNESS_DROP = 3;
     public static final int WILDERNESS_PICK = 4;
+    public static final int BACKPACK_FOOD = 5;
+    public static final int BACKPACK_EQUIPMENT = 6;
 
     /* Fields */
+    private int type;
     private OnActionListener actionListener;
     private RecyclerView itemRecyclerView;
     private Button actionButton;
@@ -74,41 +77,59 @@ public class ListFragment extends Fragment {
         }
     }
 
-    public void setListType(final int type) {
+    public void setListType(int inType) {
+        // Error checking
+        if (inType < MARKET_SELL || inType > BACKPACK_EQUIPMENT) {
+            throw new IllegalArgumentException("Unknown list fragment type");
+        }
         if (itemRecyclerView == null) {
             throw new IllegalStateException("Recycler view has not been initialised");
         }
 
-        switch (type) {
-            case MARKET_BUY:
-                actionButton.setText(getResources().getText(R.string.buy));
-                break;
+        GameData gameInstance = GameData.getInstance();
 
+        // Set type
+        type = inType;
+
+        // Set button text and list data
+        switch (type) {
             case MARKET_SELL:
                 actionButton.setText(getResources().getText(R.string.sell));
+                setData(gameInstance.getPlayer().getItemList());
+                break;
+
+            case MARKET_BUY:
+                actionButton.setText(getResources().getText(R.string.buy));
+                setData(gameInstance.getCurrentArea().getItemList());
                 break;
 
             case WILDERNESS_DROP:
                 actionButton.setText(getResources().getText(R.string.drop));
+                setData(gameInstance.getPlayer().getItemList());
                 break;
 
             case WILDERNESS_PICK:
                 actionButton.setText(getResources().getText(R.string.pick_up));
+                setData(gameInstance.getCurrentArea().getItemList());
                 break;
 
-            default:
-                throw new IllegalArgumentException("Unknown list fragment type");
+            case BACKPACK_FOOD:
+                actionButton.setText(getResources().getText(R.string.eat));
+                setData(gameInstance.getPlayer().getFoodItemList());
+                break;
+
+            case BACKPACK_EQUIPMENT:
+                actionButton.setText(getResources().getText(R.string.use));
+                setData(gameInstance.getPlayer().getEquipmentItemList());
+                break;
         }
 
+        // Set on click listener
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (adaptor == null) {
-                    throw new IllegalStateException("Cannot set list type before setting list data.");
-                }
-
                 try {
-                    adaptor.actionItems(type);
+                    adaptor.actionItems();
                 }
                 catch (Exception ex) {
                     Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
@@ -124,8 +145,6 @@ public class ListFragment extends Fragment {
 
         // Connect to recycler view
         itemRecyclerView.setAdapter(adaptor);
-
-        update();
     }
 
     public void update() {
@@ -189,7 +208,7 @@ public class ListFragment extends Fragment {
             viewHolder.bind(itemList.get(index));
         }
 
-        void actionItems(int type) {
+        void actionItems() {
             LinkedList<Item> selectedItems = new LinkedList<>();
 
             for (Item currItem : itemList) {

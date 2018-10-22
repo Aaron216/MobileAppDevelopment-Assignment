@@ -8,8 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 
-import java.util.LinkedList;
-
 import au.edu.curtin.madassignment.Fragments.*;
 import au.edu.curtin.madassignment.Model.*;
 import au.edu.curtin.madassignment.R;
@@ -93,6 +91,6 @@ public class MarketActivity extends AppCompatActivity implements ListFragment.On
     private void goBack() {
         buyList.clearSelected();
         sellList.clearSelected();
-        startActivity(NavigationActivity.getIntent(MarketActivity.this, false));
+        startActivity(NavigationActivity.getIntent(MarketActivity.this));
     }
 }
