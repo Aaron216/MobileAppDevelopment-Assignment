@@ -13,6 +13,8 @@ package au.edu.curtin.madassignment.Model;
 
 import java.util.LinkedList;
 
+import au.edu.curtin.madassignment.Fragments.ListFragment;
+
 public class GameData {
     /* Constants */
     public static final int MAX_ROW = 10;
@@ -121,8 +123,19 @@ public class GameData {
     }
 
     public void actionItems(int type, LinkedList<Item> selectedItems) {
+        if (type == ListFragment.MARKET_SELL || type == ListFragment.WILDERNESS_DROP) {
+            // Move Items to area
+            getPlayer().getItemList().removeAll(selectedItems);
+            getCurrentArea().getItemList().addAll(selectedItems);
+        }
+        else if (type == ListFragment.MARKET_BUY || type == ListFragment.WILDERNESS_PICK) {
+            // Move items to player
+            getCurrentArea().getItemList().removeAll(selectedItems);
+            getPlayer().getItemList().addAll(selectedItems);
+        }
+
         for (Item currItem : selectedItems) {
-            
+            currItem.setSelected(false);
         }
     }
 }

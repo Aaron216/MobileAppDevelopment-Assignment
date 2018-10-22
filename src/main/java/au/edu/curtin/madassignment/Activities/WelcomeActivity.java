@@ -15,6 +15,7 @@ public class WelcomeActivity extends AppCompatActivity {
     Button newGameButton;
     Button continueGameButton;
 
+    /* Overrides */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,12 +50,15 @@ public class WelcomeActivity extends AppCompatActivity {
         continueGameButton.setEnabled(GameData.hasInstance());
     }
 
-    public static Intent getIntent(Context context) {
-        return new Intent(context, WelcomeActivity.class);
-    }
-
     @Override
     public void onBackPressed() {
         moveTaskToBack(true);
     }
+
+    /* Functions */
+    public static Intent getIntent(Context context) {
+        return new Intent(context, WelcomeActivity.class);
+    }
+
+
 }

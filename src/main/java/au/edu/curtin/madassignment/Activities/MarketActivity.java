@@ -9,21 +9,18 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import java.util.LinkedList;
-import java.util.List;
 
 import au.edu.curtin.madassignment.Fragments.*;
 import au.edu.curtin.madassignment.Model.*;
 import au.edu.curtin.madassignment.R;
 
-public class MarketActivity extends AppCompatActivity {
+public class MarketActivity extends AppCompatActivity implements ListFragment.OnActionListener{
     /* Fields */
     private StatusBarFragment statusBar;
     private ListFragment buyList;
     private ListFragment sellList;
 
-    private LinkedList<Equipment> playerEquipment;
-    private LinkedList<Item> areaItems;
-
+    /* Overrides */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +31,7 @@ public class MarketActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(NavigationActivity.getIntent(MarketActivity.this, false));
+                goBack();
             }
         });
 
@@ -73,19 +70,28 @@ public class MarketActivity extends AppCompatActivity {
 
         // Populate list
         GameData gameInstance = GameData.getInstance();
-        List<Item> areaItems = gameInstance.getCurrentArea().getItemList();
-        List<Item> playerItems = gameInstance.getPlayer().getItemList();
-
-        buyList.setData(areaItems);
-        sellList.setData(playerItems);
+        buyList.setData(gameInstance.getCurrentArea().getItemList());
+        sellList.setData(gameInstance.getPlayer().getItemList());
     }
 
     @Override
     public void onBackPressed() {
-        startActivity(NavigationActivity.getIntent(MarketActivity.this, false));
+        goBack();
     }
 
+    /* Functions */
     public static Intent getIntent(Context context) {
         return new Intent(context, MarketActivity.class);
+    }
+
+    public void onAction() {
+        buyList.update();
+        sellList.update();
+    }
+
+    private void goBack() {
+        buyList.clearSelected();
+        sellList.clearSelected();
+        startActivity(NavigationActivity.getIntent(MarketActivity.this, false));
     }
 }

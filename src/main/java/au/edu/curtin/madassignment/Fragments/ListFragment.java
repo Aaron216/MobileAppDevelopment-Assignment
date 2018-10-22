@@ -1,5 +1,6 @@
 package au.edu.curtin.madassignment.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -16,10 +17,19 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
+import au.edu.curtin.madassignment.Activities.MarketActivity;
 import au.edu.curtin.madassignment.Model.*;
 import au.edu.curtin.madassignment.R;
 
 public class ListFragment extends Fragment {
+
+    /**
+     * List Interface
+     */
+    public interface OnActionListener {
+        void onAction();
+    }
+
     /* Constants */
     public static final int MARKET_SELL = 1;
     public static final int MARKET_BUY = 2;
@@ -27,6 +37,7 @@ public class ListFragment extends Fragment {
     public static final int WILDERNESS_PICK = 4;
 
     /* Fields */
+    private OnActionListener actionListener;
     private RecyclerView itemRecyclerView;
     private Button actionButton;
     private TextView noItemsText;
@@ -52,7 +63,18 @@ public class ListFragment extends Fragment {
         return view;
     }
 
-    public void setListType(int type) {
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            this.actionListener = (OnActionListener)context;
+        }
+        catch (final ClassCastException ex) {
+            throw new ClassCastException(context.toString() + " must implement OnActionListener");
+        }
+    }
+
+    public void setListType(final int type) {
         if (itemRecyclerView == null) {
             throw new IllegalStateException("Recycler view has not been initialised");
         }
@@ -86,40 +108,67 @@ public class ListFragment extends Fragment {
                 }
 
                 adaptor.actionItems(type);
+                actionListener.onAction();
             }
         });
     }
 
     public void setData(List<Item> inItemList) {
-        // Set Item List
-        List<Item> itemList = inItemList;
-
         // Initialise Adaptor
-        adaptor = new ItemAdaptor(itemList);
+        adaptor = new ItemAdaptor(inItemList);
 
         // Connect to recycler view
         itemRecyclerView.setAdapter(adaptor);
 
-        if (itemList.isEmpty()) {
+        update();
+    }
+
+    public void update() {
+        adaptor.notifyDataSetChanged();
+
+        if (adaptor.getItemCount() > 0) {
+            // Show recycler view
+            itemRecyclerView.setVisibility(View.VISIBLE);
+            noItemsText.setVisibility(View.INVISIBLE);
+            actionButton.setEnabled(true);
+        }
+        else {
             // Hide recycler view
             itemRecyclerView.setVisibility(View.INVISIBLE);
             noItemsText.setVisibility(View.VISIBLE);
+            actionButton.setEnabled(false);
         }
     }
 
+    public void clearSelected() {
+        adaptor.clearSelected();
+    }
+
+
+    /**
+     * Item Adaptor Class
+     */
     private class ItemAdaptor extends RecyclerView.Adapter<ItemViewHolder>{
         /* Fields */
         private List<Item> itemList;
 
         /* Constructor */
         public ItemAdaptor (List<Item> inItems) {
-            this.itemList = inItems;
+            setItems(inItems);
         }
 
         /* Accessors */
         @Override
         public int getItemCount() {
             return itemList.size();
+        }
+
+        /* Mutator */
+        public void setItems(List<Item> inItems) {
+            if (inItems == null) {
+                throw new IllegalArgumentException("Items cannot be null");
+            }
+            this.itemList = inItems;
         }
 
         /* Functions */
@@ -138,7 +187,7 @@ public class ListFragment extends Fragment {
         void actionItems(int type) {
             LinkedList<Item> selectedItems = new LinkedList<>();
 
-            for (Item currItem: itemList) {
+            for (Item currItem : itemList) {
                 if (currItem.isSelected()) {
                     selectedItems.add(currItem);
                 }
@@ -146,8 +195,19 @@ public class ListFragment extends Fragment {
 
             GameData.getInstance().actionItems(type, selectedItems);
         }
+
+        void clearSelected() {
+            for (Item currItem : itemList) {
+                currItem.setSelected(false);
+            }
+            notifyDataSetChanged();
+        }
     }
 
+
+    /**
+     * Item View Holder Class
+     */
     private class ItemViewHolder extends RecyclerView.ViewHolder {
         /* Fields */
         private ConstraintLayout itemLayout;
@@ -197,6 +257,15 @@ public class ListFragment extends Fragment {
             else {
                 throw new IllegalArgumentException("Unknown Item type");
             }
+
+            // Set background
+            if (item.isSelected()) {
+                itemLayout.setBackground(getResources().getDrawable(R.drawable.rounded_box, null));
+            }
+            else {
+                itemLayout.setBackground(null);
+            }
         }
     }
+
 }
