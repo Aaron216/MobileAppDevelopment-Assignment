@@ -12,12 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-import au.edu.curtin.madassignment.Activities.MarketActivity;
 import au.edu.curtin.madassignment.Model.*;
 import au.edu.curtin.madassignment.R;
 
@@ -107,7 +107,12 @@ public class ListFragment extends Fragment {
                     throw new IllegalStateException("Cannot set list type before setting list data.");
                 }
 
-                adaptor.actionItems(type);
+                try {
+                    adaptor.actionItems(type);
+                }
+                catch (Exception ex) {
+                    Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                }
                 actionListener.onAction();
             }
         });
@@ -153,7 +158,7 @@ public class ListFragment extends Fragment {
         private List<Item> itemList;
 
         /* Constructor */
-        public ItemAdaptor (List<Item> inItems) {
+        ItemAdaptor(List<Item> inItems) {
             setItems(inItems);
         }
 
@@ -164,7 +169,7 @@ public class ListFragment extends Fragment {
         }
 
         /* Mutator */
-        public void setItems(List<Item> inItems) {
+        void setItems(List<Item> inItems) {
             if (inItems == null) {
                 throw new IllegalArgumentException("Items cannot be null");
             }

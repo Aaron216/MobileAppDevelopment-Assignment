@@ -31,9 +31,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@id/layoutBottomButtons"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintBottom_toTopOf="@id/layoutMiddleButtons">
 
         <Button
             android:id="@+id/btnOptions"
@@ -44,14 +42,14 @@
             android:text="@string/options"
             android:textSize="8pt" />
 
-        <ImageButton
-            android:id="@+id/btnNorth"
+        <Button
+            android:id="@+id/btnInventory"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:contentDescription="@string/move_north"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_keyboard_arrow_up_black_24dp" />
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:text="@string/inventory"
+            android:textSize="8pt" />
 
         <Button
             android:id="@+id/btnOverview"
@@ -64,6 +62,35 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layoutMiddleButtons"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/layoutBottomButtons">
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <ImageButton
+            android:id="@+id/btnNorth"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:contentDescription="@string/move_north"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_keyboard_arrow_up_black_24dp" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/layoutBottomButtons"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -71,9 +98,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageButton
             android:id="@+id/btnWest"

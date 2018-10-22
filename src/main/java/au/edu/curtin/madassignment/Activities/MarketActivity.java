@@ -85,6 +85,7 @@ public class MarketActivity extends AppCompatActivity implements ListFragment.On
     }
 
     public void onAction() {
+        statusBar.update();
         buyList.update();
         sellList.update();
     }

@@ -5,6 +5,7 @@
     <string name="return_to_previous">Return to previous screen</string>
     <string name="wilderness">Wilderness</string>
     <string name="market">Market</string>
+    <string name="overview">Overview</string>
 
     <!-- Welcome Activity -->
     <string name="title1">Explorer Game 2:</string>
@@ -27,7 +28,7 @@
 
     <!-- Navigation Activity -->
     <string name="options">Options</string>
-    <string name="overview">Overview</string>
+    <string name="inventory">Inventory</string>
     <string name="move_north">Move North</string>
     <string name="move_west">Move West</string>
     <string name="move_east">Move East</string>
@@ -40,7 +41,11 @@
     <string name="pick_up">Pick Up Item(s)</string>
     <string name="no_items">No Items to Show</string>
 
-    <!-- Game Over Activity -->
+    <!-- Overview Activity -->
+
+
+    <!-- Game End Activity -->
+    <string name="game_won">You Win</string>
     <string name="game_over">Game Over</string>
     <string name="play_again">Play again</string>
     <string name="quit">Quit</string>

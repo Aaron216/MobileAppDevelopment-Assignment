@@ -17,6 +17,7 @@ import au.edu.curtin.madassignment.Fragments.ListFragment;
 
 public class GameData {
     /* Constants */
+    public static final double SELL_MARKDOWN = 0.75;
     public static final int MAX_ROW = 10;
     public static final int MAX_COL = 10;
 
@@ -123,23 +124,61 @@ public class GameData {
     }
 
     public void actionItems(int type, LinkedList<Item> selectedItems) {
-        if (type == ListFragment.MARKET_SELL || type == ListFragment.WILDERNESS_DROP) {
-            // Move Items to area
-            getPlayer().getItemList().removeAll(selectedItems);
-            getCurrentArea().getItemList().addAll(selectedItems);
-        }
-        else if (type == ListFragment.MARKET_BUY || type == ListFragment.WILDERNESS_PICK) {
-            // Move items to player
-            getCurrentArea().getItemList().removeAll(selectedItems);
-            getPlayer().getItemList().addAll(selectedItems);
-        }
-        else {
-            throw new IllegalArgumentException("Unknown action type");
-        }
+        Equipment currEquipment;
+        double itemMass = 0.0;
+        int itemValue = 0;
 
         for (Item currItem : selectedItems) {
-            player.updateMass();
+            // Sum Value
+            itemValue += currItem.getValue();
+
+            // Sum Mass
+            if (currItem instanceof Equipment) {
+                currEquipment = (Equipment) currItem;
+                itemMass += currEquipment.getMass();
+            }
+
+            // Reset selected
             currItem.setSelected(false);
+        }
+
+        switch (type) {
+            case ListFragment.MARKET_SELL:
+                // Change player cash
+                itemValue = (int) Math.round(itemValue * SELL_MARKDOWN);
+                player.setCash(player.getCash() + itemValue);
+                // No break: will do WILDERNESS_DROP actions
+
+            case ListFragment.WILDERNESS_DROP:
+                // Move Items to area
+                getPlayer().getItemList().removeAll(selectedItems);
+                getCurrentArea().getItemList().addAll(selectedItems);
+
+                // Change player mass
+                player.setEquipmentMass(player.getEquipmentMass() - itemMass);
+                break;
+
+            case ListFragment.MARKET_BUY:
+                // Change player cash
+                try {
+                    player.setCash(player.getCash() - itemValue);
+                }
+                catch (IllegalArgumentException ex) {
+                    throw new IllegalArgumentException("Not enough money to buy the selected items.");
+                }
+                // No break: will do WILDERNESS_PICK actions
+
+            case ListFragment.WILDERNESS_PICK:
+                // Move items to player
+                getCurrentArea().getItemList().removeAll(selectedItems);
+                getPlayer().getItemList().addAll(selectedItems);
+
+                // Change player mass
+                player.setEquipmentMass(player.getEquipmentMass() + itemMass);
+                break;
+
+            default:
+                throw new IllegalArgumentException("Unknown action type");
         }
     }
 }

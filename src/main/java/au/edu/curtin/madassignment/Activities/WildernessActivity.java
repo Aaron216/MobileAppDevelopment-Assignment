@@ -83,6 +83,7 @@ public class WildernessActivity extends AppCompatActivity implements ListFragmen
     }
 
     public void onAction() {
+        statusBar.update();
         pickUpList.update();
         dropList.update();
     }
