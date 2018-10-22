@@ -133,8 +133,12 @@ public class GameData {
             getCurrentArea().getItemList().removeAll(selectedItems);
             getPlayer().getItemList().addAll(selectedItems);
         }
+        else {
+            throw new IllegalArgumentException("Unknown action type");
+        }
 
         for (Item currItem : selectedItems) {
+            player.updateMass();
             currItem.setSelected(false);
         }
     }

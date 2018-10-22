@@ -11,6 +11,8 @@
 
 package au.edu.curtin.madassignment.Model;
 
+import android.media.audiofx.DynamicsProcessing;
+
 import java.util.List;
 import java.util.LinkedList;
 
@@ -104,6 +106,7 @@ public class Player {
         itemList = inItemList;
     }
 
+    /* Functions */
     public void move(char direction) {
         switch (direction) {
             case 'N':
@@ -126,5 +129,19 @@ public class Player {
                 throw new IllegalArgumentException("Unknown direction argument");
         }
         setHealth(Math.max(0.0, health - 5.0 - (equipmentMass / 2.0)));
+    }
+
+    void updateMass() {
+        double newMass = 0.0;
+        Equipment currEquipment;
+
+        for (Item currItem : itemList) {
+            if (currItem instanceof Equipment) {
+                currEquipment = (Equipment) currItem;
+                newMass += currEquipment.getMass();
+            }
+        }
+
+        setEquipmentMass(newMass);
     }
 }
