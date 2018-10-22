@@ -24,7 +24,7 @@ public class GameOverActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 GameData.newGame();
-                startActivity(NavigationActivity.getIntent(GameOverActivity.this, true));
+                startActivity(NavigationActivity.getIntent(GameOverActivity.this));
             }
         });
 
