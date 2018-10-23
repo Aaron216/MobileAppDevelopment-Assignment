@@ -175,14 +175,14 @@ public class Player {
         }
     }
 
-    void removeItems(List<Item> items) {
-        checkSpecial(items, false);
+    public void removeItems(List<Item> items) {
+        checkForSpecialItems(items, false);
         setEquipmentMass(equipmentMass - sumEquipmentMass(items));
         itemList.removeAll(items);
     }
 
     public void addItems(List<Item> items) {
-        checkSpecial(items, true);
+        checkForSpecialItems(items, true);
         setEquipmentMass(equipmentMass + sumEquipmentMass(items));
         itemList.addAll(items);
     }
@@ -207,7 +207,16 @@ public class Player {
     }
 
     void useItems(List<Item> items) {
-        // TODO: Usable Items
+        // Error checking
+        if (items.size() != 1) {
+            throw new IllegalArgumentException("Can only use one item at a time.");
+        }
+//        if (items.get(0) instanceof Equipment.Usable) {
+//            throw new IllegalArgumentException("Cannot use non equipment item: " + items.get(0).getDescription());
+//        }
+
+        Equipment equipment = (Equipment) items.get(0);
+        equipment.use();
     }
 
     /* Private Functions */
@@ -235,7 +244,7 @@ public class Player {
         return massSum;
     }
 
-    private void checkSpecial(List<Item> items, boolean hasItem) {
+    private void checkForSpecialItems(List<Item> items, boolean hasItem) {
         Equipment currEquipment;
         boolean hasAll = true;
         int itemType;
@@ -246,7 +255,7 @@ public class Player {
                 currEquipment = (Equipment) currItem;
                 // Check if special
                 if (currEquipment.isSpecial()) {
-                    itemType = Arrays.asList(GameData.SPECIAL_EQUIPMENT).indexOf(currEquipment.getDescription());
+                    itemType = Arrays.asList(Equipment.SPECIAL_NAMES).indexOf(currEquipment.getDescription());
                     hasSpecial[itemType] = hasItem;
                 }
             }

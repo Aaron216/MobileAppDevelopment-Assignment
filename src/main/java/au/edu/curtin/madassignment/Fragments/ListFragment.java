@@ -275,7 +275,17 @@ public class ListFragment extends Fragment {
             itemLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    item.toggleSelected();
+                    if (type == BACKPACK_EQUIPMENT) {
+                        // De-select all others
+                        boolean isSelected = item.isSelected();
+                        adaptor.clearSelected();
+                        adaptor.notifyDataSetChanged();
+                        item.setSelected(!isSelected);
+                    }
+                    else {
+                        item.toggleSelected();
+                    }
+
                     if (item.isSelected()) {
                         itemLayout.setBackground(getResources().getDrawable(R.drawable.rounded_box, null));
                     }

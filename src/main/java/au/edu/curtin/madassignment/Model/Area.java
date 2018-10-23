@@ -29,7 +29,7 @@ public class Area {
     private static final int FOOD_RANGE = 5;
     private static final int EQUIPMENT_MIN = 2;
     private static final int EQUIPMENT_RANGE = 6;
-    private static final double USABLE_CHANCE = 0.8;
+    private static final double USABLE_CHANCE = 0.0;
     private static final int NUM_USABLE = 3;
 
     /* Fields */

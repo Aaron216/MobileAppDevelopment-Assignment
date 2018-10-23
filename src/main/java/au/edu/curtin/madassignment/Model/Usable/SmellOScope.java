@@ -21,6 +21,7 @@ public class SmellOScope extends Equipment implements Equipment.Usable {
     }
 
     /* Function */
+    @Override
     public void use() {
         ActivityStarter starter = new ActivityStarter();
         starter.startSmellActivity();

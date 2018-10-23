@@ -18,7 +18,11 @@ public class ImprobabilityDrive extends Equipment implements Equipment.Usable {
     }
 
     /* Function */
+    @Override
     public void use() {
-        GameData.getInstance().generateMap();
+        GameData gameInstance = GameData.getInstance();
+
+        gameInstance.getPlayer().getItemList().remove(this);
+        gameInstance.generateMap();
     }
 }

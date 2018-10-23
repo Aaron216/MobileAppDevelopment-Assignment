@@ -21,7 +21,6 @@ public class GameData {
     static final double SELL_MARKDOWN = 0.75;
     public static final int MAX_ROW = 10;
     public static final int MAX_COL = 10;
-    static final String[] SPECIAL_EQUIPMENT = {"Jade Monkey", "Roadmap", "Ice Scraper"};
 
     /* Fields */
     private Area[][] grid;
@@ -144,10 +143,10 @@ public class GameData {
 
         // Create special items
         Random random = new Random();
-        Item[] specialItems = new Item[SPECIAL_EQUIPMENT.length];
+        Item[] specialItems = new Item[Equipment.SPECIAL_NAMES.length];
 
-        for (int ii = 0; ii < SPECIAL_EQUIPMENT.length; ii++) {
-            specialItems[ii] = new Equipment(SPECIAL_EQUIPMENT[ii]);
+        for (int ii = 0; ii < Equipment.SPECIAL_NAMES.length; ii++) {
+            specialItems[ii] = new Equipment(Equipment.SPECIAL_NAMES[ii]);
             xx = random.nextInt(MAX_COL);
             yy = random.nextInt(MAX_ROW);
             getArea(xx, yy).addItem(specialItems[ii]);

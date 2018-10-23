@@ -26,6 +26,7 @@ public class Equipment extends Item {
         "Judge Dredd's Lawgiver Mk II", "Lightsabre", "Malcom Reynolds' Sidearm", "Mobile Infantry Mini-Nuke",
         "Romulan Disruptor", "Stargate Command FN P90", "Tron's Identity Disk", "UNSC Pistol", "UNSC Shotgun"
     };
+    public static final String[] SPECIAL_NAMES = {"Jade Monkey", "Roadmap", "Ice Scraper"};
     private static final int VALUE_RANGE = 20;
     private static final int MIN_VALUE = 1;
     private static final int MIN_SPECIAL_VALUE = 10;
@@ -90,5 +91,10 @@ public class Equipment extends Item {
 
     public void setSpecial(boolean special) {
         isSpecial = special;
+    }
+
+    /* Functions */
+    public void use() {
+        throw new IllegalStateException(this.getDescription() + " cannot be used.");
     }
 }
