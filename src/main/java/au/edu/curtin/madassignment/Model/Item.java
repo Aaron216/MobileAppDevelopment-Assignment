@@ -56,9 +56,4 @@ public abstract class Item {
         }
         this.value = inValue;
     }
-
-    /* Function */
-    public void use() {
-
-    }
 }

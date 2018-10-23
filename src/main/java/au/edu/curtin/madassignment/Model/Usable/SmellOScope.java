@@ -1,8 +1,8 @@
 package au.edu.curtin.madassignment.Model.Usable;
 
-import au.edu.curtin.madassignment.Model.Equipment;
+import au.edu.curtin.madassignment.Model.*;
 
-public class SmellOScope extends Equipment {
+public class SmellOScope extends Equipment implements Equipment.Usable {
     /* Constants */
     private static final String NAME = "Portable Smell-O-Scope";
     private static final double MASS = 5.0;
@@ -12,11 +12,12 @@ public class SmellOScope extends Equipment {
         super();
         super.setDescription(NAME);
         super.setMass(MASS);
-        setValue(100);
+        super.setValue(100);
+        super.setUsable(true);
+        super.setSpecial(false);
     }
 
     /* Function */
-    @Override
     public void use() {
 
     }

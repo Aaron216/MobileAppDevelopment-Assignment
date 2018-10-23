@@ -14,6 +14,11 @@ package au.edu.curtin.madassignment.Model;
 import java.util.Random;
 
 public class Equipment extends Item {
+    /* Usable Interface */
+    public interface Usable {
+        void use();
+    }
+
     /* Constants */
     private static final String[] EQUIPMENT_NAMES = {
         "Borg Nanites", "Covenant Energy Sword", "Covenant Needler", "Deckard's Hand-Cannon", "Federation Phasor",
@@ -21,8 +26,16 @@ public class Equipment extends Item {
         "Judge Dredd's Lawgiver Mk II", "Lightsabre", "Malcom Reynolds' Sidearm", "Mobile Infantry Mini-Nuke",
         "Romulan Disruptor", "Stargate Command FN P90", "Tron's Identity Disk", "UNSC Pistol", "UNSC Shotgun"
     };
+    private static final int VALUE_RANGE = 20;
+    private static final int MIN_VALUE = 1;
+    private static final int MIN_SPECIAL_VALUE = 10;
+    private static final double MASS_RANGE = 10.0;
+    private static final double MIN_MASS = 0.1;
+
 
     /* Fields */
+    private boolean isUsable;
+    private boolean isSpecial;
     private double mass;
 
     /* Constructor */
@@ -33,8 +46,24 @@ public class Equipment extends Item {
         Random random = new Random();
         int index = random.nextInt(EQUIPMENT_NAMES.length);
         super.setDescription(EQUIPMENT_NAMES[index]);
-        super.setValue(random.nextInt(20));
-        setMass(random.nextDouble()*10.0);
+        super.setValue(random.nextInt(VALUE_RANGE) + MIN_VALUE);
+        setMass(random.nextDouble()*MASS_RANGE + MIN_MASS);
+        setUsable(false);
+        setSpecial(false);
+    }
+
+    // Special Item Constructor
+    public Equipment(String inDescription) {
+        super();
+
+        super.setDescription(inDescription);
+
+        // Set Value and Mass
+        Random random = new Random();
+        super.setValue(random.nextInt(VALUE_RANGE) + MIN_SPECIAL_VALUE);
+        setMass(random.nextDouble()*MASS_RANGE + MIN_MASS);
+        setUsable(false);
+        setSpecial(true);
     }
 
     /* Accessors */
@@ -42,14 +71,24 @@ public class Equipment extends Item {
         return mass;
     }
 
+    public boolean isUsable() {
+        return isUsable;
+    }
+
+    public boolean isSpecial() {
+        return isSpecial;
+    }
+
     /* Mutators */
     public void setMass(double inMass) {
         mass = inMass;
     }
 
-    /* Function */
-    @Override
-    public void use() {
-        // This item cannot be used
+    public void setUsable(boolean usable) {
+        isUsable = usable;
+    }
+
+    public void setSpecial(boolean special) {
+        isSpecial = special;
     }
 }

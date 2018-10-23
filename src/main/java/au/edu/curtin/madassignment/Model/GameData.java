@@ -12,6 +12,7 @@
 package au.edu.curtin.madassignment.Model;
 
 import java.util.List;
+import java.util.Random;
 
 import au.edu.curtin.madassignment.Fragments.ListFragment;
 
@@ -20,6 +21,7 @@ public class GameData {
     public static final double SELL_MARKDOWN = 0.75;
     public static final int MAX_ROW = 10;
     public static final int MAX_COL = 10;
+    private static final String[] SPECIAL_EQUIPMENT = {"Jade Monkey", "Roadmap", "Ice Scraper"};
 
     /* Fields */
     private Area[][] grid;
@@ -113,13 +115,28 @@ public class GameData {
 
     /* Functions */
     public void generateMap() {
-        for (int yy = 0; yy <= MAX_ROW; yy++) {
+        int xx;
+        int yy;
+
+        // Randomly Generate Areas
+        for (yy = 0; yy <= MAX_ROW; yy++) {
             // Iterate over rows
-            for (int xx = 0; xx <= MAX_COL; xx++) {
+            for (xx = 0; xx <= MAX_COL; xx++) {
                 // Iterate through columns
                 grid[yy][xx] = new Area();
                 grid[yy][xx].randomize();
             }
+        }
+
+        // Create special items
+        Random random = new Random();
+        Item[] specialItems = new Item[SPECIAL_EQUIPMENT.length];
+
+        for (int ii = 0; ii < SPECIAL_EQUIPMENT.length; ii++) {
+            specialItems[ii] = new Equipment(SPECIAL_EQUIPMENT[ii]);
+            xx = random.nextInt(MAX_COL);
+            yy = random.nextInt(MAX_ROW);
+            getArea(xx, yy).addItem(specialItems[ii]);
         }
     }
 

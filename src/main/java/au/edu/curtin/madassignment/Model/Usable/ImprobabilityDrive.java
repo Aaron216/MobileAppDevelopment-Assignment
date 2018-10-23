@@ -1,8 +1,8 @@
 package au.edu.curtin.madassignment.Model.Usable;
 
-import au.edu.curtin.madassignment.Model.Equipment;
+import au.edu.curtin.madassignment.Model.*;
 
-public class ImprobabilityDrive extends Equipment {
+public class ImprobabilityDrive extends Equipment implements Equipment.Usable {
     /* Constants */
     private static final String NAME = "Improbability Drive";
     private static final double MASS = -Math.PI;
@@ -13,11 +13,12 @@ public class ImprobabilityDrive extends Equipment {
         super.setDescription(NAME);
         super.setMass(MASS);
         super.setValue(100);
+        super.setUsable(true);
+        super.setSpecial(false);
     }
 
     /* Function */
-    @Override
     public void use() {
-
+        GameData.getInstance().generateMap();
     }
 }

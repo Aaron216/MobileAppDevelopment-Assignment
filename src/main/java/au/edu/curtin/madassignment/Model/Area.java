@@ -15,15 +15,22 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import au.edu.curtin.madassignment.Model.Usable.BenKenobi;
+import au.edu.curtin.madassignment.Model.Usable.ImprobabilityDrive;
+import au.edu.curtin.madassignment.Model.Usable.SmellOScope;
+
 public class Area {
     /* Constants */
     private static final String TOWN = "Town";
     private static final String WILDERNESS = "Wilderness";
-    private static final int DICE_SIZE = 10;
-    private static final int TOWN_CHANCE = 6;
-    private static final int ITEM_CHANCE = 5;
-    private static final int MIN_NUM_ITEMS = 3;
-    private static final int MAX_NUM_ITEMS = 10;
+    private static final double TOWN_CHANCE = 0.6;
+    private static final double TOWN_MODIFIER = 1.5;
+    private static final int FOOD_MIN = 1;
+    private static final int FOOD_RANGE = 5;
+    private static final int EQUIPMENT_MIN = 2;
+    private static final int EQUIPMENT_RANGE = 6;
+    private static final double USABLE_CHANCE = 0.8;
+    private static final int NUM_USABLE = 3;
 
     /* Fields */
     private boolean town;
@@ -84,6 +91,13 @@ public class Area {
         itemList = inItems;
     }
 
+    public void addItem(Item inItem) {
+        if (inItem == null) {
+            throw new IllegalArgumentException("Cannot add null item to area");
+        }
+        itemList.add(inItem);
+    }
+
     public void addItems(List<Item> inItems) {
         itemList.addAll(inItems);
     }
@@ -111,22 +125,44 @@ public class Area {
     /* Functions */
     void randomize() {
         Random random = new Random();
-        int randNum;
-        int numItems;
+        double townMod = 1.0;
+        double randDouble;
+        int randInt;
 
         // Is Town
-        randNum = random.nextInt(DICE_SIZE);
-        town = (randNum > TOWN_CHANCE);
+        randDouble = random.nextDouble();
+        if (randDouble > TOWN_CHANCE) {
+            town = true;
+            townMod = TOWN_MODIFIER;
+        }
 
-        // Items
-        numItems = random.nextInt(MAX_NUM_ITEMS) + MIN_NUM_ITEMS;
-        for (int ii = 0; ii < numItems; ii++) {
-            randNum = random.nextInt(DICE_SIZE);
-            if (randNum < ITEM_CHANCE) {
-                itemList.add(new Equipment());
-            }
-            else {
-                itemList.add(new Food());
+        // Food
+        randInt = (int) Math.round((random.nextInt(FOOD_RANGE) + FOOD_MIN) * townMod);
+        for (int ii = 0; ii < randInt; ii++) {
+            itemList.add(new Food());
+        }
+
+        // Equipment
+        randInt = (int) Math.round((random.nextInt(EQUIPMENT_RANGE) + EQUIPMENT_MIN) * townMod);
+        for (int ii = 0; ii < randInt; ii++) {
+            itemList.add(new Equipment());
+        }
+
+        // Usable
+        randDouble = random.nextDouble();
+        if (randDouble > USABLE_CHANCE) {
+            // Add usable item
+            randInt = random.nextInt(NUM_USABLE);
+            switch (randInt) {
+                case 0:
+                    itemList.add(new BenKenobi());
+                    break;
+                case 1:
+                    itemList.add(new ImprobabilityDrive());
+                    break;
+                case 2:
+                    itemList.add(new SmellOScope());
+                    break;
             }
         }
     }

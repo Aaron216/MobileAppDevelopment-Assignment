@@ -11,9 +11,6 @@
 
 package au.edu.curtin.madassignment.Model;
 
-import android.media.audiofx.DynamicsProcessing;
-import android.opengl.GLSurfaceView;
-
 import java.util.List;
 import java.util.LinkedList;
 
@@ -115,7 +112,7 @@ public class Player {
             health = 0.0;
             GameData.getInstance().setGameOver();
         }
-        health = inHealth;
+        health = Math.min(inHealth, MAX_HEALTH);
     }
 
     public void setEquipmentMass(double inEquipmentMass) {
