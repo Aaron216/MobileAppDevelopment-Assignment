@@ -20,6 +20,10 @@ public class Food extends Item {
         "Bookmark Dumplings", "Coffee", "Doughnuts", "Main Cafe Nachos", "Main Cafe Sushi",
         "Tav Burger", "Tav Chicken Parma", "Tav Chips", "Tav Schnitzel", "Vege Patch Carrot"
     };
+    private static final int VALUE_RANGE = 10;
+    private static final int MIN_VALUE = 1;
+    private static final double HEALTH_RANGE = 3.0;
+    private static final double MIN_HEALTH = 0.1;
 
     /* Fields */
     private double health;
@@ -32,8 +36,8 @@ public class Food extends Item {
         Random random = new Random();
         int index = random.nextInt(FOOD_NAMES.length);
         super.setDescription(FOOD_NAMES[index]);
-        super.setValue(random.nextInt(10));
-        setHealth(random.nextDouble()*2.0);
+        super.setValue(random.nextInt(VALUE_RANGE) + MIN_VALUE);
+        setHealth(random.nextDouble()*HEALTH_RANGE + MIN_HEALTH);
     }
 
     /* Accessors */
@@ -44,11 +48,5 @@ public class Food extends Item {
     /* Mutators */
     void setHealth(double inHealth) {
         health = inHealth;
-    }
-
-    /* Functions */
-    @Override
-    public void use() {
-
     }
 }

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Locale;
@@ -22,6 +23,9 @@ public class StatusBarFragment extends Fragment {
     TextView healthText;
     TextView massText;
     ImageButton resetButton;
+    ImageView monkeyImage;
+    ImageView mapImage;
+    ImageView iceImage;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup ui, Bundle bundle) {
@@ -32,6 +36,9 @@ public class StatusBarFragment extends Fragment {
         healthText = view.findViewById(R.id.valHealth);
         massText = view.findViewById(R.id.valMass);
         resetButton = view.findViewById(R.id.btnReset);
+        monkeyImage = view.findViewById(R.id.imgMonkey);
+        mapImage = view.findViewById(R.id.imgMap);
+        iceImage = view.findViewById(R.id.imgIce);
 
         // Set up on click listeners
         resetButton.setOnClickListener(new View.OnClickListener() {
@@ -66,12 +73,36 @@ public class StatusBarFragment extends Fragment {
     public void update() {
         Player player = GameData.getInstance().getPlayer();
 
-        if (GameData.getInstance().isGameOver()) {
+        if (GameData.getInstance().isGameEnd()) {
             startActivity(GameEndActivity.getIntent(getContext()));
         }
 
         cashText.setText(String.format(Locale.ENGLISH, "$%d", player.getCash()));
         healthText.setText(String.format(Locale.ENGLISH, "%.2f HP", player.getHealth()));
         massText.setText(String.format(Locale.ENGLISH, "%.2f kg", player.getEquipmentMass()));
+
+        // Jade Monkey
+        if (player.getHasSpecial()[1]) {
+            mapImage.setImageResource(R.drawable.ic_monkey_black_24dp);
+        }
+        else {
+            mapImage.setImageResource(R.drawable.ic_monkey_grey_24dp);
+        }
+
+        // Roadmap
+        if (player.getHasSpecial()[1]) {
+            mapImage.setImageResource(R.drawable.ic_map_black_24dp);
+        }
+        else {
+            mapImage.setImageResource(R.drawable.ic_map_grey_24dp);
+        }
+
+        // Ice Scraper
+        if (player.getHasSpecial()[2]) {
+            mapImage.setImageResource(R.drawable.ic_map_black_24dp);
+        }
+        else {
+            mapImage.setImageResource(R.drawable.ic_ice_grey_24dp);
+        }
     }
 }

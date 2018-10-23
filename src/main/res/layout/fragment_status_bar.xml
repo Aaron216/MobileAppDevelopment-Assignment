@@ -12,18 +12,17 @@
         <LinearLayout
             android:id="@+id/layoutLabels"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btnReset"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/layoutValues">
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/lblCash"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/cash"
                 android:gravity="center"
@@ -32,7 +31,7 @@
             <TextView
                 android:id="@+id/lblHealth"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/health"
                 android:gravity="center"
@@ -41,7 +40,7 @@
             <TextView
                 android:id="@+id/lblMass"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/mass"
                 android:gravity="center"
@@ -51,18 +50,17 @@
         <LinearLayout
             android:id="@+id/layoutValues"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btnReset"
-            app:layout_constraintTop_toBottomOf="@+id/layoutLabels"
-            app:layout_constraintBottom_toBottomOf="@id/btnReset">
+            app:layout_constraintTop_toBottomOf="@+id/layoutLabels">
 
             <TextView
                 android:id="@+id/valCash"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="$100"
                 android:gravity="center"/>
@@ -70,7 +68,7 @@
             <TextView
                 android:id="@+id/valHealth"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="100.00"
                 android:gravity="center"/>
@@ -78,20 +76,53 @@
             <TextView
                 android:id="@+id/valMass"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="10.00kg"
                 android:gravity="center"/>
         </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/btnReset"
+        <LinearLayout
+            android:id="@+id/layoutSpecialItems"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnReset"
+            app:layout_constraintTop_toBottomOf="@id/layoutValues">
+
+            <ImageView
+                android:id="@+id/imgMonkey"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="8dp"
+                android:src="@drawable/ic_monkey_grey_24dp"/>
+
+            <ImageView
+                android:id="@+id/imgMap"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="8dp"
+                android:src="@drawable/ic_map_grey_24dp"/>
+
+            <ImageView
+                android:id="@+id/imgIce"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="8dp"
+                android:src="@drawable/ic_ice_grey_24dp"/>
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btnReset"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:src="@drawable/ic_refresh_black_24dp"
+            android:scaleType="fitCenter"
             android:contentDescription="@string/reset"
 
-            app:layout_constraintStart_toEndOf="@id/layoutLabels"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>

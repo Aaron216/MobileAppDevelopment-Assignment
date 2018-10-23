@@ -44,7 +44,7 @@ public class GameEndActivity extends AppCompatActivity {
             gameEndText.setText(getResources().getText(R.string.game_over));
             gameEndText.setTextColor(getResources().getColor(R.color.colorRed, null));
         }
-        else {
+        else if (GameData.getInstance().isGameWon()){
             gameEndText.setText(getResources().getText(R.string.game_won));
             gameEndText.setTextColor(getResources().getColor(R.color.colorPrimary, null));
         }

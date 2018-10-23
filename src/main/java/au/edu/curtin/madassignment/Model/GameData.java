@@ -18,15 +18,16 @@ import au.edu.curtin.madassignment.Fragments.ListFragment;
 
 public class GameData {
     /* Constants */
-    public static final double SELL_MARKDOWN = 0.75;
+    static final double SELL_MARKDOWN = 0.75;
     public static final int MAX_ROW = 10;
     public static final int MAX_COL = 10;
-    private static final String[] SPECIAL_EQUIPMENT = {"Jade Monkey", "Roadmap", "Ice Scraper"};
+    static final String[] SPECIAL_EQUIPMENT = {"Jade Monkey", "Roadmap", "Ice Scraper"};
 
     /* Fields */
     private Area[][] grid;
     private Player player;
     private boolean gameOver;
+    private boolean gameWon;
     private static GameData instance;
 
     /* Constructor */
@@ -34,6 +35,7 @@ public class GameData {
         grid = new Area[MAX_ROW+1][MAX_COL+1];
         player = new Player();
         gameOver = false;
+        gameWon = false;
         generateMap();
     }
 
@@ -42,7 +44,7 @@ public class GameData {
         return grid;
     }
 
-    public Area getArea(int colLocation, int rowLocation) {
+    private Area getArea(int colLocation, int rowLocation) {
         // Check column
         if (colLocation < 0 || colLocation > MAX_COL) {
             throw new IllegalArgumentException("Column location must be >= 0 and <= " + MAX_COL);
@@ -60,6 +62,14 @@ public class GameData {
 
     public boolean isGameOver() {
         return gameOver;
+    }
+
+    public boolean isGameWon() {
+        return gameWon;
+    }
+
+    public boolean isGameEnd() {
+        return (gameOver || gameWon);
     }
 
     public static GameData getInstance() {
@@ -85,7 +95,7 @@ public class GameData {
     }
 
     /* Mutators */
-    public void setArea(int colLocation, int rowLocation, Area inArea) {
+    private void setArea(int colLocation, int rowLocation, Area inArea) {
         // Check column
         if (colLocation < 0 || colLocation > MAX_COL) {
             throw new IllegalArgumentException("Column location must be >= 0 and <= " + MAX_COL);
@@ -107,6 +117,10 @@ public class GameData {
 
     void setGameOver() {
         gameOver = true;
+    }
+
+    void setGameWon() {
+        gameWon = true;
     }
 
     public static void newGame() {

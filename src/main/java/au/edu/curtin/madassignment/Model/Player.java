@@ -11,6 +11,7 @@
 
 package au.edu.curtin.madassignment.Model;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.LinkedList;
 
@@ -25,6 +26,7 @@ public class Player {
     private double health;
     private double equipmentMass;
     private List<Item> itemList;
+    private boolean[] hasSpecial;
 
     /* Constructor */
     Player() {
@@ -34,6 +36,7 @@ public class Player {
         health = 100.0;
         equipmentMass = 0.0;
         itemList = new LinkedList<>();
+        hasSpecial = new boolean[]{false, false, false};
     }
 
     /* Accessors */
@@ -85,15 +88,19 @@ public class Player {
         return equipmentList;
     }
 
+    public boolean[] getHasSpecial() {
+        return hasSpecial;
+    }
+
     /* Mutators */
-    public void setRowLocation(int inRow) {
+    private void setRowLocation(int inRow) {
         if (inRow < 0 || inRow > GameData.MAX_ROW) {
             throw new IllegalArgumentException("Row Location must be >= 0 and <= " + GameData.MAX_ROW);
         }
         rowLocation = inRow;
     }
 
-    public void setColLocation(int inCol) {
+    private void setColLocation(int inCol) {
         if (inCol < 0 || inCol > GameData.MAX_COL) {
             throw new IllegalArgumentException("Column Location must be >= 0 and <= " + GameData.MAX_COL);
         }
@@ -115,7 +122,7 @@ public class Player {
         health = Math.min(inHealth, MAX_HEALTH);
     }
 
-    public void setEquipmentMass(double inEquipmentMass) {
+    private void setEquipmentMass(double inEquipmentMass) {
         // Considered input validation
         // However, Improbability Drive had mas of -pi and therefore means mass can be negative.
         equipmentMass = inEquipmentMass;
@@ -161,7 +168,7 @@ public class Player {
     void buyItems(List<Item> items) {
         try {
             setCash(cash - sumItemValue(items));
-            removeItems(items);
+            addItems(items);
         }
         catch (IllegalArgumentException ex) {
             throw new IllegalArgumentException("Not enough money to buy the selected items");
@@ -169,11 +176,13 @@ public class Player {
     }
 
     void removeItems(List<Item> items) {
+        checkSpecial(items, false);
         setEquipmentMass(equipmentMass - sumEquipmentMass(items));
         itemList.removeAll(items);
     }
 
     void addItems(List<Item> items) {
+        checkSpecial(items, true);
         setEquipmentMass(equipmentMass + sumEquipmentMass(items));
         itemList.addAll(items);
     }
@@ -224,5 +233,34 @@ public class Player {
         }
 
         return massSum;
+    }
+
+    private void checkSpecial(List<Item> items, boolean hasItem) {
+        Equipment currEquipment;
+        boolean hasAll = true;
+        int itemType;
+
+        for (Item currItem : items) {
+            // Check if equipment
+            if (currItem instanceof Equipment) {
+                currEquipment = (Equipment) currItem;
+                // Check if special
+                if (currEquipment.isSpecial()) {
+                    itemType = Arrays.asList(GameData.SPECIAL_EQUIPMENT).indexOf(currEquipment.getDescription());
+                    hasSpecial[itemType] = hasItem;
+                }
+            }
+        }
+
+        if (hasItem) {
+            // Iterate through has special array to check if has all items
+            for (boolean hasThisSpecial : hasSpecial) {
+                hasAll &= hasThisSpecial;
+            }
+        }
+
+        if (hasAll) {
+            GameData.getInstance().setGameWon();
+        }
     }
 }
