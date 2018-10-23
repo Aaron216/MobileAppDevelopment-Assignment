@@ -11,7 +11,7 @@
 
 package au.edu.curtin.madassignment.Model;
 
-import java.util.LinkedList;
+import java.util.List;
 
 import au.edu.curtin.madassignment.Fragments.ListFragment;
 
@@ -123,90 +123,33 @@ public class GameData {
         }
     }
 
-    public void actionItems(int type, LinkedList<Item> selectedItems) {
-
-        // TODO: TIDY THIS SHIT UP
-
-        Equipment currEquipment;
-        Food currFood;
-        double itemMass = 0.0;
-        double foodHealth = 0.0;
-        int itemValue = 0;
-
-        // Always
-        for (Item currItem : selectedItems) {
-            // Sum Mass
-            if (currItem instanceof Equipment) {
-                currEquipment = (Equipment) currItem;
-                itemMass += currEquipment.getMass();
-            }
-
-            // Reset selected
-            currItem.setSelected(false);
-        }
-
-        // If Buying or selling
-        if (type == ListFragment.MARKET_SELL || type == ListFragment.MARKET_BUY) {
-            // Sum value
-            for (Item currItem : selectedItems) {
-                itemValue += currItem.getValue();
-            }
-        }
-
+    public void actionItems(int type, List<Item> selectedItems) {
         switch (type) {
             case ListFragment.MARKET_SELL:
-                // Change player cash
-                itemValue = (int) Math.round(itemValue * SELL_MARKDOWN);
-                player.setCash(player.getCash() + itemValue);
-                // No break: will do WILDERNESS_DROP actions
-
-            case ListFragment.WILDERNESS_DROP:
-                // Move Items to area
-                getPlayer().getItemList().removeAll(selectedItems);
-                getCurrentArea().getItemList().addAll(selectedItems);
-
-                // Change player mass
-                player.setEquipmentMass(player.getEquipmentMass() - itemMass);
+                player.sellItems(selectedItems);
+                getCurrentArea().addItems(selectedItems);
                 break;
 
             case ListFragment.MARKET_BUY:
-                // Change player cash
-                try {
-                    player.setCash(player.getCash() - itemValue);
-                }
-                catch (IllegalArgumentException ex) {
-                    throw new IllegalArgumentException("Not enough money to buy the selected items.");
-                }
-                // No break: will do WILDERNESS_PICK actions
+                player.buyItems(selectedItems);
+                getCurrentArea().removeItems(selectedItems);
+
+            case ListFragment.WILDERNESS_DROP:
+                player.removeItems(selectedItems);
+                getCurrentArea().addItems(selectedItems);
+                break;
 
             case ListFragment.WILDERNESS_PICK:
-                // Move items to player
-                getCurrentArea().getItemList().removeAll(selectedItems);
-                getPlayer().getItemList().addAll(selectedItems);
-
-                // Change player mass
-                player.setEquipmentMass(player.getEquipmentMass() + itemMass);
+                player.addItems(selectedItems);
+                getCurrentArea().removeItems(selectedItems);
                 break;
 
             case ListFragment.BACKPACK_FOOD:
-                // Eat food
-                for (Item currItem : selectedItems) {
-                    if (currItem instanceof Food) {
-                        currFood = (Food) currItem;
-                        foodHealth += currFood.getHealth();
-                    }
-                    else {
-                        throw new IllegalStateException("Cannot eat non-food item");
-                    }
-                }
-                player.setHealth(player.getHealth() + foodHealth);
-
-                // Remove Items from Inventory
-                player.getItemList().removeAll(selectedItems);
-                player.setEquipmentMass(player.getEquipmentMass() - itemMass);
+                player.eatItems(selectedItems);
                 break;
 
             case ListFragment.BACKPACK_EQUIPMENT:
+                player.useItems(selectedItems);
                 break;
 
             default:

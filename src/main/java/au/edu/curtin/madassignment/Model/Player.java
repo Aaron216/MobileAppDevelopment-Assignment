@@ -12,6 +12,7 @@
 package au.edu.curtin.madassignment.Model;
 
 import android.media.audiofx.DynamicsProcessing;
+import android.opengl.GLSurfaceView;
 
 import java.util.List;
 import java.util.LinkedList;
@@ -155,17 +156,76 @@ public class Player {
         setHealth(Math.max(0.0, health - 5.0 - (equipmentMass / 2.0)));
     }
 
-    void updateMass() {
-        double newMass = 0.0;
-        Equipment currEquipment;
+    void sellItems(List<Item> items) {
+        setCash(cash + (int) Math.round(sumItemValue(items) * GameData.SELL_MARKDOWN));
+        removeItems(items);
+    }
 
-        for (Item currItem : itemList) {
-            if (currItem instanceof Equipment) {
-                currEquipment = (Equipment) currItem;
-                newMass += currEquipment.getMass();
+    void buyItems(List<Item> items) {
+        try {
+            setCash(cash - sumItemValue(items));
+            removeItems(items);
+        }
+        catch (IllegalArgumentException ex) {
+            throw new IllegalArgumentException("Not enough money to buy the selected items");
+        }
+    }
+
+    void removeItems(List<Item> items) {
+        setEquipmentMass(equipmentMass - sumEquipmentMass(items));
+        itemList.removeAll(items);
+    }
+
+    void addItems(List<Item> items) {
+        setEquipmentMass(equipmentMass + sumEquipmentMass(items));
+        itemList.addAll(items);
+    }
+
+    void eatItems(List<Item> items) {
+        Food currFood;
+        double sumHealth = 0.0;
+
+        // Sum Food health
+        for (Item currItem : items) {
+            if (currItem instanceof Food) {
+                currFood = (Food) currItem;
+                sumHealth += currFood.getHealth();
+            }
+            else {
+                throw new IllegalArgumentException("Cannot eat non-food item: " + currItem.getDescription());
             }
         }
 
-        setEquipmentMass(newMass);
+        setHealth(health + sumHealth);
+        removeItems(items);
+    }
+
+    void useItems(List<Item> items) {
+        // TODO: Usable Items
+    }
+
+    /* Private Functions */
+    private int sumItemValue(List<Item> items) {
+        int valueSum = 0;
+
+        for (Item currItem : items) {
+            valueSum += currItem.getValue();
+        }
+
+        return valueSum;
+    }
+
+    private double sumEquipmentMass(List<Item> items) {
+        Equipment currEquipment;
+        double massSum = 0.0;
+
+        for (Item currItem : items) {
+            if (currItem instanceof Equipment) {
+                currEquipment = (Equipment) currItem;
+                massSum += currEquipment.getMass();
+            }
+        }
+
+        return massSum;
     }
 }

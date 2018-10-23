@@ -27,7 +27,7 @@ public class ListFragment extends Fragment {
      * List Interface
      */
     public interface OnActionListener {
-        void onAction();
+        void update();
     }
 
     /* Constants */
@@ -138,11 +138,12 @@ public class ListFragment extends Fragment {
             public void onClick(View view) {
                 try {
                     adaptor.actionItems();
+                    adaptor.clearSelected();
                 }
                 catch (Exception ex) {
                     Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-                actionListener.onAction();
+                actionListener.update();
             }
         });
     }

@@ -12,6 +12,7 @@
 package au.edu.curtin.madassignment.Model;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 public class Area {
@@ -26,7 +27,7 @@ public class Area {
 
     /* Fields */
     private boolean town;
-    private LinkedList<Item> itemList;
+    private List<Item> itemList;
     private String description;
     private boolean starred;
     private boolean explored;
@@ -34,7 +35,7 @@ public class Area {
     /* Constructor */
     public Area() {
         town = false;
-        itemList = new LinkedList<Item>();
+        itemList = new LinkedList<>();
         description = "";
         starred = false;
         explored = false;
@@ -45,7 +46,7 @@ public class Area {
         return town;
     }
 
-    public LinkedList<Item> getItemList() {
+    public List<Item> getItemList() {
         return itemList;
     }
 
@@ -79,8 +80,16 @@ public class Area {
         town = inTown;
     }
 
-    public void setItemList(LinkedList<Item> inItems) {
+    public void setItemList(List<Item> inItems) {
         itemList = inItems;
+    }
+
+    public void addItems(List<Item> inItems) {
+        itemList.addAll(inItems);
+    }
+
+    public void removeItems(List<Item> inItems) {
+        itemList.removeAll(inItems);
     }
 
     public void setDescription(String inDescription) {

@@ -107,11 +107,7 @@ public class InventoryActivity extends AppCompatActivity implements ListFragment
     }
 
     /* Functions */
-    public void onAction() {
-        update();
-    }
-
-    private void update() {
+    public void update() {
         statusBar.update();
         leftList.update();
         rightList.update();
