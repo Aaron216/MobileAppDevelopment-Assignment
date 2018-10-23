@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import au.edu.curtin.madassignment.*;
 import au.edu.curtin.madassignment.Model.GameData;
@@ -17,9 +18,12 @@ public class GameEndActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_end);
 
+        // Get UI elements
+        TextView gameEndText = findViewById(R.id.lblGameEnd);
         Button playAgainButton = findViewById(R.id.btnPlayAgain);
         Button quitButton = findViewById(R.id.btnQuit);
 
+        // Set on click listeners
         playAgainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -34,6 +38,16 @@ public class GameEndActivity extends AppCompatActivity {
                 startActivity(WelcomeActivity.getIntent(GameEndActivity.this));
             }
         });
+
+        // Set header
+        if (GameData.getInstance().isGameOver()) {
+            gameEndText.setText(getResources().getText(R.string.game_over));
+            gameEndText.setTextColor(getResources().getColor(R.color.colorRed, null));
+        }
+        else {
+            gameEndText.setText(getResources().getText(R.string.game_won));
+            gameEndText.setTextColor(getResources().getColor(R.color.colorPrimary, null));
+        }
     }
 
     public static Intent getIntent(Context context) {
