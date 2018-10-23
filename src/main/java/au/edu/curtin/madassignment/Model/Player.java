@@ -181,7 +181,7 @@ public class Player {
         itemList.removeAll(items);
     }
 
-    void addItems(List<Item> items) {
+    public void addItems(List<Item> items) {
         checkSpecial(items, true);
         setEquipmentMass(equipmentMass + sumEquipmentMass(items));
         itemList.addAll(items);
@@ -257,10 +257,10 @@ public class Player {
             for (boolean hasThisSpecial : hasSpecial) {
                 hasAll &= hasThisSpecial;
             }
-        }
 
-        if (hasAll) {
-            GameData.getInstance().setGameWon();
+            if (hasAll) {
+                GameData.getInstance().setGameWon();
+            }
         }
     }
 }

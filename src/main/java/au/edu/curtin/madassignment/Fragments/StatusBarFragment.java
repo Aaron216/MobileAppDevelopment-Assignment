@@ -82,11 +82,11 @@ public class StatusBarFragment extends Fragment {
         massText.setText(String.format(Locale.ENGLISH, "%.2f kg", player.getEquipmentMass()));
 
         // Jade Monkey
-        if (player.getHasSpecial()[1]) {
-            mapImage.setImageResource(R.drawable.ic_monkey_black_24dp);
+        if (player.getHasSpecial()[0]) {
+            monkeyImage.setImageResource(R.drawable.ic_monkey_black_24dp);
         }
         else {
-            mapImage.setImageResource(R.drawable.ic_monkey_grey_24dp);
+            monkeyImage.setImageResource(R.drawable.ic_monkey_grey_24dp);
         }
 
         // Roadmap
@@ -99,10 +99,10 @@ public class StatusBarFragment extends Fragment {
 
         // Ice Scraper
         if (player.getHasSpecial()[2]) {
-            mapImage.setImageResource(R.drawable.ic_map_black_24dp);
+            iceImage.setImageResource(R.drawable.ic_ice_black_24dp);
         }
         else {
-            mapImage.setImageResource(R.drawable.ic_ice_grey_24dp);
+            iceImage.setImageResource(R.drawable.ic_ice_grey_24dp);
         }
     }
 }

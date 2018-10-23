@@ -49,7 +49,7 @@ public class WelcomeActivity extends AppCompatActivity {
         // Check if there is a game to continue
         if (GameData.hasInstance()) {
             // Check if game over
-            continueGameButton.setEnabled(!GameData.getInstance().isGameOver());
+            continueGameButton.setEnabled(!GameData.getInstance().isGameEnd());
         }
         else {
             continueGameButton.setEnabled(false);

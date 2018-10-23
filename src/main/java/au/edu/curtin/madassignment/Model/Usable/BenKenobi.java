@@ -1,6 +1,8 @@
 package au.edu.curtin.madassignment.Model.Usable;
 
-import au.edu.curtin.madassignment.Model.Equipment;
+import java.util.List;
+
+import au.edu.curtin.madassignment.Model.*;
 
 public class BenKenobi extends Equipment implements Equipment.Usable {
     /* Constants */
@@ -19,6 +21,9 @@ public class BenKenobi extends Equipment implements Equipment.Usable {
 
     /* Function */
     public void use() {
-
+        GameData gameInstance = GameData.getInstance();
+        List<Item> items = gameInstance.getCurrentArea().getItemList();
+        gameInstance.getPlayer().addItems(items);
+        gameInstance.getCurrentArea().removeItems(items);
     }
 }

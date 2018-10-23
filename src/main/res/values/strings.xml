@@ -50,4 +50,7 @@
     <string name="game_over">Game Over</string>
     <string name="play_again">Play again</string>
     <string name="quit">Quit</string>
+
+    <!-- Smell-O-Scope -->
+    <string name="smell_o_scope">Smell-O-Scope</string>
 </resources>
