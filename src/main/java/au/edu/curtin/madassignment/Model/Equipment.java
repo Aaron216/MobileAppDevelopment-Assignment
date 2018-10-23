@@ -11,12 +11,14 @@
 
 package au.edu.curtin.madassignment.Model;
 
+import android.content.Context;
+
 import java.util.Random;
 
 public class Equipment extends Item {
     /* Usable Interface */
     public interface Usable {
-        void use();
+        void use(Context context);
     }
 
     /* Constants */
@@ -94,7 +96,7 @@ public class Equipment extends Item {
     }
 
     /* Functions */
-    public void use() {
+    public void use(Context context) {
         throw new IllegalStateException(this.getDescription() + " cannot be used.");
     }
 }

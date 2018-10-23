@@ -11,6 +11,8 @@
 
 package au.edu.curtin.madassignment.Model;
 
+import android.content.Context;
+
 import java.util.List;
 import java.util.Random;
 
@@ -153,7 +155,7 @@ public class GameData {
         }
     }
 
-    public void actionItems(int type, List<Item> selectedItems) {
+    public void actionItems(Context context, int type, List<Item> selectedItems) {
         switch (type) {
             case ListFragment.MARKET_SELL:
                 player.sellItems(selectedItems);
@@ -179,7 +181,7 @@ public class GameData {
                 break;
 
             case ListFragment.BACKPACK_EQUIPMENT:
-                player.useItems(selectedItems);
+                player.useItems(context, selectedItems);
                 break;
 
             default:

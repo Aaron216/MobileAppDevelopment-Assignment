@@ -1,8 +1,8 @@
 package au.edu.curtin.madassignment.Model.Usable;
 
-import android.app.Activity;
+import android.content.Context;
 
-import au.edu.curtin.madassignment.Activities.SmellActivity;
+import au.edu.curtin.madassignment.Activities.*;
 import au.edu.curtin.madassignment.Model.*;
 
 public class SmellOScope extends Equipment implements Equipment.Usable {
@@ -22,15 +22,7 @@ public class SmellOScope extends Equipment implements Equipment.Usable {
 
     /* Function */
     @Override
-    public void use() {
-        ActivityStarter starter = new ActivityStarter();
-        starter.startSmellActivity();
-    }
-
-    /* Private Class */
-    private class ActivityStarter extends Activity {
-        void startSmellActivity() {
-            startActivity(SmellActivity.getInent(ActivityStarter.this));
-        }
+    public void use(Context context) {
+        context.startActivity(SmellActivity.getInent(context));
     }
 }

@@ -229,7 +229,7 @@ public class ListFragment extends Fragment {
                 }
             }
 
-            GameData.getInstance().actionItems(type, selectedItems);
+            GameData.getInstance().actionItems(getContext(), type, selectedItems);
 
             // Refresh item list if BACKPACK_FOOD or BACKPACK_EQUIPMENT
             if (type == BACKPACK_FOOD) {

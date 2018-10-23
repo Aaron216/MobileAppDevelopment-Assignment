@@ -11,6 +11,8 @@
 
 package au.edu.curtin.madassignment.Model;
 
+import android.content.Context;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.LinkedList;
@@ -206,7 +208,7 @@ public class Player {
         removeItems(items);
     }
 
-    void useItems(List<Item> items) {
+    void useItems(Context context, List<Item> items) {
         // Error checking
         if (items.size() != 1) {
             throw new IllegalArgumentException("Can only use one item at a time.");
@@ -216,7 +218,7 @@ public class Player {
 //        }
 
         Equipment equipment = (Equipment) items.get(0);
-        equipment.use();
+        equipment.use(context);
     }
 
     /* Private Functions */

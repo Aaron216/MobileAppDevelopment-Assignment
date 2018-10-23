@@ -20,7 +20,9 @@
         <activity android:name=".Activities.OverviewActivity" />
         <activity android:name=".Activities.GameEndActivity" />
         <activity android:name=".Activities.InventoryActivity" />
-        <activity android:name=".Activities.SmellActivity"></activity>
+        <activity android:name=".Activities.SmellActivity" />
+        <activity android:name=".Activities.BenKenobiActivity" />
+        <activity android:name=".Activities.ImprobabilityDriveActivity"></activity>
     </application>
 
 </manifest>

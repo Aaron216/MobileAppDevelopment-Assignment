@@ -53,4 +53,10 @@
 
     <!-- Smell-O-Scope -->
     <string name="smell_o_scope">Smell-O-Scope</string>
+
+    <!-- Ben Kenobi -->
+    <string name="ben_kenobi">Ben Kenobi</string>
+    <string name="kenobi_description">When used in a town, you immediately acquire all items in the market without paying for them. The same happens in wilderness areas, even thout this isn\'t terribly useful.</string>
+    <string name="do_it">Do it</string>
+    <string name="don_t_try_it">Don\'t Try it</string>
 </resources>
