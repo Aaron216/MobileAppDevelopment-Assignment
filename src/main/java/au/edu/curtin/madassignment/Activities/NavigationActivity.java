@@ -120,6 +120,11 @@ public class NavigationActivity extends AppCompatActivity {
         update();
     }
 
+    @Override
+    public void onBackPressed() {
+        startActivity(WelcomeActivity.getIntent(NavigationActivity.this));
+    }
+
     /* Functions */
     private void move(char direction) {
         try {

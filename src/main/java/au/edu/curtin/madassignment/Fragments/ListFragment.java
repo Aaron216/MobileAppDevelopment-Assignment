@@ -47,6 +47,7 @@ public class ListFragment extends Fragment {
     private TextView noItemsText;
     private ItemAdaptor adaptor;
 
+    /* Overrides */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +80,7 @@ public class ListFragment extends Fragment {
         }
     }
 
+    /* Functions */
     public void setListType(int inType) {
         // Error checking
         if (inType < MARKET_SELL || inType > BACKPACK_EQUIPMENT) {
@@ -138,7 +140,6 @@ public class ListFragment extends Fragment {
             public void onClick(View view) {
                 try {
                     adaptor.actionItems();
-                    adaptor.clearSelected();
                 }
                 catch (Exception ex) {
                     Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
@@ -204,7 +205,7 @@ public class ListFragment extends Fragment {
             this.itemList = inItems;
         }
 
-        /* Functions */
+        /* Overrides */
         @NonNull
         @Override
         public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -217,23 +218,32 @@ public class ListFragment extends Fragment {
             viewHolder.bind(itemList.get(index));
         }
 
+        /* Functions */
         void actionItems() {
             LinkedList<Item> selectedItems = new LinkedList<>();
 
             for (Item currItem : itemList) {
                 if (currItem.isSelected()) {
                     selectedItems.add(currItem);
+                    currItem.setSelected(false);
                 }
             }
 
             GameData.getInstance().actionItems(type, selectedItems);
+
+            // Refresh item list if BACKPACK_FOOD or BACKPACK_EQUIPMENT
+            if (type == BACKPACK_FOOD) {
+                setItems(GameData.getInstance().getPlayer().getFoodItemList());
+            }
+            else if (type == BACKPACK_EQUIPMENT) {
+                setItems(GameData.getInstance().getPlayer().getEquipmentItemList());
+            }
         }
 
         void clearSelected() {
             for (Item currItem : itemList) {
                 currItem.setSelected(false);
             }
-            notifyDataSetChanged();
         }
     }
 
