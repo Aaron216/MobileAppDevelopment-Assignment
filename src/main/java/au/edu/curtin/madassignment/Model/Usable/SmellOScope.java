@@ -13,6 +13,7 @@ public class SmellOScope extends Equipment implements Equipment.Usable {
     /* Constructor */
     public SmellOScope() {
         super();
+        super.setType(Usable.TYPE);
         super.setDescription(NAME);
         super.setMass(MASS);
         super.setValue(100);

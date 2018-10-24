@@ -20,6 +20,9 @@ public class Food extends Item {
         "Bookmark Dumplings", "Coffee", "Doughnuts", "Main Cafe Nachos", "Main Cafe Sushi",
         "Tav Burger", "Tav Chicken Parma", "Tav Chips", "Tav Schnitzel", "Vege Patch Carrot"
     };
+
+    private static final String TYPE = "Food";
+
     private static final int VALUE_RANGE = 10;
     private static final int MIN_VALUE = 1;
     private static final double HEALTH_RANGE = 40.0;
@@ -35,6 +38,7 @@ public class Food extends Item {
         // Choose Random Food
         Random random = new Random();
         int index = random.nextInt(FOOD_NAMES.length);
+        super.setType(TYPE);
         super.setDescription(FOOD_NAMES[index]);
         super.setValue(random.nextInt(VALUE_RANGE) + MIN_VALUE);
         setHealth(random.nextDouble()*HEALTH_RANGE + MIN_HEALTH);

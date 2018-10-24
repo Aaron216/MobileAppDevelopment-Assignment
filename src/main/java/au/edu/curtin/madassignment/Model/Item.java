@@ -14,12 +14,14 @@ package au.edu.curtin.madassignment.Model;
 public abstract class Item {
     /* Fields */
     private boolean selected;
+    private String type;
     private String description;
     private int value;
 
     /* Constructor */
     Item() {
         selected = false;
+        type = "";
         description = "";
         value = 0;
     }
@@ -27,6 +29,10 @@ public abstract class Item {
     /* Accessors */
     public boolean isSelected() {
         return selected;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public String getDescription() {
@@ -44,6 +50,13 @@ public abstract class Item {
 
     public void setSelected(boolean inSelected) {
         this.selected = inSelected;
+    }
+
+    public void setType(String inType) {
+        if ((inType == null) || (inType.isEmpty())) {
+            throw new IllegalArgumentException("Type string cannot be null or empty");
+        }
+        this.type = inType;
     }
 
     public void setDescription(String inDescription) {

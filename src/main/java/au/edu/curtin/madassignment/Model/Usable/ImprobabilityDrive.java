@@ -12,6 +12,7 @@ public class ImprobabilityDrive extends Equipment implements Equipment.Usable {
     /* Constructor */
     public ImprobabilityDrive() {
         super();
+        super.setType(Usable.TYPE);
         super.setDescription(NAME);
         super.setMass(MASS);
         super.setValue(100);

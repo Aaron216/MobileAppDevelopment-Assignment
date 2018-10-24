@@ -1,22 +1,26 @@
-/**
- * Curtin University
- * Mobile Application Development
- * Assignment
- * Aaron Musgrave
- * 25/10/2018
- *
- * Game Data Class
- * Responsible for storing data about the current game
+/*
+  Curtin University
+  Mobile Application Development
+  Assignment
+  Aaron Musgrave
+  25/10/2018
+
+  Game Data Class
+  Responsible for storing data about the current game
  */
 
 package au.edu.curtin.madassignment.Model;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.app.FragmentManager;
 
 import java.util.List;
 import java.util.Random;
 
 import au.edu.curtin.madassignment.Fragments.ListFragment;
+import au.edu.curtin.madassignment.Model.GameSchema.*;
 
 public class GameData {
     /* Constants */
@@ -25,6 +29,7 @@ public class GameData {
     public static final int MAX_COL = 11;
 
     /* Fields */
+    private SQLiteDatabase db;
     private Area[][] grid;
     private Player player;
     private boolean gameOver;
@@ -33,12 +38,17 @@ public class GameData {
 
     /* Constructor */
     private GameData() {
-        grid = new Area[MAX_ROW][MAX_COL];
-        player = new Player();
-        gameOver = false;
-        gameWon = false;
+        this.grid = new Area[MAX_ROW][MAX_COL];
+        this.player = new Player();
+        this.gameOver = false;
+        this.gameWon = false;
         generateMap();
         getCurrentArea().setExplored(true);
+    }
+
+    private GameData(Context context) {
+        this();
+        this.db = new GameDbHelper(context.getApplicationContext()).getWritableDatabase();
     }
 
     /* Accessors */
@@ -126,13 +136,11 @@ public class GameData {
     /* Functions */
     public void generateMap() {
         Area currArea;
-        int row;
-        int col;
 
         // Randomly Generate Areas
-        for (row = 0; row < MAX_ROW; row++) {
+        for (int row = 0; row < MAX_ROW; row++) {
             // Iterate over rows
-            for (col = 0; col < MAX_COL; col++) {
+            for (int col = 0; col < MAX_COL; col++) {
                 // Iterate through columns
                 currArea = new Area();
 
@@ -150,10 +158,10 @@ public class GameData {
 
         for (int ii = 0; ii < Equipment.SPECIAL_NAMES.length; ii++) {
             specialItems[ii] = new Equipment(Equipment.SPECIAL_NAMES[ii]);
-            col = random.nextInt(MAX_COL);
-            row = random.nextInt(MAX_ROW);
-            getArea(col, row).addItem(specialItems[ii]);
+            getArea(random.nextInt(MAX_ROW), random.nextInt(MAX_COL)).addItem(specialItems[ii]);
         }
+
+        dbAddAreaGrid();
     }
 
     public void actionItems(Context context, int type, List<Item> selectedItems) {
@@ -187,6 +195,61 @@ public class GameData {
 
             default:
                 throw new IllegalArgumentException("Unknown action type");
+        }
+    }
+
+    /* Private Functions */
+    private void dbAddAreaGrid() {
+        db.execSQL("delete from " + AreaTable.NAME);
+        db.execSQL("delete from " + AreaItemTable.NAME);
+
+        // Iterate over rows and cols
+        for (int row = 0; row < MAX_ROW; row++) {
+            for (int col = 0; col < MAX_COL; col++) {
+                dBAddArea(grid[row][col]);
+
+                // Add Items to database
+                for (Item currItem : grid[row][col].getItemList()) {
+                    dbAddAreaItem(row, col, currItem);
+                }
+            }
+        }
+    }
+
+    private void dBAddArea(Area area) {
+        ContentValues cv = new ContentValues();
+
+        cv.put(AreaTable.Cols.ROW_LOCATION, area.getRowLocation());
+        cv.put(AreaTable.Cols.COL_LOCATION, area.getColLocation());
+        cv.put(AreaTable.Cols.IS_TOWN, area.isTown());
+        cv.put(AreaTable.Cols.DESCRIPTION, area.getDescription());
+        cv.put(AreaTable.Cols.IS_STARRED, area.isStarred());
+        cv.put(AreaTable.Cols.IS_EXPLORED, area.isExplored());
+
+        db.insert(AreaTable.NAME, null, cv);
+    }
+
+    private void dbAddAreaItem(int row, int col, Item item) {
+        ContentValues cv = new ContentValues();
+
+        cv.put(AreaItemTable.Cols.ROW_LOCATION, row);
+        cv.put(AreaItemTable.Cols.COL_LOCATION, col);
+        cv.put(AreaItemTable.Cols.TYPE, item.getType());
+        cv.put(AreaItemTable.Cols.DESCRIPTION, item.getDescription());
+        cv.put(AreaItemTable.Cols.VALUE, item.getValue());
+
+        if (item instanceof Equipment) {
+            cv.put(AreaItemTable.Cols.MASS, ((Equipment) item).getMass());
+        }
+        else {
+            cv.put(AreaItemTable.Cols.MASS, 0.0);
+        }
+
+        if (item instanceof Food) {
+            cv.put(AreaItemTable.Cols.HEALTH, ((Food) item).getHealth());
+        }
+        else {
+            cv.put(AreaItemTable.Cols.HEALTH, 0.0);
         }
     }
 }

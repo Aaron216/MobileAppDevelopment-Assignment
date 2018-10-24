@@ -14,6 +14,7 @@ public class BenKenobi extends Equipment implements Equipment.Usable {
     /* Constructor */
     public BenKenobi() {
         super();
+        super.setType(Usable.TYPE);
         super.setDescription(NAME);
         super.setMass(MASS);
         super.setValue(1000);

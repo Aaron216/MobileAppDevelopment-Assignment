@@ -22,6 +22,9 @@ import au.edu.curtin.madassignment.Fragments.*;
 
 public class OverviewActivity extends AppCompatActivity {
     /* Fields */
+    private Area selectedArea;
+    private MapAdaptor adaptor;
+
     private ImageButton backButton;
     private StatusBarFragment statusBar;
     private AreaInfoFragment areaInfo;
@@ -68,15 +71,15 @@ public class OverviewActivity extends AppCompatActivity {
         verticalRecycler.setLayoutManager(layoutManager);
 
         // Populate recycler view
-        MapAdaptor adaptor = new MapAdaptor(GameData.getInstance().getGrid());
+        adaptor = new MapAdaptor(GameData.getInstance().getGrid());
         verticalRecycler.setAdapter(adaptor);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        statusBar.update();
-        areaInfo.update();
+        setSelectedArea(GameData.getInstance().getCurrentArea());
+        update();
     }
 
     @Override
@@ -85,6 +88,20 @@ public class OverviewActivity extends AppCompatActivity {
     }
 
     /* Functions */
+    private void setSelectedArea(Area inArea) {
+        if (inArea == null) {
+            throw new IllegalArgumentException("Cannot select a null area");
+        }
+        selectedArea = inArea;
+    }
+
+    private void update() {
+        statusBar.update();
+        areaInfo.setArea(selectedArea);
+        areaInfo.update();
+        adaptor.notifyDataSetChanged();
+    }
+
     private void goBack() {
         startActivity(NavigationActivity.getIntent(OverviewActivity.this));
     }
@@ -158,8 +175,9 @@ public class OverviewActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     if ((area != null) && (area.isExplored())) {
-                        areaInfo.setArea(area);
-                        areaInfo.update();
+                        setSelectedArea(area);
+                        areaLayout.setBackground(getResources().getDrawable(R.drawable.rounded_box, null));
+                        update();
                     }
                 }
             });
@@ -184,6 +202,14 @@ public class OverviewActivity extends AppCompatActivity {
         // Functions
         void bind(Area inArea) {
             area = inArea;
+
+            // Check if selected
+            if (area.equals(selectedArea)) {
+                areaLayout.setBackground(getResources().getDrawable(R.drawable.rounded_box, null));
+            }
+            else {
+                areaLayout.setBackground(null);
+            }
 
             // Set area type
             if (area.isExplored()) {

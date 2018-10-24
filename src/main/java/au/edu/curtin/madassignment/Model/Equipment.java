@@ -18,6 +18,7 @@ import java.util.Random;
 public class Equipment extends Item {
     /* Usable Interface */
     public interface Usable {
+        String TYPE = "Usable";
         void use(Context context);
     }
 
@@ -28,7 +29,11 @@ public class Equipment extends Item {
         "Judge Dredd's Lawgiver Mk II", "Lightsabre", "Malcom Reynolds' Sidearm", "Mobile Infantry Mini-Nuke",
         "Romulan Disruptor", "Stargate Command FN P90", "Tron's Identity Disk", "UNSC Pistol", "UNSC Shotgun"
     };
-    public static final String[] SPECIAL_NAMES = {"Jade Monkey", "Roadmap", "Ice Scraper"};
+    static final String[] SPECIAL_NAMES = {"Jade Monkey", "Roadmap", "Ice Scraper"};
+
+    private static final String TYPE = "Equipment";
+    private static final String SPECIAL_TYPE = "Special";
+
     private static final int VALUE_RANGE = 20;
     private static final int MIN_VALUE = 1;
     private static final int MIN_SPECIAL_VALUE = 10;
@@ -48,6 +53,7 @@ public class Equipment extends Item {
         // Choose random item
         Random random = new Random();
         int index = random.nextInt(EQUIPMENT_NAMES.length);
+        super.setType(TYPE);
         super.setDescription(EQUIPMENT_NAMES[index]);
         super.setValue(random.nextInt(VALUE_RANGE) + MIN_VALUE);
         setMass(random.nextDouble()*MASS_RANGE + MIN_MASS);
@@ -59,6 +65,7 @@ public class Equipment extends Item {
     public Equipment(String inDescription) {
         super();
 
+        super.setType(SPECIAL_TYPE);
         super.setDescription(inDescription);
 
         // Set Value and Mass
