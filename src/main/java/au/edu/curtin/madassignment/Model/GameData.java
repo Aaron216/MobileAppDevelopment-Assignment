@@ -42,8 +42,6 @@ public class GameData {
         this.player = new Player();
         this.gameOver = false;
         this.gameWon = false;
-        generateMap();
-        getCurrentArea().setExplored(true);
     }
 
     private GameData(Context context) {
@@ -131,6 +129,7 @@ public class GameData {
 
     public static void newGame() {
         instance = new GameData();
+        instance.generateMap();
     }
 
     /* Functions */
@@ -161,6 +160,10 @@ public class GameData {
             getArea(random.nextInt(MAX_ROW), random.nextInt(MAX_COL)).addItem(specialItems[ii]);
         }
 
+        // Set current player area as explored
+        getCurrentArea().setExplored(true);
+
+        // Add all to database
         dbAddAreaGrid();
     }
 
@@ -199,6 +202,48 @@ public class GameData {
     }
 
     /* Private Functions */
+    private void dbAddPlayer() {
+        db.execSQL("delete from " + PlayerTable.NAME);
+        db.execSQL("delete from " + PlayerItemTable.NAME);
+
+        ContentValues cv = new ContentValues();
+
+        cv.put(PlayerTable.Cols.ROW_LOCATION, player.getRowLocation());
+        cv.put(PlayerTable.Cols.COL_LOCATION, player.getColLocation());
+        cv.put(PlayerTable.Cols.CASH, player.getCash());
+        cv.put(PlayerTable.Cols.HEALTH, player.getHealth());
+        cv.put(PlayerTable.Cols.EQUIPMENT_MASS, player.getEquipmentMass());
+        cv.put(PlayerTable.Cols.HAS_JADE_MONKEY, player.getHasSpecial()[0]);
+        cv.put(PlayerTable.Cols.HAS_JADE_MONKEY, player.getHasSpecial()[1]);
+        cv.put(PlayerTable.Cols.HAS_ICE_SCRAPER, player.getHasSpecial()[2]);
+
+        db.insert(PlayerTable.NAME, null, cv);
+
+        for (Item currItem : player.getItemList()) {
+            cv = new ContentValues();
+
+            cv.put(PlayerItemTable.Cols.TYPE, currItem.getType());
+            cv.put(PlayerItemTable.Cols.DESCRIPTION, currItem.getDescription());
+            cv.put(PlayerItemTable.Cols.VALUE, currItem.getValue());
+
+            if (currItem instanceof Equipment) {
+                cv.put(PlayerItemTable.Cols.MASS, ((Equipment) currItem).getMass());
+            }
+            else {
+                cv.put(PlayerItemTable.Cols.MASS, 0.0);
+            }
+
+            if (currItem instanceof Food) {
+                cv.put(PlayerItemTable.Cols.HEALTH, ((Food) currItem).getHealth());
+            }
+            else {
+                cv.put(PlayerItemTable.Cols.HEALTH, 0.0);
+            }
+
+            db.insert(PlayerItemTable.NAME, null, cv);
+        }
+    }
+
     private void dbAddAreaGrid() {
         db.execSQL("delete from " + AreaTable.NAME);
         db.execSQL("delete from " + AreaItemTable.NAME);
@@ -251,5 +296,7 @@ public class GameData {
         else {
             cv.put(AreaItemTable.Cols.HEALTH, 0.0);
         }
+
+        db.insert(AreaItemTable.NAME, null, cv);
     }
 }
