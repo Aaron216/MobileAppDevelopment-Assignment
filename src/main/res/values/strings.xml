@@ -42,7 +42,7 @@
     <string name="drop">Drop Item(s)</string>
     <string name="pick_up">Pick Up Item(s)</string>
     <string name="eat">Eat Food</string>
-    <string name="use">Use Item(s)</string>
+    <string name="use">Use Item</string>
     <string name="no_items">No Items to Show</string>
 
     <!-- Game End Activity -->

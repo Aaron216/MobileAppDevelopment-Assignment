@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
-;
+
 import au.edu.curtin.madassignment.Fragments.*;
 import au.edu.curtin.madassignment.Model.*;
 import au.edu.curtin.madassignment.*;

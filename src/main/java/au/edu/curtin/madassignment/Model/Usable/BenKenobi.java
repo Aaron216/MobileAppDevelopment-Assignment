@@ -2,7 +2,8 @@ package au.edu.curtin.madassignment.Model.Usable;
 
 import android.content.Context;
 
-import au.edu.curtin.madassignment.Activities.BenKenobiActivity;
+import java.util.List;
+
 import au.edu.curtin.madassignment.Model.*;
 
 public class BenKenobi extends Equipment implements Equipment.Usable {
@@ -23,6 +24,14 @@ public class BenKenobi extends Equipment implements Equipment.Usable {
     /* Function */
     @Override
     public void use(Context context) {
-        context.startActivity(BenKenobiActivity.getIntent(context));
+        GameData gameInstance = GameData.getInstance();
+        List<Item> items = gameInstance.getCurrentArea().getItemList();
+
+        gameInstance.getPlayer().getItemList().remove(this);
+        gameInstance.getPlayer().addItems(items);
+        gameInstance.getCurrentArea().removeItems(items);
+
+        // Would like to use this, but I'm saving it for later
+        // context.startActivity(BenKenobiActivity.getIntent(context));
     }
 }
