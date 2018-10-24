@@ -23,6 +23,10 @@ public class SmellOScope extends Equipment implements Equipment.Usable {
     /* Function */
     @Override
     public void use(Context context) {
+        // Start smell activity
         context.startActivity(SmellActivity.getIntent(context));
+
+        // Remove smell-o-scope from player
+        GameData.getInstance().getPlayer().removeItem(this);
     }
 }

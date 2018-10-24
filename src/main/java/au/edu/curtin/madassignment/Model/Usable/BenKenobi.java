@@ -27,7 +27,7 @@ public class BenKenobi extends Equipment implements Equipment.Usable {
         GameData gameInstance = GameData.getInstance();
         List<Item> items = gameInstance.getCurrentArea().getItemList();
 
-        gameInstance.getPlayer().getItemList().remove(this);
+        gameInstance.getPlayer().removeItem(this);
         gameInstance.getPlayer().addItems(items);
         gameInstance.getCurrentArea().removeItems(items);
 

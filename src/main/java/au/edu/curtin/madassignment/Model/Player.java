@@ -177,16 +177,39 @@ public class Player {
         }
     }
 
+    public void removeItem(Item item) {
+        // Check if special item
+        Equipment equipment;
+        int itemType;
+
+        // Check if equipment
+        if (item instanceof Equipment) {
+            equipment = (Equipment) item;
+
+            // Check if special
+            if (equipment.isSpecial()) {
+                itemType = Arrays.asList(Equipment.SPECIAL_NAMES).indexOf(equipment.getDescription());
+                this.hasSpecial[itemType] = false;
+            }
+
+            // Update equipment mass
+            setEquipmentMass(this.equipmentMass - equipment.getMass());
+        }
+
+        // Remove from list
+        this.itemList.remove(item);
+    }
+
     public void removeItems(List<Item> items) {
         checkForSpecialItems(items, false);
-        setEquipmentMass(equipmentMass - sumEquipmentMass(items));
-        itemList.removeAll(items);
+        setEquipmentMass(this.equipmentMass - sumEquipmentMass(items));
+        this.itemList.removeAll(items);
     }
 
     public void addItems(List<Item> items) {
         checkForSpecialItems(items, true);
-        setEquipmentMass(equipmentMass + sumEquipmentMass(items));
-        itemList.addAll(items);
+        setEquipmentMass(this.equipmentMass + sumEquipmentMass(items));
+        this.itemList.addAll(items);
     }
 
     void eatItems(List<Item> items) {
