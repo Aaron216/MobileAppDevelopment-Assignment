@@ -9,7 +9,6 @@ public class BenKenobi extends Equipment implements Equipment.Usable {
     /* Constants */
     private static final String NAME = "Ben Kenobi";
     private static final double MASS = 0.0;
-    private static final int REQUEST_CONFIRM = 0;
 
     /* Constructor */
     public BenKenobi() {
