@@ -39,4 +39,11 @@
         app:layout_constraintTop_toBottomOf="@+id/frameStatusBar"
         app:layout_constraintBottom_toBottomOf="@+id/btnBack"/>
 
+    <FrameLayout
+        android:id="@+id/frameAreaInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@id/lblOverview"/>
+
 </android.support.constraint.ConstraintLayout>
