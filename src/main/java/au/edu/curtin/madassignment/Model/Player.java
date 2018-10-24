@@ -96,15 +96,15 @@ public class Player {
 
     /* Mutators */
     private void setRowLocation(int inRow) {
-        if (inRow < 0 || inRow > GameData.MAX_ROW) {
-            throw new IllegalArgumentException("Row Location must be >= 0 and <= " + GameData.MAX_ROW);
+        if (inRow < 0 || inRow >= GameData.MAX_ROW) {
+            throw new IllegalArgumentException("Row Location must be >= 0 and < " + GameData.MAX_ROW);
         }
         rowLocation = inRow;
     }
 
     private void setColLocation(int inCol) {
-        if (inCol < 0 || inCol > GameData.MAX_COL) {
-            throw new IllegalArgumentException("Column Location must be >= 0 and <= " + GameData.MAX_COL);
+        if (inCol < 0 || inCol >= GameData.MAX_COL) {
+            throw new IllegalArgumentException("Column Location must be >= 0 and < " + GameData.MAX_COL);
         }
         colLocation = inCol;
     }
@@ -160,6 +160,7 @@ public class Player {
                 throw new IllegalArgumentException("Unknown direction argument");
         }
         setHealth(Math.max(0.0, health - 5.0 - (equipmentMass / 2.0)));
+        GameData.getInstance().getCurrentArea().setExplored(true);
     }
 
     void sellItems(List<Item> items) {

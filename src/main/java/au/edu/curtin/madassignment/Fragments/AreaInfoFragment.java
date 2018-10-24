@@ -18,12 +18,14 @@ import au.edu.curtin.madassignment.Model.*;
 
 public class AreaInfoFragment extends Fragment {
     /* Fields */
+    Area area;
     TextView biomeText;
     TextView descriptionText;
     TextView coordinateText;
     ImageButton starButton;
     ImageButton editButton;
 
+    /* Overrides */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup ui, Bundle bundle) {
         View view = inflater.inflate(R.layout.fragment_area_info, ui, false);
@@ -89,17 +91,28 @@ public class AreaInfoFragment extends Fragment {
             }
         });
 
-        update();
+        //update();
         return view;
     }
 
+    /* Mutators */
+    public void setArea(Area inArea) {
+        if (inArea == null) {
+            throw new IllegalArgumentException("Area cannot be null");
+        }
+        this.area = inArea;
+    }
+
+    /* Functions */
     public void update() {
-        GameData gameData = GameData.getInstance();
-        Area area = gameData.getCurrentArea();
+        // Check that area is set
+        if (area == null) {
+            area = GameData.getInstance().getCurrentArea();
+        }
 
         biomeText.setText(area.getBiomeString());
         descriptionText.setText(area.getDescription());
-        coordinateText.setText(gameData.getCoordinateText());
+        coordinateText.setText(area.getCoordinateText());
 
         if (area.isStarred()) {
             starButton.setImageResource(R.drawable.ic_star_black_24dp);

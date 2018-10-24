@@ -33,6 +33,8 @@ public class Area {
     private static final int NUM_USABLE = 3;
 
     /* Fields */
+    private int rowLocation;
+    private int colLocation;
     private boolean town;
     private List<Item> itemList;
     private String description;
@@ -41,6 +43,8 @@ public class Area {
 
     /* Constructor */
     public Area() {
+        rowLocation = 0;
+        colLocation = 0;
         town = false;
         itemList = new LinkedList<>();
         description = "";
@@ -49,6 +53,21 @@ public class Area {
     }
 
     /* Accessors */
+    public int getRowLocation() {
+        return rowLocation;
+    }
+
+    public int getColLocation() {
+        return colLocation;
+    }
+
+    public String getCoordinateText() {
+        String coordinate = "";
+        coordinate += "[" + getRowLocation() + "]";
+        coordinate += "[" + getColLocation() + "]";
+        return coordinate;
+    }
+
     public boolean isTown() {
         return town;
     }
@@ -83,6 +102,20 @@ public class Area {
     }
 
     /* Mutators */
+    void setRowLocation(int inRow) {
+        if (inRow < 0 || inRow > GameData.MAX_ROW) {
+            throw new IllegalArgumentException("Row Location must be >= 0 and <= " + GameData.MAX_ROW);
+        }
+        rowLocation = inRow;
+    }
+
+    void setColLocation(int inCol) {
+        if (inCol < 0 || inCol > GameData.MAX_COL) {
+            throw new IllegalArgumentException("Column Location must be >= 0 and <= " + GameData.MAX_COL);
+        }
+        colLocation = inCol;
+    }
+
     public void setTown(boolean inTown) {
         town = inTown;
     }

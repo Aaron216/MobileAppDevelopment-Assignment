@@ -142,14 +142,14 @@ public class NavigationActivity extends AppCompatActivity {
     }
 
     private void update() {
-        int xx = GameData.getInstance().getPlayer().getColLocation();
-        int yy = GameData.getInstance().getPlayer().getRowLocation();
+        int col = GameData.getInstance().getPlayer().getColLocation();
+        int row = GameData.getInstance().getPlayer().getRowLocation();
 
         // Update UI elements
-        northButton.setEnabled(yy > 0);
-        southButton.setEnabled(yy < GameData.MAX_ROW);
-        westButton.setEnabled(xx > 0);
-        eastButton.setEnabled(xx < GameData.MAX_COL);
+        northButton.setEnabled(row > 0);
+        southButton.setEnabled(row < GameData.MAX_ROW-1);
+        westButton.setEnabled(col > 0);
+        eastButton.setEnabled(col < GameData.MAX_COL-1);
 
         if (northButton.isEnabled()) {
             northButton.setImageResource(R.drawable.ic_keyboard_arrow_up_black_24dp);
@@ -180,6 +180,7 @@ public class NavigationActivity extends AppCompatActivity {
         }
 
         // Area Info and Status Bar
+        areaInfo.setArea(GameData.getInstance().getCurrentArea());
         areaInfo.update();
         statusBar.update();
     }

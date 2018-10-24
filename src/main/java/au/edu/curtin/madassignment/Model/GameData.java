@@ -21,8 +21,8 @@ import au.edu.curtin.madassignment.Fragments.ListFragment;
 public class GameData {
     /* Constants */
     static final double SELL_MARKDOWN = 0.75;
-    public static final int MAX_ROW = 10;
-    public static final int MAX_COL = 10;
+    public static final int MAX_ROW = 11;
+    public static final int MAX_COL = 11;
 
     /* Fields */
     private Area[][] grid;
@@ -33,11 +33,12 @@ public class GameData {
 
     /* Constructor */
     private GameData() {
-        grid = new Area[MAX_ROW+1][MAX_COL+1];
+        grid = new Area[MAX_ROW][MAX_COL];
         player = new Player();
         gameOver = false;
         gameWon = false;
         generateMap();
+        getCurrentArea().setExplored(true);
     }
 
     /* Accessors */
@@ -45,16 +46,17 @@ public class GameData {
         return grid;
     }
 
-    public Area getArea(int colLocation, int rowLocation) {
-        // Check column
-        if (colLocation < 0 || colLocation > MAX_COL) {
-            throw new IllegalArgumentException("Column location must be >= 0 and <= " + MAX_COL);
-        }
+    public Area getArea(int row, int col) {
         // Check Row
-        if (rowLocation < 0 || rowLocation > MAX_ROW) {
+        if (row < 0 || row >= MAX_ROW) {
             throw new IllegalArgumentException("Row location must be >= 0 and <= " + MAX_ROW);
         }
-        return grid[colLocation][rowLocation];
+        // Check column
+        if (col < 0 || col >= MAX_COL) {
+            throw new IllegalArgumentException("Column location must be >= 0 and <= " + MAX_COL);
+        }
+
+        return grid[row][col];
     }
 
     public Player getPlayer() {
@@ -85,24 +87,17 @@ public class GameData {
     }
 
     public Area getCurrentArea() {
-        return getArea(player.getColLocation(), player.getRowLocation());
-    }
-
-    public String getCoordinateText() {
-        String coordinate = "[";
-        coordinate += player.getColLocation() + ",";
-        coordinate += player.getRowLocation() + "]";
-        return coordinate;
+        return getArea(player.getRowLocation(), player.getColLocation());
     }
 
     /* Mutators */
     private void setArea(int colLocation, int rowLocation, Area inArea) {
         // Check column
-        if (colLocation < 0 || colLocation > MAX_COL) {
+        if (colLocation < 0 || colLocation >= MAX_COL) {
             throw new IllegalArgumentException("Column location must be >= 0 and <= " + MAX_COL);
         }
         // Check Row
-        if (rowLocation < 0 || rowLocation > MAX_ROW) {
+        if (rowLocation < 0 || rowLocation >= MAX_ROW) {
             throw new IllegalArgumentException("Row location must be >= 0 and <= " + MAX_ROW);
         }
         grid[colLocation][rowLocation] = inArea;
@@ -130,16 +125,22 @@ public class GameData {
 
     /* Functions */
     public void generateMap() {
-        int xx;
-        int yy;
+        Area currArea;
+        int row;
+        int col;
 
         // Randomly Generate Areas
-        for (yy = 0; yy <= MAX_ROW; yy++) {
+        for (row = 0; row < MAX_ROW; row++) {
             // Iterate over rows
-            for (xx = 0; xx <= MAX_COL; xx++) {
+            for (col = 0; col < MAX_COL; col++) {
                 // Iterate through columns
-                grid[yy][xx] = new Area();
-                grid[yy][xx].randomize();
+                currArea = new Area();
+
+                currArea.setRowLocation(row);
+                currArea.setColLocation(col);
+                currArea.randomize();
+
+                grid[row][col] = currArea;
             }
         }
 
@@ -149,9 +150,9 @@ public class GameData {
 
         for (int ii = 0; ii < Equipment.SPECIAL_NAMES.length; ii++) {
             specialItems[ii] = new Equipment(Equipment.SPECIAL_NAMES[ii]);
-            xx = random.nextInt(MAX_COL);
-            yy = random.nextInt(MAX_ROW);
-            getArea(xx, yy).addItem(specialItems[ii]);
+            col = random.nextInt(MAX_COL);
+            row = random.nextInt(MAX_ROW);
+            getArea(col, row).addItem(specialItems[ii]);
         }
     }
 

@@ -141,7 +141,7 @@ public class SmellActivity extends AppCompatActivity {
         /* Overrides */
         @NonNull
         @Override
-        public SmellViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+        public SmellViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int index) {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
             return new SmellViewHolder(inflater, parent);
         }
