@@ -22,7 +22,7 @@ public class Food extends Item {
     };
     private static final int VALUE_RANGE = 10;
     private static final int MIN_VALUE = 1;
-    private static final double HEALTH_RANGE = 3.0;
+    private static final double HEALTH_RANGE = 40.0;
     private static final double MIN_HEALTH = 0.1;
 
     /* Fields */

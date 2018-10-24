@@ -45,7 +45,7 @@ public class GameData {
         return grid;
     }
 
-    private Area getArea(int colLocation, int rowLocation) {
+    public Area getArea(int colLocation, int rowLocation) {
         // Check column
         if (colLocation < 0 || colLocation > MAX_COL) {
             throw new IllegalArgumentException("Column location must be >= 0 and <= " + MAX_COL);

@@ -23,6 +23,6 @@ public class SmellOScope extends Equipment implements Equipment.Usable {
     /* Function */
     @Override
     public void use(Context context) {
-        context.startActivity(SmellActivity.getInent(context));
+        context.startActivity(SmellActivity.getIntent(context));
     }
 }

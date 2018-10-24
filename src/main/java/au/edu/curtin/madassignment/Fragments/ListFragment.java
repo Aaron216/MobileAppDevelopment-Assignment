@@ -225,6 +225,7 @@ public class ListFragment extends Fragment {
             for (Item currItem : itemList) {
                 if (currItem.isSelected()) {
                     selectedItems.add(currItem);
+                    currItem.setSelected(false);
                 }
             }
 
