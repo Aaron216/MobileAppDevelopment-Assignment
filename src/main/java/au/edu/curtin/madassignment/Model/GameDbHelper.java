@@ -36,6 +36,7 @@ public class GameDbHelper extends SQLiteOpenHelper {
 
         sqlQuery += "create table " + PlayerTable.NAME + "(";
         sqlQuery += " _id integer primary key autoincrement, ";
+        sqlQuery += PlayerTable.Cols.ID + ", ";
         sqlQuery += PlayerTable.Cols.ROW_LOCATION + ", ";
         sqlQuery += PlayerTable.Cols.COL_LOCATION + ", ";
         sqlQuery += PlayerTable.Cols.CASH + ", ";
@@ -53,6 +54,7 @@ public class GameDbHelper extends SQLiteOpenHelper {
 
         sqlQuery += "create table " + PlayerItemTable.NAME + "(";
         sqlQuery += " _id integer primary key autoincrement, ";
+        sqlQuery += PlayerItemTable.Cols.ID + ", ";
         sqlQuery += PlayerItemTable.Cols.TYPE + ", ";
         sqlQuery += PlayerItemTable.Cols.DESCRIPTION + ", ";
         sqlQuery += PlayerItemTable.Cols.VALUE + ", ";
@@ -67,6 +69,7 @@ public class GameDbHelper extends SQLiteOpenHelper {
 
         sqlQuery += "create table " + AreaTable.NAME + "(";
         sqlQuery += " _id integer primary key autoincrement, ";
+        sqlQuery += AreaTable.Cols.ID + ", ";
         sqlQuery += AreaTable.Cols.ROW_LOCATION + ", ";
         sqlQuery += AreaTable.Cols.COL_LOCATION + ", ";
         sqlQuery += AreaTable.Cols.IS_TOWN + ", ";
@@ -82,6 +85,7 @@ public class GameDbHelper extends SQLiteOpenHelper {
 
         sqlQuery += "create table " + AreaItemTable.NAME + "(";
         sqlQuery += " _id integer primary key autoincrement, ";
+        sqlQuery += AreaItemTable.Cols.ID + ", ";
         sqlQuery += AreaItemTable.Cols.ROW_LOCATION + ", ";
         sqlQuery += AreaItemTable.Cols.COL_LOCATION + ", ";
         sqlQuery += AreaItemTable.Cols.TYPE + ", ";

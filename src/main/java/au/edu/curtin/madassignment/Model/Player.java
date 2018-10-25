@@ -11,17 +11,22 @@
 
 package au.edu.curtin.madassignment.Model;
 
+import android.content.ContentValues;
 import android.content.Context;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.LinkedList;
+import java.util.UUID;
+
+import au.edu.curtin.madassignment.Model.GameSchema.PlayerTable;
 
 public class Player {
     /* Constants */
     private static final double MAX_HEALTH = 100.0;
 
     /* Fields */
+    private UUID playerID;
     private int rowLocation;
     private int colLocation;
     private int cash;
@@ -32,6 +37,7 @@ public class Player {
 
     /* Constructor */
     Player() {
+        playerID = UUID.randomUUID();
         rowLocation = 0;
         colLocation = 0;
         cash = 0;
@@ -42,6 +48,10 @@ public class Player {
     }
 
     /* Accessors */
+    String getIDString() {
+        return playerID.toString();
+    }
+
     public int getRowLocation() {
         return rowLocation;
     }
@@ -100,6 +110,7 @@ public class Player {
             throw new IllegalArgumentException("Row Location must be >= 0 and < " + GameData.MAX_ROW);
         }
         rowLocation = inRow;
+        GameData.getInstance().dbUpdatePlayer(this);
     }
 
     private void setColLocation(int inCol) {
@@ -107,6 +118,7 @@ public class Player {
             throw new IllegalArgumentException("Column Location must be >= 0 and < " + GameData.MAX_COL);
         }
         colLocation = inCol;
+        GameData.getInstance().dbUpdatePlayer(this);
     }
 
     public void setCash(int inCash) {
@@ -114,6 +126,7 @@ public class Player {
             throw new IllegalArgumentException("Cash cannot be a negative value");
         }
         cash = inCash;
+        GameData.getInstance().dbUpdatePlayer(this);
     }
 
     public void setHealth(double inHealth) {
@@ -122,12 +135,14 @@ public class Player {
             GameData.getInstance().setGameOver();
         }
         health = Math.min(inHealth, MAX_HEALTH);
+        GameData.getInstance().dbUpdatePlayer(this);
     }
 
     private void setEquipmentMass(double inEquipmentMass) {
         // Considered input validation
         // However, Improbability Drive had mas of -pi and therefore means mass can be negative.
         equipmentMass = inEquipmentMass;
+        GameData.getInstance().dbUpdatePlayer(this);
     }
 
     public void setItemList(List<Item> inItemList) {
@@ -135,6 +150,45 @@ public class Player {
             throw new IllegalArgumentException("Item list cannot be null");
         }
         itemList = inItemList;
+        GameData.getInstance().dbReplacePlayerItems(inItemList);
+    }
+
+    public void addItems(List<Item> items) {
+        checkForSpecialItems(items, true);
+        setEquipmentMass(this.equipmentMass + sumEquipmentMass(items));
+        this.itemList.addAll(items);
+        GameData.getInstance().dbAddPlayerItems(items);
+    }
+
+    void removeItems(List<Item> items) {
+        checkForSpecialItems(items, false);
+        setEquipmentMass(this.equipmentMass - sumEquipmentMass(items));
+        this.itemList.removeAll(items);
+        GameData.getInstance().dbRemovePlayerItems(items);
+    }
+
+    public void removeItem(Item item) {
+        // Check if special item
+        Equipment equipment;
+        int itemType;
+
+        // Check if equipment
+        if (item instanceof Equipment) {
+            equipment = (Equipment) item;
+
+            // Check if special
+            if (equipment.isSpecial()) {
+                itemType = Arrays.asList(Equipment.SPECIAL_NAMES).indexOf(equipment.getDescription());
+                this.hasSpecial[itemType] = false;
+            }
+
+            // Update equipment mass
+            setEquipmentMass(this.equipmentMass - equipment.getMass());
+        }
+
+        // Remove from list
+        this.itemList.remove(item);
+        GameData.getInstance().dbRemovePlayerItem(item);
     }
 
     /* Functions */
@@ -160,12 +214,7 @@ public class Player {
                 throw new IllegalArgumentException("Unknown direction argument");
         }
         setHealth(Math.max(0.0, health - 5.0 - (equipmentMass / 2.0)));
-        GameData.getInstance().getCurrentArea().setExplored(true);
-    }
-
-    void sellItems(List<Item> items) {
-        setCash(cash + (int) Math.round(sumItemValue(items) * GameData.SELL_MARKDOWN));
-        removeItems(items);
+        GameData.getInstance().getCurrentArea().setExplored();
     }
 
     void buyItems(List<Item> items) {
@@ -178,39 +227,9 @@ public class Player {
         }
     }
 
-    public void removeItem(Item item) {
-        // Check if special item
-        Equipment equipment;
-        int itemType;
-
-        // Check if equipment
-        if (item instanceof Equipment) {
-            equipment = (Equipment) item;
-
-            // Check if special
-            if (equipment.isSpecial()) {
-                itemType = Arrays.asList(Equipment.SPECIAL_NAMES).indexOf(equipment.getDescription());
-                this.hasSpecial[itemType] = false;
-            }
-
-            // Update equipment mass
-            setEquipmentMass(this.equipmentMass - equipment.getMass());
-        }
-
-        // Remove from list
-        this.itemList.remove(item);
-    }
-
-    public void removeItems(List<Item> items) {
-        checkForSpecialItems(items, false);
-        setEquipmentMass(this.equipmentMass - sumEquipmentMass(items));
-        this.itemList.removeAll(items);
-    }
-
-    public void addItems(List<Item> items) {
-        checkForSpecialItems(items, true);
-        setEquipmentMass(this.equipmentMass + sumEquipmentMass(items));
-        this.itemList.addAll(items);
+    void sellItems(List<Item> items) {
+        setCash(cash + (int) Math.round(sumItemValue(items) * GameData.SELL_MARKDOWN));
+        removeItems(items);
     }
 
     void eatItems(List<Item> items) {
@@ -297,5 +316,22 @@ public class Player {
                 GameData.getInstance().setGameWon();
             }
         }
+    }
+
+    /* Database Functions */
+    ContentValues getContentValues() {
+        ContentValues cv = new ContentValues();
+
+        cv.put(PlayerTable.Cols.ID, getIDString());
+        cv.put(PlayerTable.Cols.ROW_LOCATION, getRowLocation());
+        cv.put(PlayerTable.Cols.COL_LOCATION, getColLocation());
+        cv.put(PlayerTable.Cols.CASH, getCash());
+        cv.put(PlayerTable.Cols.HEALTH, getHealth());
+        cv.put(PlayerTable.Cols.EQUIPMENT_MASS, getEquipmentMass());
+        cv.put(PlayerTable.Cols.HAS_JADE_MONKEY, getHasSpecial()[0]);
+        cv.put(PlayerTable.Cols.HAS_JADE_MONKEY, getHasSpecial()[1]);
+        cv.put(PlayerTable.Cols.HAS_ICE_SCRAPER, getHasSpecial()[2]);
+
+        return cv;
     }
 }

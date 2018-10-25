@@ -14,7 +14,6 @@ package au.edu.curtin.madassignment.Model;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v4.app.FragmentManager;
 
 import java.util.List;
 import java.util.Random;
@@ -115,8 +114,12 @@ public class GameData {
         setArea(player.getColLocation(), player.getRowLocation(), inArea);
     }
 
-    public void setPlayer(Player inPlayer) {
-        player = inPlayer;
+    private void setPlayer(Player inPlayer) {
+        if (inPlayer == null) {
+            throw new IllegalArgumentException("Player cannot be null");
+        }
+        this.player = inPlayer;
+        dbAddPlayer();
     }
 
     void setGameOver() {
@@ -127,8 +130,8 @@ public class GameData {
         gameWon = true;
     }
 
-    public static void newGame() {
-        instance = new GameData();
+    public static void newGame(Context context) {
+        instance = new GameData(context);
         instance.generateMap();
     }
 
@@ -161,10 +164,7 @@ public class GameData {
         }
 
         // Set current player area as explored
-        getCurrentArea().setExplored(true);
-
-        // Add all to database
-        dbAddAreaGrid();
+        getCurrentArea().setExplored();
     }
 
     public void actionItems(Context context, int type, List<Item> selectedItems) {
@@ -201,50 +201,9 @@ public class GameData {
         }
     }
 
-    /* Private Functions */
-    private void dbAddPlayer() {
-        db.execSQL("delete from " + PlayerTable.NAME);
-        db.execSQL("delete from " + PlayerItemTable.NAME);
-
-        ContentValues cv = new ContentValues();
-
-        cv.put(PlayerTable.Cols.ROW_LOCATION, player.getRowLocation());
-        cv.put(PlayerTable.Cols.COL_LOCATION, player.getColLocation());
-        cv.put(PlayerTable.Cols.CASH, player.getCash());
-        cv.put(PlayerTable.Cols.HEALTH, player.getHealth());
-        cv.put(PlayerTable.Cols.EQUIPMENT_MASS, player.getEquipmentMass());
-        cv.put(PlayerTable.Cols.HAS_JADE_MONKEY, player.getHasSpecial()[0]);
-        cv.put(PlayerTable.Cols.HAS_JADE_MONKEY, player.getHasSpecial()[1]);
-        cv.put(PlayerTable.Cols.HAS_ICE_SCRAPER, player.getHasSpecial()[2]);
-
-        db.insert(PlayerTable.NAME, null, cv);
-
-        for (Item currItem : player.getItemList()) {
-            cv = new ContentValues();
-
-            cv.put(PlayerItemTable.Cols.TYPE, currItem.getType());
-            cv.put(PlayerItemTable.Cols.DESCRIPTION, currItem.getDescription());
-            cv.put(PlayerItemTable.Cols.VALUE, currItem.getValue());
-
-            if (currItem instanceof Equipment) {
-                cv.put(PlayerItemTable.Cols.MASS, ((Equipment) currItem).getMass());
-            }
-            else {
-                cv.put(PlayerItemTable.Cols.MASS, 0.0);
-            }
-
-            if (currItem instanceof Food) {
-                cv.put(PlayerItemTable.Cols.HEALTH, ((Food) currItem).getHealth());
-            }
-            else {
-                cv.put(PlayerItemTable.Cols.HEALTH, 0.0);
-            }
-
-            db.insert(PlayerItemTable.NAME, null, cv);
-        }
-    }
-
+    /* Database Functions */
     private void dbAddAreaGrid() {
+        // Refresh Table
         db.execSQL("delete from " + AreaTable.NAME);
         db.execSQL("delete from " + AreaItemTable.NAME);
 
@@ -262,41 +221,83 @@ public class GameData {
     }
 
     private void dBAddArea(Area area) {
-        ContentValues cv = new ContentValues();
-
-        cv.put(AreaTable.Cols.ROW_LOCATION, area.getRowLocation());
-        cv.put(AreaTable.Cols.COL_LOCATION, area.getColLocation());
-        cv.put(AreaTable.Cols.IS_TOWN, area.isTown());
-        cv.put(AreaTable.Cols.DESCRIPTION, area.getDescription());
-        cv.put(AreaTable.Cols.IS_STARRED, area.isStarred());
-        cv.put(AreaTable.Cols.IS_EXPLORED, area.isExplored());
-
-        db.insert(AreaTable.NAME, null, cv);
+        db.insert(AreaTable.NAME, null, area.getContentValues());
     }
 
-    private void dbAddAreaItem(int row, int col, Item item) {
-        ContentValues cv = new ContentValues();
+    void dbUpdateArea(Area area) {
+        ContentValues cv = area.getContentValues();
+        String[] whereValue = { area.getIDString() };
+        db.update(AreaTable.NAME, cv, AreaTable.Cols.ID + " = ?", whereValue);
+    }
 
-        cv.put(AreaItemTable.Cols.ROW_LOCATION, row);
-        cv.put(AreaItemTable.Cols.COL_LOCATION, col);
-        cv.put(AreaItemTable.Cols.TYPE, item.getType());
-        cv.put(AreaItemTable.Cols.DESCRIPTION, item.getDescription());
-        cv.put(AreaItemTable.Cols.VALUE, item.getValue());
 
-        if (item instanceof Equipment) {
-            cv.put(AreaItemTable.Cols.MASS, ((Equipment) item).getMass());
-        }
-        else {
-            cv.put(AreaItemTable.Cols.MASS, 0.0);
-        }
 
-        if (item instanceof Food) {
-            cv.put(AreaItemTable.Cols.HEALTH, ((Food) item).getHealth());
+    void dbAddAreaItems(int row, int col, List<Item> items) {
+        for (Item currItem : items) {
+            dbAddAreaItem(row, col, currItem);
         }
-        else {
-            cv.put(AreaItemTable.Cols.HEALTH, 0.0);
-        }
+    }
 
-        db.insert(AreaItemTable.NAME, null, cv);
+    void dbAddAreaItem(int row, int col, Item item) {
+        db.insert(AreaItemTable.NAME, null, item.getAreaItemContentValues(row, col));
+    }
+
+    void dbRemoveAreaItems(List<Item> items) {
+        for (Item currItem : items) {
+            dbRemoveAreaItem(currItem);
+        }
+    }
+
+    private void dbRemoveAreaItem(Item item) {
+        String[] whereValue = { item.getIDString() };
+        db.delete(AreaItemTable.NAME, AreaItemTable.Cols.ID + " = ?", whereValue);
+    }
+
+    void dbReplaceAreaItems(int row, int col, List<Item> items) {
+        dbRemoveAreaItems(items);
+        dbAddAreaItems(row, col, items);
+    }
+
+    private void dbAddPlayer() {
+        // Empty Tables: Only 1 player
+        db.execSQL("delete from " + PlayerTable.NAME);
+        db.execSQL("delete from " + PlayerItemTable.NAME);
+
+        db.insert(PlayerTable.NAME, null, player.getContentValues());
+
+        dbAddPlayerItems(player.getItemList());
+    }
+
+    void dbUpdatePlayer(Player player) {
+        ContentValues cv = player.getContentValues();
+        String[] whereValue = { player.getIDString() };
+        db.update(PlayerTable.NAME, cv, PlayerTable.Cols.ID + " = ?", whereValue);
+    }
+
+
+    void dbAddPlayerItems(List<Item> items) {
+        for (Item currItem : items) {
+            dbAddPlayerItem(currItem);
+        }
+    }
+
+    private void dbAddPlayerItem(Item item) {
+        db.insert(PlayerItemTable.NAME, null, item.getPlayerItemContentValues());
+    }
+
+    void dbRemovePlayerItems(List<Item> items) {
+        for (Item currItem : items) {
+            dbRemovePlayerItem(currItem);
+        }
+    }
+
+    void dbRemovePlayerItem(Item item) {
+        String[] whereValue = { item.getIDString() };
+        db.delete(PlayerItemTable.NAME, PlayerItemTable.Cols.ID + " = ?", whereValue);
+    }
+
+    void dbReplacePlayerItems(List<Item> items) {
+        db.execSQL("delete from " + PlayerItemTable.NAME);
+        dbAddPlayerItems(items);
     }
 }

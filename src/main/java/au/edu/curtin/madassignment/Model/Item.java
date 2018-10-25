@@ -11,8 +11,15 @@
 
 package au.edu.curtin.madassignment.Model;
 
+import android.content.ContentValues;
+
+import java.util.UUID;
+
+import au.edu.curtin.madassignment.Model.GameSchema.*;
+
 public abstract class Item {
     /* Fields */
+    private UUID itemID;
     private boolean selected;
     private String type;
     private String description;
@@ -20,6 +27,7 @@ public abstract class Item {
 
     /* Constructor */
     Item() {
+        itemID = UUID.randomUUID();
         selected = false;
         type = "";
         description = "";
@@ -27,6 +35,10 @@ public abstract class Item {
     }
 
     /* Accessors */
+    String getIDString() {
+        return itemID.toString();
+    }
+
     public boolean isSelected() {
         return selected;
     }
@@ -68,5 +80,58 @@ public abstract class Item {
             throw new IllegalArgumentException("Value cannot be negative");
         }
         this.value = inValue;
+    }
+
+    /* Database Functions */
+    ContentValues getPlayerItemContentValues() {
+        ContentValues cv = new ContentValues();
+
+        cv.put(PlayerItemTable.Cols.ID, getIDString());
+        cv.put(PlayerItemTable.Cols.TYPE, getType());
+        cv.put(PlayerItemTable.Cols.DESCRIPTION, getDescription());
+        cv.put(PlayerItemTable.Cols.VALUE, getValue());
+
+        if (this instanceof Equipment) {
+            cv.put(PlayerItemTable.Cols.MASS, ((Equipment) this).getMass());
+        }
+        else {
+            cv.put(PlayerItemTable.Cols.MASS, 0.0);
+        }
+
+        if (this instanceof Food) {
+            cv.put(PlayerItemTable.Cols.HEALTH, ((Food) this).getHealth());
+        }
+        else {
+            cv.put(PlayerItemTable.Cols.HEALTH, 0.0);
+        }
+
+        return cv;
+    }
+
+    ContentValues getAreaItemContentValues(int row, int col) {
+        ContentValues cv = new ContentValues();
+
+        cv.put(AreaItemTable.Cols.ID, getIDString());
+        cv.put(AreaItemTable.Cols.ROW_LOCATION, row);
+        cv.put(AreaItemTable.Cols.COL_LOCATION, col);
+        cv.put(AreaItemTable.Cols.TYPE, getType());
+        cv.put(AreaItemTable.Cols.DESCRIPTION, getDescription());
+        cv.put(AreaItemTable.Cols.VALUE, getValue());
+
+        if (this instanceof Equipment) {
+            cv.put(AreaItemTable.Cols.MASS, ((Equipment) this).getMass());
+        }
+        else {
+            cv.put(AreaItemTable.Cols.MASS, 0.0);
+        }
+
+        if (this instanceof Food) {
+            cv.put(AreaItemTable.Cols.HEALTH, ((Food) this).getHealth());
+        }
+        else {
+            cv.put(AreaItemTable.Cols.HEALTH, 0.0);
+        }
+
+        return cv;
     }
 }

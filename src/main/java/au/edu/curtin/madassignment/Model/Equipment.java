@@ -85,7 +85,7 @@ public class Equipment extends Item {
         return isUsable;
     }
 
-    public boolean isSpecial() {
+    boolean isSpecial() {
         return isSpecial;
     }
 
@@ -94,11 +94,11 @@ public class Equipment extends Item {
         mass = inMass;
     }
 
-    public void setUsable(boolean usable) {
+    protected void setUsable(boolean usable) {
         isUsable = usable;
     }
 
-    public void setSpecial(boolean special) {
+    protected void setSpecial(boolean special) {
         isSpecial = special;
     }
 

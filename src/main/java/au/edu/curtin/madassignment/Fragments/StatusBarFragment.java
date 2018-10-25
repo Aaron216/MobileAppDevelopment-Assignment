@@ -52,7 +52,7 @@ public class StatusBarFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         // Start new Game
-                        GameData.newGame();
+                        GameData.newGame(getContext());
                         startActivity(NavigationActivity.getIntent(getContext()));
                     }
                 });

@@ -1,9 +1,20 @@
+/*
+Curtin University
+Mobile Application Development
+Assignment
+Aaron Musgrave 25/10/2018
+
+Game Schema Class
+Responsible for storing constants for database schema
+ */
+
 package au.edu.curtin.madassignment.Model;
 
 class GameSchema {
     class PlayerTable {
         static final String NAME = "player";
         class Cols {
+            static final String ID = "player_id";
             static final String ROW_LOCATION = "row_location";
             static final String COL_LOCATION = "col_location";
             static final String CASH = "cash";
@@ -18,6 +29,7 @@ class GameSchema {
     class PlayerItemTable {
         static final String NAME = "player_item";
         class Cols {
+            static final String ID = "p_item_id";
             static final String TYPE = "type";
             static final String DESCRIPTION = "description";
             static final String VALUE = "value";
@@ -29,6 +41,7 @@ class GameSchema {
     class AreaTable {
         static final String NAME = "area";
         class Cols {
+            static final String ID = "area_id";
             static final String ROW_LOCATION = "row_location";
             static final String COL_LOCATION = "col_location";
             static final String IS_TOWN = "is_town";
@@ -42,6 +55,7 @@ class GameSchema {
     class AreaItemTable {
         static final String NAME = "area_item";
         class Cols {
+            static final String ID = "a_item_id";
             static final String ROW_LOCATION = "row_location";
             static final String COL_LOCATION = "col_location";
             static final String TYPE = "type";

@@ -29,7 +29,7 @@ public class WelcomeActivity extends AppCompatActivity {
         newGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GameData.newGame();
+                GameData.newGame(WelcomeActivity.this);
                 startActivity(NavigationActivity.getIntent(WelcomeActivity.this));
             }
         });

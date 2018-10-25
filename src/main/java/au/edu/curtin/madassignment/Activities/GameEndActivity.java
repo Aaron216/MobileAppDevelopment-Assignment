@@ -42,7 +42,7 @@ public class GameEndActivity extends AppCompatActivity {
         playAgainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GameData.newGame();
+                GameData.newGame(GameEndActivity.this);
                 startActivity(NavigationActivity.getIntent(GameEndActivity.this));
             }
         });
