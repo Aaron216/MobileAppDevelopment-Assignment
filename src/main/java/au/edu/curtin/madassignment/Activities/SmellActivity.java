@@ -91,8 +91,8 @@ public class SmellActivity extends AppCompatActivity {
         // Get bounds
         int minX = Math.max((currX - SMELL_RANGE), 0);
         int minY = Math.max((currY - SMELL_RANGE), 0);
-        int maxX = Math.min((currX + SMELL_RANGE), GameData.MAX_COL);
-        int maxY = Math.min((currY + SMELL_RANGE), GameData.MAX_ROW);
+        int maxX = Math.min((currX + SMELL_RANGE), GameData.MAX_COL-1);
+        int maxY = Math.min((currY + SMELL_RANGE), GameData.MAX_ROW-1);
 
         // Create list of items within smell range
         for (int yy = minY; yy <= maxY; yy++) {

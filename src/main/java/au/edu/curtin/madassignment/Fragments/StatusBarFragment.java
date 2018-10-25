@@ -3,6 +3,7 @@ package au.edu.curtin.madassignment.Fragments;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +29,7 @@ public class StatusBarFragment extends Fragment {
     ImageView iceImage;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup ui, Bundle bundle) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup ui, Bundle bundle) {
         View view = inflater.inflate(R.layout.fragment_status_bar, ui, false);
 
         // Reference UI Objects

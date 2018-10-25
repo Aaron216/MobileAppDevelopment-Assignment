@@ -43,7 +43,7 @@ public abstract class Item {
     }
 
     /* Accessors */
-    String getIDString() {
+    protected String getIDString() {
         return itemID.toString();
     }
 

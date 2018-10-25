@@ -5,6 +5,7 @@ import android.content.Context;
 import java.util.List;
 import java.util.UUID;
 
+import au.edu.curtin.madassignment.Activities.BenKenobiActivity;
 import au.edu.curtin.madassignment.Model.*;
 
 public class BenKenobi extends Equipment implements Equipment.Usable {
@@ -31,14 +32,15 @@ public class BenKenobi extends Equipment implements Equipment.Usable {
     /* Function */
     @Override
     public void use(Context context) {
+        context.startActivity(BenKenobiActivity.getIntent(context, super.getIDString()));
+    }
+
+    public void confirm() {
         GameData gameInstance = GameData.getInstance();
         List<Item> items = gameInstance.getCurrentArea().getItemList();
 
         gameInstance.getPlayer().removeItem(this);
         gameInstance.getPlayer().addItems(items);
         gameInstance.getCurrentArea().removeItems(items);
-
-        // Would like to use this, but I'm saving it for later
-        // context.startActivity(BenKenobiActivity.getIntent(context));
     }
 }

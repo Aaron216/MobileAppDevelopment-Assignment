@@ -111,6 +111,19 @@ public class Player {
         return equipmentList;
     }
 
+    public Item getItem(String itemID) {
+        Item item = null;
+
+        for (Item currItem : itemList) {
+            if (currItem.getIDString().equals(itemID)) {
+                item = currItem;
+                break;
+            }
+        }
+
+        return item;
+    }
+
     public boolean[] getHasSpecial() {
         return hasSpecial;
     }

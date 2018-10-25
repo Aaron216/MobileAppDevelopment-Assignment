@@ -9,14 +9,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.VideoView;
 
+import au.edu.curtin.madassignment.Model.GameData;
+import au.edu.curtin.madassignment.Model.Usable.BenKenobi;
 import au.edu.curtin.madassignment.R;
 
 public class BenKenobiActivity extends AppCompatActivity {
+    /* Constants */
+    private static final String ITEM_ID = "edu.au.curtin.madassignment.itemid";
+
     /* Overrides */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ben_kenobi);
+
+        // Get kenobi object
+        String itemID = getIntent().getStringExtra(ITEM_ID);
+        final BenKenobi kenobi = (BenKenobi) GameData.getInstance().getPlayer().getItem(itemID);
 
         // Get UI Objects
         VideoView kenobiVideo = findViewById(R.id.vidKenobi);
@@ -40,6 +49,7 @@ public class BenKenobiActivity extends AppCompatActivity {
         useBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                kenobi.confirm();
                 goBack();
             }
         });
@@ -62,7 +72,9 @@ public class BenKenobiActivity extends AppCompatActivity {
         startActivity(InventoryActivity.getIntent(BenKenobiActivity.this, InventoryActivity.BACKPACK));
     }
 
-    public static Intent getIntent(Context context) {
-        return new Intent(context, BenKenobiActivity.class);
+    public static Intent getIntent(Context context, String itemID) {
+        Intent intent = new Intent(context, BenKenobiActivity.class);
+        intent.putExtra(ITEM_ID, itemID);
+        return intent;
     }
 }

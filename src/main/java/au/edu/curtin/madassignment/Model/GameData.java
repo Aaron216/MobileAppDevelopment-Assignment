@@ -62,11 +62,11 @@ public class GameData {
     public Area getArea(int row, int col) {
         // Check Row
         if (row < 0 || row >= MAX_ROW) {
-            throw new IllegalArgumentException("Row location must be >= 0 and <= " + MAX_ROW);
+            throw new IllegalArgumentException("Row location must be >= 0 and < " + MAX_ROW);
         }
         // Check column
         if (col < 0 || col >= MAX_COL) {
-            throw new IllegalArgumentException("Column location must be >= 0 and <= " + MAX_COL);
+            throw new IllegalArgumentException("Column location must be >= 0 and < " + MAX_COL);
         }
 
         return grid[row][col];
@@ -315,11 +315,6 @@ public class GameData {
     /* Area Item Table */
     private List<Item> dbReadAreaItems(int row, int col) {
         List<Item> items = new LinkedList<>();
-
-//        String sqlQuery = "select *";
-//        sqlQuery += " from " + AreaItemTable.NAME;
-//        sqlQuery += " where " + AreaItemTable.Cols.ROW_LOCATION + row;
-//        sqlQuery += " and " + AreaItemTable.Cols.COL_LOCATION + " = " + col;
 
         String whereClause = "";
         whereClause += AreaItemTable.Cols.ROW_LOCATION + " = ? AND ";

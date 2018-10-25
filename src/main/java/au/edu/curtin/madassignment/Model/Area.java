@@ -143,7 +143,7 @@ public class Area {
         GameData.getInstance().dbUpdateArea(this);
     }
 
-    public void setItemList(List<Item> inItems, boolean updateDatabase) {
+    void setItemList(List<Item> inItems, boolean updateDatabase) {
         if (inItems == null) {
             throw new IllegalArgumentException("Cannot set item list to null");
         }
