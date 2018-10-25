@@ -21,7 +21,7 @@ import java.util.UUID;
 import au.edu.curtin.madassignment.Model.Usable.BenKenobi;
 import au.edu.curtin.madassignment.Model.Usable.ImprobabilityDrive;
 import au.edu.curtin.madassignment.Model.Usable.SmellOScope;
-import au.edu.curtin.madassignment.Model.GameSchema.AreaTable;
+import au.edu.curtin.madassignment.Database.GameSchema.AreaTable;
 
 public class Area {
     /* Constants */
@@ -48,14 +48,25 @@ public class Area {
 
     /* Constructor */
     public Area() {
-        areaID = UUID.randomUUID();
-        rowLocation = 0;
-        colLocation = 0;
-        town = false;
-        itemList = new LinkedList<>();
-        description = "";
-        starred = false;
-        explored = false;
+        this.areaID = UUID.randomUUID();
+        this.rowLocation = 0;
+        this.colLocation = 0;
+        this.town = false;
+        this.itemList = new LinkedList<>();
+        this.description = "";
+        this.starred = false;
+        this.explored = false;
+    }
+
+    public Area(UUID inID, int inRow, int inCol, boolean inTown, String inDescription, boolean inStarred, boolean inExplored) {
+        this.areaID = inID;
+        this.rowLocation = inRow;
+        this.colLocation = inCol;
+        this.town = inTown;
+        this.description = inDescription;
+        this.starred = inStarred;
+        this.explored = inExplored;
+        this.itemList = new LinkedList<>();
     }
 
     /* Accessors */

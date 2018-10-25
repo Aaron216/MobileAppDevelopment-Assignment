@@ -15,7 +15,7 @@ import android.content.ContentValues;
 
 import java.util.UUID;
 
-import au.edu.curtin.madassignment.Model.GameSchema.*;
+import au.edu.curtin.madassignment.Database.GameSchema.*;
 
 public abstract class Item {
     /* Fields */
@@ -27,11 +27,19 @@ public abstract class Item {
 
     /* Constructor */
     Item() {
-        itemID = UUID.randomUUID();
-        selected = false;
-        type = "";
-        description = "";
-        value = 0;
+        this.itemID = UUID.randomUUID();
+        this.selected = false;
+        this.type = "";
+        this.description = "";
+        this.value = 0;
+    }
+
+    Item(UUID inID, String inDescription, int inValue) {
+        this.itemID = inID;
+        this.selected = false;
+        this.type = "";
+        this.description = inDescription;
+        this.value = inValue;
     }
 
     /* Accessors */
@@ -56,6 +64,10 @@ public abstract class Item {
     }
 
     /* Mutators */
+    public void setItemID(UUID inID) {
+        this.itemID = inID;
+    }
+
     public void toggleSelected() {
         this.selected = !this.selected;
     }

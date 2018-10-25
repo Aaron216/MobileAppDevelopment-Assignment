@@ -14,6 +14,7 @@ package au.edu.curtin.madassignment.Model;
 import android.content.Context;
 
 import java.util.Random;
+import java.util.UUID;
 
 public class Equipment extends Item {
     /* Usable Interface */
@@ -31,8 +32,8 @@ public class Equipment extends Item {
     };
     static final String[] SPECIAL_NAMES = {"Jade Monkey", "Roadmap", "Ice Scraper"};
 
-    private static final String TYPE = "Equipment";
-    private static final String SPECIAL_TYPE = "Special";
+    public static final String TYPE = "Equipment";
+    public static final String SPECIAL_TYPE = "Special";
 
     private static final int VALUE_RANGE = 20;
     private static final int MIN_VALUE = 1;
@@ -56,9 +57,17 @@ public class Equipment extends Item {
         super.setType(TYPE);
         super.setDescription(EQUIPMENT_NAMES[index]);
         super.setValue(random.nextInt(VALUE_RANGE) + MIN_VALUE);
-        setMass(random.nextDouble()*MASS_RANGE + MIN_MASS);
-        setUsable(false);
-        setSpecial(false);
+        this.setMass(random.nextDouble()*MASS_RANGE + MIN_MASS);
+        this.setUsable(false);
+        this.setSpecial(false);
+    }
+
+    public Equipment(UUID inID, String inDescription, int inValue, double inMass, boolean inSpecial) {
+        super(inID, inDescription, inValue);
+        super.setType(TYPE);
+        this.setMass(inMass);
+        this.setUsable(false);
+        this.setSpecial(inSpecial);
     }
 
     // Special Item Constructor

@@ -1,6 +1,6 @@
-package au.edu.curtin.madassignment.Model;
+package au.edu.curtin.madassignment.Database;
 
-import au.edu.curtin.madassignment.Model.GameSchema.*;
+import au.edu.curtin.madassignment.Database.GameSchema.*;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

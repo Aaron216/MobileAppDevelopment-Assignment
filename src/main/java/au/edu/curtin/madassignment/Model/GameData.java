@@ -18,8 +18,9 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.List;
 import java.util.Random;
 
+import au.edu.curtin.madassignment.Database.GameDbHelper;
 import au.edu.curtin.madassignment.Fragments.ListFragment;
-import au.edu.curtin.madassignment.Model.GameSchema.*;
+import au.edu.curtin.madassignment.Database.GameSchema.*;
 
 public class GameData {
     /* Constants */
@@ -133,6 +134,7 @@ public class GameData {
     public static void newGame(Context context) {
         instance = new GameData(context);
         instance.generateMap();
+        instance.dbNewGame();
     }
 
     /* Functions */
@@ -201,7 +203,15 @@ public class GameData {
         }
     }
 
-    /* Database Functions */
+    /**
+     * DATABASE FUNCTIONS
+     */
+    private void dbNewGame() {
+        dbAddAreaGrid();
+        dbAddPlayer();
+    }
+
+    /* Area Table */
     private void dbAddAreaGrid() {
         // Refresh Table
         db.execSQL("delete from " + AreaTable.NAME);
@@ -211,11 +221,7 @@ public class GameData {
         for (int row = 0; row < MAX_ROW; row++) {
             for (int col = 0; col < MAX_COL; col++) {
                 dBAddArea(grid[row][col]);
-
-                // Add Items to database
-                for (Item currItem : grid[row][col].getItemList()) {
-                    dbAddAreaItem(row, col, currItem);
-                }
+                dbAddAreaItems(row, col, grid[row][col].getItemList());
             }
         }
     }
@@ -230,8 +236,7 @@ public class GameData {
         db.update(AreaTable.NAME, cv, AreaTable.Cols.ID + " = ?", whereValue);
     }
 
-
-
+    /* Area Item Table */
     void dbAddAreaItems(int row, int col, List<Item> items) {
         for (Item currItem : items) {
             dbAddAreaItem(row, col, currItem);
@@ -258,6 +263,7 @@ public class GameData {
         dbAddAreaItems(row, col, items);
     }
 
+    /* Player Table */
     private void dbAddPlayer() {
         // Empty Tables: Only 1 player
         db.execSQL("delete from " + PlayerTable.NAME);
@@ -274,7 +280,7 @@ public class GameData {
         db.update(PlayerTable.NAME, cv, PlayerTable.Cols.ID + " = ?", whereValue);
     }
 
-
+    /* Player Item Table */
     void dbAddPlayerItems(List<Item> items) {
         for (Item currItem : items) {
             dbAddPlayerItem(currItem);

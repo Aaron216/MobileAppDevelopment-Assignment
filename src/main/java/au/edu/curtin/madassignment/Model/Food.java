@@ -12,6 +12,7 @@
 package au.edu.curtin.madassignment.Model;
 
 import java.util.Random;
+import java.util.UUID;
 
 public class Food extends Item {
     /* Constants */
@@ -21,7 +22,7 @@ public class Food extends Item {
         "Tav Burger", "Tav Chicken Parma", "Tav Chips", "Tav Schnitzel", "Vege Patch Carrot"
     };
 
-    private static final String TYPE = "Food";
+    public static final String TYPE = "Food";
 
     private static final int VALUE_RANGE = 10;
     private static final int MIN_VALUE = 1;
@@ -42,6 +43,12 @@ public class Food extends Item {
         super.setDescription(FOOD_NAMES[index]);
         super.setValue(random.nextInt(VALUE_RANGE) + MIN_VALUE);
         setHealth(random.nextDouble()*HEALTH_RANGE + MIN_HEALTH);
+    }
+
+    public Food(UUID inID, String inDescription, int inValue, double inHealth) {
+        super(inID, inDescription, inValue);
+        super.setType(TYPE);
+        this.setHealth(inHealth);
     }
 
     /* Accessors */

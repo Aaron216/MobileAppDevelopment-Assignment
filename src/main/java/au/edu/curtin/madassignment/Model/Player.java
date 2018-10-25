@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.LinkedList;
 import java.util.UUID;
 
-import au.edu.curtin.madassignment.Model.GameSchema.PlayerTable;
+import au.edu.curtin.madassignment.Database.GameSchema.PlayerTable;
 
 public class Player {
     /* Constants */
@@ -37,14 +37,25 @@ public class Player {
 
     /* Constructor */
     Player() {
-        playerID = UUID.randomUUID();
-        rowLocation = 0;
-        colLocation = 0;
-        cash = 0;
-        health = 100.0;
-        equipmentMass = 0.0;
-        itemList = new LinkedList<>();
-        hasSpecial = new boolean[]{false, false, false};
+        this.playerID = UUID.randomUUID();
+        this.rowLocation = 0;
+        this.colLocation = 0;
+        this.cash = 0;
+        this.health = 100.0;
+        this.equipmentMass = 0.0;
+        this.itemList = new LinkedList<>();
+        this.hasSpecial = new boolean[]{false, false, false};
+    }
+
+    public Player(UUID inID, int inRow, int inCol, int inCash, double inHealth, double inMass, boolean[] inSpecial) {
+        this.playerID = inID;
+        this.rowLocation = inRow;
+        this.colLocation = inCol;
+        this.cash = inCash;
+        this.health = inHealth;
+        this.equipmentMass = inMass;
+        this.hasSpecial = inSpecial;
+        this.itemList = new LinkedList<>();
     }
 
     /* Accessors */
@@ -329,7 +340,7 @@ public class Player {
         cv.put(PlayerTable.Cols.HEALTH, getHealth());
         cv.put(PlayerTable.Cols.EQUIPMENT_MASS, getEquipmentMass());
         cv.put(PlayerTable.Cols.HAS_JADE_MONKEY, getHasSpecial()[0]);
-        cv.put(PlayerTable.Cols.HAS_JADE_MONKEY, getHasSpecial()[1]);
+        cv.put(PlayerTable.Cols.HAS_ROADMAP, getHasSpecial()[1]);
         cv.put(PlayerTable.Cols.HAS_ICE_SCRAPER, getHasSpecial()[2]);
 
         return cv;
