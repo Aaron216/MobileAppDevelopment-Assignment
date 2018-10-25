@@ -13,14 +13,16 @@ package au.edu.curtin.madassignment.Model;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import au.edu.curtin.madassignment.Database.GameDbHelper;
-import au.edu.curtin.madassignment.Fragments.ListFragment;
+import au.edu.curtin.madassignment.Database.*;
 import au.edu.curtin.madassignment.Database.GameSchema.*;
+import au.edu.curtin.madassignment.Fragments.ListFragment;
 
 public class GameData {
     /* Constants */
@@ -28,20 +30,23 @@ public class GameData {
     public static final int MAX_ROW = 11;
     public static final int MAX_COL = 11;
 
+    private static final int GAME_NEW = 0;
+    private static final int GAME_IN_PROGRESS = 1;
+    private static final int GAME_WON = 2;
+    private static final int GAME_OVER = 3;
+
     /* Fields */
     private SQLiteDatabase db;
     private Area[][] grid;
     private Player player;
-    private boolean gameOver;
-    private boolean gameWon;
+    private int gameState;
     private static GameData instance;
 
     /* Constructor */
     private GameData() {
         this.grid = new Area[MAX_ROW][MAX_COL];
         this.player = new Player();
-        this.gameOver = false;
-        this.gameWon = false;
+        this.gameState = GAME_NEW;
     }
 
     private GameData(Context context) {
@@ -71,21 +76,36 @@ public class GameData {
         return player;
     }
 
+    public boolean isGameNew() {
+        return (gameState == GAME_NEW);
+    }
+
+    public boolean isGameInProgress() {
+        return (gameState == GAME_IN_PROGRESS);
+    }
+
     public boolean isGameOver() {
-        return gameOver;
+        return (gameState == GAME_OVER);
     }
 
     public boolean isGameWon() {
-        return gameWon;
+        return (gameState == GAME_WON);
     }
 
     public boolean isGameEnd() {
-        return (gameOver || gameWon);
+        return (gameState > GAME_IN_PROGRESS);
     }
 
     public static GameData getInstance() {
         if (instance == null) {
-            instance = new GameData();
+            throw new IllegalStateException("Game data instance has not been created");
+        }
+        return instance;
+    }
+
+    public static GameData getInstance(Context context) {
+        if (instance == null) {
+            instance = new GameData(context);
         }
         return instance;
     }
@@ -99,42 +119,54 @@ public class GameData {
     }
 
     /* Mutators */
-    private void setArea(int colLocation, int rowLocation, Area inArea) {
-        // Check column
-        if (colLocation < 0 || colLocation >= MAX_COL) {
-            throw new IllegalArgumentException("Column location must be >= 0 and <= " + MAX_COL);
-        }
+    private void setArea(int row, int col, Area inArea) {
         // Check Row
-        if (rowLocation < 0 || rowLocation >= MAX_ROW) {
+        if (row < 0 || row >= MAX_ROW) {
             throw new IllegalArgumentException("Row location must be >= 0 and <= " + MAX_ROW);
         }
-        grid[colLocation][rowLocation] = inArea;
+        // Check column
+        if (col < 0 || col >= MAX_COL) {
+            throw new IllegalArgumentException("Column location must be >= 0 and <= " + MAX_COL);
+        }
+
+        grid[row][col] = inArea;
     }
 
     public void setCurrentArea(Area inArea) {
-        setArea(player.getColLocation(), player.getRowLocation(), inArea);
+        setArea(player.getRowLocation(), player.getColLocation(), inArea);
     }
 
-    private void setPlayer(Player inPlayer) {
+    private void setPlayer(Player inPlayer, boolean updateDatabase) {
         if (inPlayer == null) {
             throw new IllegalArgumentException("Player cannot be null");
         }
+
         this.player = inPlayer;
-        dbAddPlayer();
+
+        if (updateDatabase) {
+            dbAddPlayer();
+        }
+    }
+
+    private void setGameInProgress() {
+        gameState = GAME_IN_PROGRESS;
     }
 
     void setGameOver() {
-        gameOver = true;
+        gameState = GAME_OVER;
+        dbDeleteAll();
     }
 
     void setGameWon() {
-        gameWon = true;
+        gameState = GAME_WON;
+        dbDeleteAll();
     }
 
-    public static void newGame(Context context) {
-        instance = new GameData(context);
-        instance.generateMap();
-        instance.dbNewGame();
+    public void newGame() {
+        setGameInProgress();
+        setPlayer(new Player(), true);
+        generateMap();
+        dbNewGame();
     }
 
     /* Functions */
@@ -206,12 +238,56 @@ public class GameData {
     /**
      * DATABASE FUNCTIONS
      */
+    public void dbLoadGame() {
+        dbReadAreaGrid();
+        dbReadPlayer();
+        setGameInProgress();
+    }
+
     private void dbNewGame() {
         dbAddAreaGrid();
         dbAddPlayer();
     }
 
+    private void dbDeleteAll() {
+        db.execSQL("delete from " + PlayerTable.NAME);
+        db.execSQL("delete from " + PlayerItemTable.NAME);
+        db.execSQL("delete from " + AreaTable.NAME);
+        db.execSQL("delete from " + AreaItemTable.NAME);
+    }
+
     /* Area Table */
+    private void dbReadAreaGrid() {
+        Area currArea;
+        int row;
+        int col;
+
+        AreaCursor cursor = new AreaCursor(
+                db.query(AreaTable.NAME, null, null, null, null, null, null));
+
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                // Get area
+                currArea = cursor.getArea();
+
+                // Get Area Items
+                row = currArea.getRowLocation();
+                col = currArea.getColLocation();
+                currArea.setItemList(dbReadAreaItems(row, col), false);
+
+                // Put in array
+                setArea(row, col, currArea);
+
+                // Move cursor
+                cursor.moveToNext();
+            }
+        }
+        finally {
+            cursor.close();
+        }
+    }
+
     private void dbAddAreaGrid() {
         // Refresh Table
         db.execSQL("delete from " + AreaTable.NAME);
@@ -237,6 +313,31 @@ public class GameData {
     }
 
     /* Area Item Table */
+    private List<Item> dbReadAreaItems(int row, int col) {
+        List<Item> items = new LinkedList<>();
+
+        String whereClause = "";
+        whereClause += AreaItemTable.Cols.ROW_LOCATION + " = ? AND ";
+        whereClause += AreaItemTable.Cols.COL_LOCATION + " = ?";
+        String[] whereArgs = { String.valueOf(row), String.valueOf(col) };
+
+        ItemCursor cursor = new ItemCursor(
+                db.query(AreaItemTable.NAME, null, whereClause, whereArgs, null, null, null));
+
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                items.add(cursor.getAreaItem());
+                cursor.moveToNext();
+            }
+        }
+        finally {
+            cursor.close();
+        }
+
+        return items;
+    }
+
     void dbAddAreaItems(int row, int col, List<Item> items) {
         for (Item currItem : items) {
             dbAddAreaItem(row, col, currItem);
@@ -264,6 +365,27 @@ public class GameData {
     }
 
     /* Player Table */
+    public boolean dbCheckForPlayer() {
+        long numPlayers = DatabaseUtils.queryNumEntries(db, PlayerTable.NAME);
+        return (numPlayers > 0);
+    }
+
+    private void dbReadPlayer() {
+        Player currPlayer;
+
+        PlayerCursor cursor = new PlayerCursor(
+                db.query(PlayerTable.NAME, null, null, null, null, null, null));
+        try {
+            cursor.moveToFirst();
+            currPlayer = cursor.getPlayer();
+            currPlayer.setItemList(dbReadPlayerItems(), false);
+            setPlayer(currPlayer, false);
+        }
+        finally {
+            cursor.close();
+        }
+    }
+
     private void dbAddPlayer() {
         // Empty Tables: Only 1 player
         db.execSQL("delete from " + PlayerTable.NAME);
@@ -281,6 +403,26 @@ public class GameData {
     }
 
     /* Player Item Table */
+    private List<Item> dbReadPlayerItems() {
+        List<Item> items = new LinkedList<>();
+
+        ItemCursor cursor = new ItemCursor(
+                db.query(PlayerItemTable.NAME, null, null, null, null, null, null));
+
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                items.add(cursor.getPlayerItem());
+                cursor.moveToNext();
+            }
+        }
+        finally {
+            cursor.close();
+        }
+
+        return items;
+    }
+
     void dbAddPlayerItems(List<Item> items) {
         for (Item currItem : items) {
             dbAddPlayerItem(currItem);

@@ -15,11 +15,21 @@ public class WelcomeActivity extends AppCompatActivity {
     Button newGameButton;
     Button continueGameButton;
 
+    GameData gameInstance;
+
     /* Overrides */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+
+        // Get game instance
+        gameInstance = GameData.getInstance(WelcomeActivity.this);
+
+        // Load from database
+        if (gameInstance.dbCheckForPlayer()) {
+            gameInstance.dbLoadGame();
+        }
 
         // Get references to UI objects
         newGameButton = findViewById(R.id.btnNewGame);
@@ -29,7 +39,7 @@ public class WelcomeActivity extends AppCompatActivity {
         newGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GameData.newGame(WelcomeActivity.this);
+                gameInstance.newGame();
                 startActivity(NavigationActivity.getIntent(WelcomeActivity.this));
             }
         });
@@ -46,14 +56,7 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        // Check if there is a game to continue
-        if (GameData.hasInstance()) {
-            // Check if game over
-            continueGameButton.setEnabled(!GameData.getInstance().isGameEnd());
-        }
-        else {
-            continueGameButton.setEnabled(false);
-        }
+        continueGameButton.setEnabled(gameInstance.isGameInProgress());
     }
 
     @Override

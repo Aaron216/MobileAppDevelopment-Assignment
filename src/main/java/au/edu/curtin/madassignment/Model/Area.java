@@ -143,12 +143,14 @@ public class Area {
         GameData.getInstance().dbUpdateArea(this);
     }
 
-    public void setItemList(List<Item> inItems) {
+    public void setItemList(List<Item> inItems, boolean updateDatabase) {
         if (inItems == null) {
             throw new IllegalArgumentException("Cannot set item list to null");
         }
         this.itemList = inItems;
-        GameData.getInstance().dbReplaceAreaItems(rowLocation, colLocation, itemList);
+        if (updateDatabase) {
+            GameData.getInstance().dbReplaceAreaItems(rowLocation, colLocation, itemList);
+        }
     }
 
     void addItem(Item inItem) {
@@ -247,10 +249,10 @@ public class Area {
         cv.put(AreaTable.Cols.ID, getIDString());
         cv.put(AreaTable.Cols.ROW_LOCATION, getRowLocation());
         cv.put(AreaTable.Cols.COL_LOCATION, getColLocation());
-        cv.put(AreaTable.Cols.IS_TOWN, isTown());
+        cv.put(AreaTable.Cols.IS_TOWN, Boolean.toString(isTown()));
         cv.put(AreaTable.Cols.DESCRIPTION, getDescription());
-        cv.put(AreaTable.Cols.IS_STARRED, isStarred());
-        cv.put(AreaTable.Cols.IS_EXPLORED, isExplored());
+        cv.put(AreaTable.Cols.IS_STARRED, Boolean.toString(isStarred()));
+        cv.put(AreaTable.Cols.IS_EXPLORED, Boolean.toString(isExplored()));
 
         return cv;
     }

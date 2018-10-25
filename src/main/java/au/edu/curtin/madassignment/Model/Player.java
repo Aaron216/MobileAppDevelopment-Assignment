@@ -156,12 +156,14 @@ public class Player {
         GameData.getInstance().dbUpdatePlayer(this);
     }
 
-    public void setItemList(List<Item> inItemList) {
+    public void setItemList(List<Item> inItemList, boolean updateDatabase) {
         if (inItemList == null) {
             throw new IllegalArgumentException("Item list cannot be null");
         }
         itemList = inItemList;
-        GameData.getInstance().dbReplacePlayerItems(inItemList);
+        if (updateDatabase) {
+            GameData.getInstance().dbReplacePlayerItems(inItemList);
+        }
     }
 
     public void addItems(List<Item> items) {
