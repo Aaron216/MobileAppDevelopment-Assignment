@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.util.UUID;
 
+import au.edu.curtin.madassignment.Activities.ImprobabilityDriveActivity;
 import au.edu.curtin.madassignment.Model.*;
 
 public class ImprobabilityDrive extends Equipment implements Equipment.Usable {
@@ -30,10 +31,11 @@ public class ImprobabilityDrive extends Equipment implements Equipment.Usable {
     /* Function */
     @Override
     public void use(Context context) {
-        // context.startActivity(ImprobabilityDriveActivity.getIntent(context));
+        context.startActivity(ImprobabilityDriveActivity.getIntent(context, super.getIDString()));
+    }
 
+    public void confirm() {
         GameData gameInstance = GameData.getInstance();
-
         gameInstance.getPlayer().removeItem(this);
         gameInstance.generateMap();
     }

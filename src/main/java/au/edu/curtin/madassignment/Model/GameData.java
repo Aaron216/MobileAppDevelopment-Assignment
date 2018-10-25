@@ -164,7 +164,9 @@ public class GameData {
 
     public void newGame() {
         setGameInProgress();
-        setPlayer(new Player(), true);
+        Player newPlayer = new Player();
+        newPlayer.setRandomLocation();
+        setPlayer(newPlayer, true);
         generateMap();
         dbNewGame();
     }

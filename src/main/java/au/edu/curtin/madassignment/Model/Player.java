@@ -17,6 +17,7 @@ import android.content.Context;
 import java.util.Arrays;
 import java.util.List;
 import java.util.LinkedList;
+import java.util.Random;
 import java.util.UUID;
 
 import au.edu.curtin.madassignment.Database.GameSchema.PlayerTable;
@@ -145,6 +146,12 @@ public class Player {
         GameData.getInstance().dbUpdatePlayer(this);
     }
 
+    public void setRandomLocation() {
+        Random random = new Random();
+        setRowLocation(random.nextInt(GameData.MAX_ROW));
+        setColLocation(random.nextInt(GameData.MAX_COL));
+    }
+
     public void setCash(int inCash) {
         if (inCash < 0) {
             throw new IllegalArgumentException("Cash cannot be a negative value");
@@ -174,6 +181,7 @@ public class Player {
             throw new IllegalArgumentException("Item list cannot be null");
         }
         itemList = inItemList;
+        checkForSpecialItems(itemList, true);
         if (updateDatabase) {
             GameData.getInstance().dbReplacePlayerItems(inItemList);
         }

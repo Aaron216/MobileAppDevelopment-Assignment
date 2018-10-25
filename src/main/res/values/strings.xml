@@ -58,5 +58,11 @@
     <string name="ben_kenobi">Ben Kenobi</string>
     <string name="kenobi_description">When used in a town, you immediately acquire all items in the market without paying for them. The same happens in wilderness areas, even thout this isn\'t terribly useful.</string>
     <string name="do_it">Do it</string>
-    <string name="don_t_try_it">Don\'t Try it</string>
+    <string name="dont_try_it">Don\'t Try it</string>
+
+    <!-- Improbability Drive -->
+    <string name="improbability_drive">Improbability Drive</string>
+    <string name="drive_description">When used, causes the entire map (all areas and the items in each area) to be randomly re-generated, except that the player keeps their current items.</string>
+    <string name="got_towel">I\'ve got my towel</string>
+    <string name="save_for_thurs">Save for a Thursday</string>
 </resources>

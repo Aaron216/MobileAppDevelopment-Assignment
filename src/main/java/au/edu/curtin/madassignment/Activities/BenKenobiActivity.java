@@ -30,7 +30,7 @@ public class BenKenobiActivity extends AppCompatActivity {
         // Get UI Objects
         VideoView kenobiVideo = findViewById(R.id.vidKenobi);
         Button useBtn = findViewById(R.id.btnUse);
-        Button cancellBtn = findViewById(R.id.btnCancel);
+        Button cancelBtn = findViewById(R.id.btnCancel);
 
         // Start Video
         String path = "android.resource://au.edu.curtin.madassignment/" + R.raw.kenobi_hello_there;
@@ -54,7 +54,7 @@ public class BenKenobiActivity extends AppCompatActivity {
             }
         });
 
-        cancellBtn.setOnClickListener(new View.OnClickListener() {
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 goBack();
