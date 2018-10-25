@@ -20,7 +20,7 @@ import au.edu.curtin.madassignment.*;
 import au.edu.curtin.madassignment.Model.*;
 import au.edu.curtin.madassignment.Fragments.*;
 
-public class OverviewActivity extends AppCompatActivity {
+public class OverviewActivity extends AppCompatActivity implements AreaInfoFragment.OnActionListener{
     /* Fields */
     private Area selectedArea;
     private MapAdaptor adaptor;
@@ -95,7 +95,7 @@ public class OverviewActivity extends AppCompatActivity {
         selectedArea = inArea;
     }
 
-    private void update() {
+    public void update() {
         statusBar.update();
         areaInfo.setArea(selectedArea);
         areaInfo.update();

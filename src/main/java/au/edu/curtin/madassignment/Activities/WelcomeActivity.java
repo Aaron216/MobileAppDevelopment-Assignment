@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import au.edu.curtin.madassignment.*;
 import au.edu.curtin.madassignment.Model.GameData;
@@ -28,7 +29,12 @@ public class WelcomeActivity extends AppCompatActivity {
 
         // Load from database
         if (gameInstance.dbCheckForPlayer()) {
-            gameInstance.dbLoadGame();
+            try {
+                gameInstance.dbLoadGame();
+            }
+            catch (Exception ex) {
+                Toast.makeText(WelcomeActivity.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
+            }
         }
 
         // Get references to UI objects

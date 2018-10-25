@@ -14,10 +14,7 @@ import au.edu.curtin.madassignment.Fragments.*;
 import au.edu.curtin.madassignment.Model.*;
 import au.edu.curtin.madassignment.*;
 
-public class NavigationActivity extends AppCompatActivity {
-    /* Constants */
-    private static final String START_NEW = "au.edu.curtin.madassigment.startNew";
-
+public class NavigationActivity extends AppCompatActivity implements AreaInfoFragment.OnActionListener{
     /* Fields */
     private ImageButton northButton;
     private ImageButton westButton;
@@ -141,7 +138,7 @@ public class NavigationActivity extends AppCompatActivity {
         return new Intent(context, NavigationActivity.class);
     }
 
-    private void update() {
+    public void update() {
         int col = GameData.getInstance().getPlayer().getColLocation();
         int row = GameData.getInstance().getPlayer().getRowLocation();
 

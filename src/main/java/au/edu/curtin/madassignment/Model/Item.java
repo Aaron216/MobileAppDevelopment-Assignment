@@ -63,6 +63,14 @@ public abstract class Item {
         return value;
     }
 
+    public String toString() {
+        String output = "";
+        output += "Type: " + type + ", ";
+        output += "ID: " + itemID.toString() + ", ";
+        output += "Desc: " + description;
+        return output;
+    }
+
     /* Mutators */
     public void setItemID(UUID inID) {
         this.itemID = inID;
@@ -124,8 +132,8 @@ public abstract class Item {
         ContentValues cv = new ContentValues();
 
         cv.put(AreaItemTable.Cols.ID, getIDString());
-        cv.put(AreaItemTable.Cols.ROW_LOCATION, row);
-        cv.put(AreaItemTable.Cols.COL_LOCATION, col);
+        cv.put(AreaItemTable.Cols.ROW_LOCATION, String.valueOf(row));
+        cv.put(AreaItemTable.Cols.COL_LOCATION, String.valueOf(col));
         cv.put(AreaItemTable.Cols.TYPE, getType());
         cv.put(AreaItemTable.Cols.DESCRIPTION, getDescription());
         cv.put(AreaItemTable.Cols.VALUE, getValue());

@@ -20,7 +20,7 @@ public class ItemCursor extends CursorWrapper {
         UUID itemID = UUID.fromString(getString(getColumnIndex(AreaItemTable.Cols.ID)));
         int row = getInt(getColumnIndex(AreaItemTable.Cols.ROW_LOCATION));
         int col = getInt(getColumnIndex(AreaItemTable.Cols.COL_LOCATION));
-        String type = getString(getColumnIndex(AreaItemTable.Cols.ID));
+        String type = getString(getColumnIndex(AreaItemTable.Cols.TYPE));
         String description = getString(getColumnIndex(AreaItemTable.Cols.DESCRIPTION));
         int value = getInt(getColumnIndex(AreaItemTable.Cols.VALUE));
         double health = getDouble(getColumnIndex(AreaItemTable.Cols.HEALTH));
@@ -56,6 +56,8 @@ public class ItemCursor extends CursorWrapper {
                 throw new IllegalArgumentException("Cannot read item from database: Unknown type");
         }
 
+        // System.out.println("Area Item > " + item.toString());
+
         return item;
     }
 
@@ -63,7 +65,7 @@ public class ItemCursor extends CursorWrapper {
         Item item;
 
         UUID itemID = UUID.fromString(getString(getColumnIndex(PlayerItemTable.Cols.ID)));
-        String type = getString(getColumnIndex(PlayerItemTable.Cols.ID));
+        String type = getString(getColumnIndex(PlayerItemTable.Cols.TYPE));
         String description = getString(getColumnIndex(PlayerItemTable.Cols.DESCRIPTION));
         int value = getInt(getColumnIndex(PlayerItemTable.Cols.VALUE));
         double health = getDouble(getColumnIndex(PlayerItemTable.Cols.HEALTH));
@@ -98,6 +100,8 @@ public class ItemCursor extends CursorWrapper {
             default:
                 throw new IllegalArgumentException("Cannot read item from database: Unknown type");
         }
+
+        // System.out.println("Player Item > " + item.toString());
 
         return item;
     }

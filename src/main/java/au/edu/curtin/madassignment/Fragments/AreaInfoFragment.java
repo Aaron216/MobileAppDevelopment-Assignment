@@ -1,6 +1,7 @@
 package au.edu.curtin.madassignment.Fragments;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,13 +18,21 @@ import au.edu.curtin.madassignment.*;
 import au.edu.curtin.madassignment.Model.*;
 
 public class AreaInfoFragment extends Fragment {
+    /**
+     * Area Info Interface
+     */
+    public interface OnActionListener {
+        void update();
+    }
+
     /* Fields */
-    Area area;
-    TextView biomeText;
-    TextView descriptionText;
-    TextView coordinateText;
-    ImageButton starButton;
-    ImageButton editButton;
+    private OnActionListener actionListener;
+    private Area area;
+    private TextView biomeText;
+    private TextView descriptionText;
+    private TextView coordinateText;
+    private ImageButton starButton;
+    private ImageButton editButton;
 
     /* Overrides */
     @Override
@@ -41,8 +50,6 @@ public class AreaInfoFragment extends Fragment {
         starButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Get Current Area
-                Area area = GameData.getInstance().getCurrentArea();
                 area.toggleStarred();
 
                 if (area.isStarred()) {
@@ -51,15 +58,14 @@ public class AreaInfoFragment extends Fragment {
                 else {
                     starButton.setImageResource(R.drawable.ic_star_border_black_24dp);
                 }
+
+                actionListener.update();
             }
         });
 
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Get current area
-                final Area area = GameData.getInstance().getCurrentArea();
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle("Edit Area Description");
 
@@ -93,6 +99,17 @@ public class AreaInfoFragment extends Fragment {
 
         //update();
         return view;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            this.actionListener = (OnActionListener)context;
+        }
+        catch (final ClassCastException ex) {
+            throw new ClassCastException(context.toString() + " must implement OnActionListener");
+        }
     }
 
     /* Mutators */
